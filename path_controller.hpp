@@ -2,16 +2,18 @@
 #define PATH_CONTROLLER_HPP
 
 #include "controller.hpp"
+#include "sprite.hpp"
 #include "path.hpp"
 
 class PathController : public Controller {
   public:
-    PathController();
-    PathController(Path*);
+    PathController(Sprite*, Path*);
     ~PathController();
+    void update(float) override;
 
   protected:
-    Path *_path;
+    Path *_path = 0;
+    Sprite *_sprite = 0;
     // we will have to keep track of the origin,
     // the last node and the node we are headed to.
     // will have to figure out how to move toward

@@ -8,6 +8,7 @@ class Controller {
     //Controller (Sprite *s) { _sprite = s; }
     //Controller(Sprite*);
     virtual void update(float dt) { }
+    virtual ~Controller(void);
 
   //protected:
     //Sprite *_sprite = 0;

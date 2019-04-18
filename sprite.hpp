@@ -11,6 +11,13 @@ class Sprite {
     int _width;
     int _height;
     SDL_Point *_velocity = 0;
+    // Level can be responsible for detecting collisions for each sprite,
+    // and each sprite can be sent an array of pointers to sprites
+    // that it is colliding with. similar to Controller, can have a CollisionHandler
+    // class that is either null or will allow the sprite to deal with it itself.
+
+    // https://wiki.libsdl.org/SDL_IntersectRect
+    // https://wiki.libsdl.org/SDL_HasIntersection
     SDL_Rect *_hitbox = 0;
 
   public:

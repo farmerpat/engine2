@@ -11,6 +11,8 @@ Level::~Level() {
   for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
     delete this->_sprites[i];
   }
+  // TODO:
+  // do we want to erase and shrink this like in path?
 
   if (_texture) {
     SDL_DestroyTexture(this->_texture);

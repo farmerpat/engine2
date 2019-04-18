@@ -10,7 +10,7 @@ class HeroController : public Controller {
   public:
     HeroController();
     HeroController(Sprite*);
-    void update (float) override;
+    void update(float) override;
 
   private:
     Sprite *_sprite = 0;

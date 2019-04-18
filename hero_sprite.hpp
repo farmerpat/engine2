@@ -4,6 +4,12 @@
 #include "textured_sprite.hpp"
 #include "hero_controller.hpp"
 
+// TODO:
+//  consider using a config.ini file that will
+//  hold things like hero velocity, gravity ,drag etc.
+//  this will allow us to alter magick numbers w/o
+//  recompiling. could potentially alter in real time
+//  as well, if we read from file instead of class memeber
 class HeroSprite : public TexturedSprite {
   public:
     HeroSprite(SDL_Point, SDL_Renderer*);

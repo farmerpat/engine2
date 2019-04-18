@@ -17,25 +17,21 @@ void HeroController::update(float dt) {
       SDL_Point *newPos = this->_sprite->getPos();
       newPos->y -= moveAmount;
       this->_sprite->setPos(*newPos);
-      delete newPos;
 
     } else if (gm->playerInput.downPressed) {
       SDL_Point *newPos = this->_sprite->getPos();
       newPos->y += moveAmount;
       this->_sprite->setPos(*newPos);
-      delete newPos;
 
     } else if (gm->playerInput.leftPressed) {
       SDL_Point *newPos = this->_sprite->getPos();
       newPos->x -= moveAmount;
       this->_sprite->setPos(*newPos);
-      delete newPos;
 
     } else if (gm->playerInput.rightPressed) {
       SDL_Point *newPos = this->_sprite->getPos();
       newPos->x += moveAmount;
       this->_sprite->setPos(*newPos);
-      delete newPos;
 
     }
   }

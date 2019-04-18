@@ -6,6 +6,8 @@
 #include "hero_sprite.hpp"
 #include "rectangular_primitive_sprite.hpp"
 #include "level.hpp"
+#include "path.hpp"
+#include "path_controller.hpp"
 #include <string>
 #include <iostream>
 
@@ -27,6 +29,9 @@ static bool x_pressed_this_frame = false;
 static bool y_pressed_this_frame = false;
 static bool lb_pressed_this_frame = false;
 static bool rb_pressed_this_frame = false;
+
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 static bool quit = false;
 static GameManager *gm;
@@ -280,6 +285,18 @@ int main (int argc, char **argv) {
       SDL_Point rPos = { 0, 100 };
       //TexturedSprite *testSprite = new TexturedSprite(p, 32, 32, "./slug_right.png", renderer);
       RectangularPrimitiveSprite *rSprite = new RectangularPrimitiveSprite(rPos, 300, 15);
+      Path *path = new Path();
+      SDL_Point controllerPoint;
+      controllerPoint.x = rPos.x;
+      controllerPoint.y = rPos.y;
+      path->addNode(controllerPoint);
+      controllerPoint.x = rPos.x + 300;
+      controllerPoint.y = rPos.y;
+      path->addNode(controllerPoint);
+
+      PathController *pc = new PathController(rSprite, path);
+      rSprite->controller = pc;
+
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
 
@@ -290,6 +307,9 @@ int main (int argc, char **argv) {
       testLevel->addSprite(rSprite);
 
       //texture = Util::loadTexture("./slug_right.png", renderer);
+
+      unsigned int last_time = 0, current_time;
+      float dt;
 
       while (!quit) {
         clearFrameInputFlags();
@@ -310,8 +330,17 @@ int main (int argc, char **argv) {
         // renderer, texture, source_rect, dest_rect
         //SDL_RenderCopy(renderer, texture, NULL, &texture_dest_rect);
         //SDL_RenderPresent(renderer);
+        current_time = SDL_GetTicks();
+        //dt = (current_time - last_time) / 1000.0f;
         testLevel->update(0.0f);
         testLevel->render(renderer);
+
+
+        if ((current_time-last_time) < SCREEN_TICKS_PER_FRAME) {
+          SDL_Delay(SCREEN_TICKS_PER_FRAME - (current_time-last_time));
+        }
+
+        last_time = current_time;
 
         // weekend's goal:
         // create a level that draws controllable hero sprite

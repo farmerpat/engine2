@@ -3,11 +3,18 @@ DEBUG=-g -O0
 
 # user some variables (e.g. OBJECTS) to clean this nonsense up
 
-all: util.o game_manager.o sprite.o controller.o hero_controller.o hero_sprite.o textured_sprite.o primitive_sprite.o rectangular_primitive_sprite.o level.o main.o
-	g++ $(DEBUG) -o main util.o game_manager.o sprite.o controller.o hero_controller.o hero_sprite.o textured_sprite.o primitive_sprite.o rectangular_primitive_sprite.o level.o main.o -lSDL2 -lSDL2_image
+all: util.o game_manager.o path.o controller.o path_controller.o sprite.o hero_controller.o hero_sprite.o textured_sprite.o primitive_sprite.o rectangular_primitive_sprite.o level.o main.o
+	g++ $(DEBUG) -o main util.o game_manager.o path.o controller.o path_controller.o sprite.o hero_controller.o hero_sprite.o textured_sprite.o primitive_sprite.o rectangular_primitive_sprite.o level.o main.o -lSDL2 -lSDL2_image
+
+path.o: path.cpp
+	g++ $(DEBUG) -c path.cpp -I /usr/include/SDL2 -lSDL2
 
 controller.o: controller.cpp
-	g++ $(DEBUG) -c controller.cpp -I /usr/include/SDL2 -lSDL2
+	g++ $(DEBUG) -c controller.cpp
+	#g++ $(DEBUG) -c controller.cpp -I /usr/include/SDL2 -lSDL2
+
+path_controller.o: path_controller.cpp
+	g++ $(DEBUG) -c path_controller.cpp -I /usr/include/SDL2 -lSDL2
 
 util.o: util.cpp
 	g++ $(DEBUG) -c util.cpp -I/usr/include/SDL2 -lSDL2
@@ -40,4 +47,4 @@ main.o: main.cpp
 	g++ $(DEBUG) -c main.cpp -I/usr/include/SDL2 -lSDL2 -lSDL2_image
 
 clean:
-	rm *.o
+	rm -f *.o

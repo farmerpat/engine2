@@ -22,6 +22,11 @@ Sprite::~Sprite(void) {
   if (this->_hitbox) {
     delete this->_hitbox;
   }
+
+  // add _
+  if (this->controller) {
+    delete this->controller;
+  }
 }
 
 SDL_Point *Sprite::getPos(void) {
