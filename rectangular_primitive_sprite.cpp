@@ -1,6 +1,7 @@
 #include "rectangular_primitive_sprite.hpp"
+#include <iostream>
 
-RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p) :
+RectangularPrimitiveSprite::RectangularPrimitiveSprite(RealPoint p) :
   PrimitiveSprite(p) {
     this->_width = 10;
     this->_height = 10;
@@ -17,7 +18,7 @@ RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p) :
     this->_outlineColor->a = 255;
 }
 
-RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p, int w , int h) :
+RectangularPrimitiveSprite::RectangularPrimitiveSprite(RealPoint p, int w , int h) :
   PrimitiveSprite(p) {
     this->_width = w;
     this->_height = h;
@@ -34,7 +35,7 @@ RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p, int w , int 
     this->_outlineColor->a = 255;
 }
 
-RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p, int w , int h, SDL_Color c) :
+RectangularPrimitiveSprite::RectangularPrimitiveSprite(RealPoint p, int w , int h, SDL_Color c) :
   PrimitiveSprite(p) {
     this->_width = w;
     this->_height = h;
@@ -54,10 +55,12 @@ RectangularPrimitiveSprite::RectangularPrimitiveSprite(SDL_Point p, int w , int 
 
 void RectangularPrimitiveSprite::render(SDL_Renderer *renderer) {
   SDL_Rect rect;
-  rect.x = this->_pos->x;
-  rect.y = this->_pos->y;
+  rect.x = (int)this->_pos->X();
+  rect.y = (int)this->_pos->Y();
   rect.w = this->_width;
   rect.h = this->_height;
+
+  //std::cout << (int)this->_pos->X() << std::endl;
 
   Uint8 r;
   Uint8 g;

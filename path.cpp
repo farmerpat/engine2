@@ -3,7 +3,7 @@
 Path::Path() { }
 
 Path::~Path() {
-  for (std::vector<SDL_Point*>::size_type i = 0; i < this->_nodes.size(); i++) {
+  for (std::vector<RealPoint*>::size_type i = 0; i < this->_nodes.size(); i++) {
     delete this->_nodes[i];
   }
 
@@ -11,10 +11,10 @@ Path::~Path() {
   this->_nodes.shrink_to_fit();
 }
 
-void Path::addNode(SDL_Point p) {
-  SDL_Point *pt = new SDL_Point();
-  pt->x = p.x;
-  pt->y = p.y;
+void Path::addNode(RealPoint p) {
+  RealPoint *pt = new RealPoint();
+  pt->setX(p.X());
+  pt->setY(p.Y());
   this->_nodes.push_back(pt);
 }
 
@@ -30,6 +30,6 @@ void Path::rewind() {
   }
 }
 
-SDL_Point *Path::getCurrentPoint() {
+RealPoint *Path::getCurrentPoint() {
   return this->_nodes[this->_current];
 }

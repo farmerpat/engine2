@@ -12,12 +12,11 @@
 //  as well, if we read from file instead of class memeber
 class HeroSprite : public TexturedSprite {
   public:
-    HeroSprite(SDL_Point, SDL_Renderer*);
+    HeroSprite(RealPoint, SDL_Renderer*);
     ~HeroSprite();
 
   private:
     float moveSpeed = 10.0f;
-    SDL_Point velocity { 0, 0 };
 
 };
 #endif

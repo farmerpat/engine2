@@ -6,7 +6,7 @@
 
 class TexturedSprite : public Sprite {
   public:
-    TexturedSprite(SDL_Point, int, int, std::string, SDL_Renderer*);
+    TexturedSprite(RealPoint, int, int, std::string, SDL_Renderer*);
     virtual ~TexturedSprite();
     // TexturedSprite and PrimitiveSprite
     // will need their own render and update functions.

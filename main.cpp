@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "SDL_image.h"
+#include "real_point.hpp"
 #include "game_manager.hpp"
 #include "util.hpp"
 #include "sprite.hpp"
@@ -10,6 +11,8 @@
 #include "path_controller.hpp"
 #include <string>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 // TODO: use valgrind to check profiling, look for leaks, etc
 // TODO: use a namespace, you barbarian
@@ -280,18 +283,18 @@ int main (int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (renderer) {
-      SDL_Point heroPos = { 10, 10 };
+      RealPoint heroPos = { 10.0, 10.0 };
       HeroSprite *heroSprite = new HeroSprite(heroPos, renderer);
-      SDL_Point rPos = { 0, 100 };
+      RealPoint rPos = { 0.0, 100.0 };
       //TexturedSprite *testSprite = new TexturedSprite(p, 32, 32, "./slug_right.png", renderer);
       RectangularPrimitiveSprite *rSprite = new RectangularPrimitiveSprite(rPos, 300, 15);
       Path *path = new Path();
-      SDL_Point controllerPoint;
-      controllerPoint.x = rPos.x;
-      controllerPoint.y = rPos.y;
+      RealPoint controllerPoint;
+      controllerPoint.setX(rPos.X());
+      controllerPoint.setY(rPos.Y());
       path->addNode(controllerPoint);
-      controllerPoint.x = rPos.x + 300;
-      controllerPoint.y = rPos.y;
+      controllerPoint.setX(rPos.X() + 300);
+      controllerPoint.setY(rPos.Y());
       path->addNode(controllerPoint);
 
       PathController *pc = new PathController(rSprite, path);
@@ -331,13 +334,30 @@ int main (int argc, char **argv) {
         //SDL_RenderCopy(renderer, texture, NULL, &texture_dest_rect);
         //SDL_RenderPresent(renderer);
         current_time = SDL_GetTicks();
-        //dt = (current_time - last_time) / 1000.0f;
-        testLevel->update(0.0f);
+        // if we are using a wait, shouldn't we always
+        // be sending the same dt?
+        // derp....
+        // or the wait should be before update and render or something
+        // could try monkeying around with the order,
+        // or could just try moving to
+        // std::this_thread::sleep_for(std::chrono::milliseconds(x))
+        // ^ requires c++ 11
+        dt = (current_time - last_time) / 1000.0f;
+        testLevel->update(dt);
+        //testLevel->update(1/60.0);
         testLevel->render(renderer);
 
-
+        //last_time = current_time;
+        // this value keeps oscillating by an order of magnitude...
+        // wtf
+        std::cout << current_time-last_time << std::endl;
         if ((current_time-last_time) < SCREEN_TICKS_PER_FRAME) {
-          SDL_Delay(SCREEN_TICKS_PER_FRAME - (current_time-last_time));
+          //SDL_Delay(SCREEN_TICKS_PER_FRAME - (current_time-last_time));
+          std::this_thread::sleep_for(
+            std::chrono::milliseconds(
+              SCREEN_TICKS_PER_FRAME - (current_time-last_time)
+            )
+          );
         }
 
         last_time = current_time;

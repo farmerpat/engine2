@@ -9,30 +9,53 @@ HeroController::HeroController(Sprite *sprite) {
 void HeroController::update(float dt) {
   GameManager *gm = GameManager::getInstance();
 
-  int moveAmount = 10;
+  int moveAmount = 200;
+
+  RealPoint oldVelocity(
+    this->_sprite->getVelocity()->X(),
+    this->_sprite->getVelocity()->Y()
+  );
 
   if (gm) {
     if (gm->playerInput.upPressed) {
-      // just change the velocity of the sprite.
-      SDL_Point *newPos = this->_sprite->getPos();
-      newPos->y -= moveAmount;
-      this->_sprite->setPos(*newPos);
+      oldVelocity.setY(-moveAmount);
+      //RealPoint *newPos = this->_sprite->getPos();
+      //newPos->setY(newPos->Y() - moveAmount);
+      //this->_sprite->setPos(*newPos);
 
     } else if (gm->playerInput.downPressed) {
-      SDL_Point *newPos = this->_sprite->getPos();
-      newPos->y += moveAmount;
-      this->_sprite->setPos(*newPos);
+      oldVelocity.setY(moveAmount);
+      //RealPoint *newPos = this->_sprite->getPos();
+      //newPos->setY(newPos->Y() + moveAmount);
+      //this->_sprite->setPos(*newPos);
 
     } else if (gm->playerInput.leftPressed) {
-      SDL_Point *newPos = this->_sprite->getPos();
-      newPos->x -= moveAmount;
-      this->_sprite->setPos(*newPos);
+      oldVelocity.setX(-moveAmount);
+      //RealPoint *newPos = this->_sprite->getPos();
+      //newPos->setX(newPos->X() - moveAmount);
+      //this->_sprite->setPos(*newPos);
 
     } else if (gm->playerInput.rightPressed) {
-      SDL_Point *newPos = this->_sprite->getPos();
-      newPos->x += moveAmount;
-      this->_sprite->setPos(*newPos);
+      oldVelocity.setX(moveAmount);
+      //RealPoint *newPos = this->_sprite->getPos();
+      //newPos->setX(newPos->X() + moveAmount);
+      //this->_sprite->setPos(*newPos);
+
+    } else {
+      oldVelocity.setX(0.0);
+      oldVelocity.setY(0.0);
 
     }
+
+
   }
+
+  this->_sprite->setVelocity(oldVelocity);
+  this->_sprite->move(dt);
+
+  // can we call parent update?
+  // even if so, is it better to leave
+  // controllers enough flexibility
+  // to update at their will, or
+  // would responding to velocity be good enough?
 }

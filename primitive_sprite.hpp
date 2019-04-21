@@ -5,7 +5,7 @@
 
 class PrimitiveSprite : public Sprite {
   public:
-    PrimitiveSprite (SDL_Point);
+    PrimitiveSprite (RealPoint);
     ~PrimitiveSprite();
     void render(SDL_Renderer*);
 

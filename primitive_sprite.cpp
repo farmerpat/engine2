@@ -1,6 +1,6 @@
 #include "primitive_sprite.hpp"
 
-PrimitiveSprite::PrimitiveSprite(SDL_Point p)
+PrimitiveSprite::PrimitiveSprite(RealPoint p)
   : Sprite(p) {
 }
 

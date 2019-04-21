@@ -5,9 +5,9 @@
 
 class RectangularPrimitiveSprite : public PrimitiveSprite {
   public:
-    RectangularPrimitiveSprite(SDL_Point);
-    RectangularPrimitiveSprite(SDL_Point, int, int);
-    RectangularPrimitiveSprite(SDL_Point, int, int, SDL_Color);
+    RectangularPrimitiveSprite(RealPoint);
+    RectangularPrimitiveSprite(RealPoint, int, int);
+    RectangularPrimitiveSprite(RealPoint, int, int, SDL_Color);
     void render(SDL_Renderer*);
     void setFilled();
     void clearFilled();

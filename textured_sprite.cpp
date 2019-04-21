@@ -1,6 +1,6 @@
 #include "textured_sprite.hpp"
 
-TexturedSprite::TexturedSprite(SDL_Point pos, int w, int h, std::string img, SDL_Renderer *r)
+TexturedSprite::TexturedSprite(RealPoint pos, int w, int h, std::string img, SDL_Renderer *r)
   : Sprite (pos, w, h) {
   //this->_pos = pos;
   //this->_width = w;
@@ -23,8 +23,8 @@ void TexturedSprite::render(SDL_Renderer *renderer) {
   // maybe make this a member and just update it
   SDL_Rect texture_dest_rect;
 
-  texture_dest_rect.x = this->getPos()->x;
-  texture_dest_rect.y = this->getPos()->y;
+  texture_dest_rect.x = (int)this->getPos()->X();
+  texture_dest_rect.y = (int)this->getPos()->Y();
   texture_dest_rect.w = this->getWidth();
   texture_dest_rect.h = this->getHeight();
 

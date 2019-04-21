@@ -2,20 +2,21 @@
 #define PATH_HPP
 
 #include <vector>
+#include "real_point.hpp"
 #include "SDL.h"
 
 class Path {
   public:
     Path();
     ~Path();
-    void addNode(SDL_Point);
+    void addNode(RealPoint);
     void advance();
     void rewind();
-    SDL_Point *getCurrentPoint();
+    RealPoint *getCurrentPoint();
 
   protected:
     int _current = 0;
-    std::vector<SDL_Point*> _nodes;
+    std::vector<RealPoint*> _nodes;
 
 };
 #endif
