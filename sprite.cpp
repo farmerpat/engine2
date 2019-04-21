@@ -27,9 +27,8 @@ Sprite::~Sprite(void) {
     delete this->_hitbox;
   }
 
-  // add _
-  if (this->controller) {
-    delete this->controller;
+  if (this->_controller) {
+    delete this->_controller;
   }
 }
 

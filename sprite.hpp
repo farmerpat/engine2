@@ -22,7 +22,7 @@ class Sprite {
     SDL_Rect *_hitbox = 0;
 
   public:
-    Controller *controller = 0;
+    Controller *_controller = 0;
     Sprite(RealPoint);
     Sprite(RealPoint, int, int);
     // made virtual because deleting a child instance,

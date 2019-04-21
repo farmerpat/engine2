@@ -23,7 +23,7 @@ void Level::update(float dt) {
   for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
     Sprite *sprite = this->_sprites[i];
 
-    if (sprite->controller) {
+    if (sprite->_controller) {
       // maybe its bombing b/c it doesn't know
       // what kind of controller it is?
       // but then what is the point of polymorphism?
@@ -42,7 +42,7 @@ void Level::update(float dt) {
       // it appears that it wasn't from passing "this" as arg.
       // i removed that and it bombed anyway
       //HeroController *c = std::dynamic_cast<HeroController*>(sprite->controller);
-      Controller *c = sprite->controller;
+      Controller *c = sprite->_controller;
 
       if (c) {
         c->update(dt);

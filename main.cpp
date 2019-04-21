@@ -9,6 +9,7 @@
 #include "level.hpp"
 #include "path.hpp"
 #include "path_controller.hpp"
+#include "function_controller.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -22,6 +23,9 @@
 //        ...it might be really cool to create a lisp ffi for this
 
 // TODO: clean up these globals
+static const int SCREEN_WIDTH = 640;
+static const int SCREEN_HEIGHT = 480;
+
 static bool up_pressed_this_frame = false;
 static bool down_pressed_this_frame = false;
 static bool left_pressed_this_frame = false;
@@ -219,6 +223,9 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
 
 int main (int argc, char **argv) {
   gm = GameManager::getInstance();
+  gm->setScreenWidth(SCREEN_WIDTH);
+  gm->setScreenHeight(SCREEN_HEIGHT);
+
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
   SDL_Event e;
@@ -325,12 +332,30 @@ int main (int argc, char **argv) {
       path->addNode(controllerPoint);
 
       PathController *pc = new PathController(rSprite, path);
-      rSprite->controller = pc;
+      rSprite->_controller = pc;
+
+      RealPoint fPos = { 20.0, 300.0 };
+      RectangularPrimitiveSprite *fSprite =
+        new RectangularPrimitiveSprite(fPos, 15, 15);
+
+      // TODO:
+      // makes more sense to pass RealPoint to FunctionController
+      // constructor.
+      FunctionController *fc =
+        new FunctionController(fSprite, fPos.X(), fPos.Y());
+
+      fc->setMaxX(600.0);
+      fc->setMaxY(fPos.Y());
+      fc->setYInc(0.0);
+      fc->setXInc(1.5);
+      fc->setOscillating();
+
+      fSprite->_controller = fc;
 
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
-
       testLevel->addSprite(rSprite);
+      testLevel->addSprite(fSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
