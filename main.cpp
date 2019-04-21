@@ -33,13 +33,19 @@ static bool y_pressed_this_frame = false;
 static bool lb_pressed_this_frame = false;
 static bool rb_pressed_this_frame = false;
 
+static bool up_input_stale = false;
+static bool down_input_stale = false;
+static bool left_input_stale = false;
+static bool right_input_stale = false;
+static bool a_input_stale = false;
+
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 static bool quit = false;
 static GameManager *gm;
 
-void clearFrameInputFlags (void) {
+void clearFrameInputFlags () {
   up_pressed_this_frame = false;
   down_pressed_this_frame = false;
   left_pressed_this_frame = false;
@@ -53,31 +59,58 @@ void clearFrameInputFlags (void) {
 
 }
 
+void dropStaleInputs () {
+  if (up_input_stale) {
+    gm->playerInput.upPressed = false;
+    gm->playerInput.upJustPressed = false;
+    up_input_stale = false;
+  }
+
+  if (down_input_stale) {
+    gm->playerInput.downPressed = false;
+    gm->playerInput.downJustPressed = false;
+    down_input_stale = false;
+  }
+
+  if (left_input_stale) {
+    gm->playerInput.leftPressed = false;
+    gm->playerInput.leftJustPressed = false;
+    left_input_stale = false;
+  }
+
+  if (right_input_stale) {
+    gm->playerInput.rightPressed = false;
+    gm->playerInput.rightJustPressed = false;
+    right_input_stale = false;
+  }
+
+  if (a_input_stale) {
+    gm->playerInput.aPressed = false;
+    gm->playerInput.aJustPressed = false;
+    a_input_stale = false;
+  }
+}
+
 // probably move this and parsePlayerInput
 // to GameManager or a util class or something
 void cleanUpInput(GameManager *gm) {
   if (!up_pressed_this_frame) {
-    gm->playerInput.upPressed = false;
     gm->playerInput.upJustPressed = false;
   }
 
   if (!down_pressed_this_frame) {
-    gm->playerInput.downPressed = false;
     gm->playerInput.downJustPressed = false;
   }
 
   if (!left_pressed_this_frame) {
-    gm->playerInput.leftPressed = false;
     gm->playerInput.leftJustPressed = false;
   }
 
   if (!right_pressed_this_frame) {
-    gm->playerInput.rightPressed = false;
     gm->playerInput.rightJustPressed = false;
   }
 
   if (!a_pressed_this_frame) {
-    gm->playerInput.aPressed = false;
     gm->playerInput.aJustPressed = false;
   }
 }
@@ -87,62 +120,96 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
   if (e.type == SDL_KEYDOWN) {
     switch (e.key.keysym.sym) {
       case SDLK_UP:
-        up_pressed_this_frame = true;
-
-        if (gm->playerInput.upPressed) {
-          gm->playerInput.upJustPressed = false;
-
-        } else {
+        if (!e.key.repeat) {
+          up_pressed_this_frame = true;
           gm->playerInput.upPressed = true;
           gm->playerInput.upJustPressed = true;
         }
+
         break;
 
       case SDLK_DOWN:
-        down_pressed_this_frame = true;
-
-        if (gm->playerInput.downPressed) {
-          gm->playerInput.downJustPressed = false;
-
-        } else {
+        if (!e.key.repeat) {
+          down_pressed_this_frame = true;
           gm->playerInput.downPressed = true;
           gm->playerInput.downJustPressed = true;
+
         }
         break;
 
       case SDLK_LEFT:
-        left_pressed_this_frame = true;
-
-        if (gm->playerInput.leftPressed) {
-          gm->playerInput.leftJustPressed = false;
-
-        } else {
+        if (!e.key.repeat) {
+          left_pressed_this_frame = true;
           gm->playerInput.leftPressed = true;
           gm->playerInput.leftJustPressed = true;
+
         }
         break;
 
       case SDLK_RIGHT:
-        right_pressed_this_frame = true;
-
-        if (gm->playerInput.rightPressed) {
-          gm->playerInput.rightJustPressed = false;
-
-        } else {
+        if (!e.key.repeat) {
+          right_pressed_this_frame = true;
           gm->playerInput.rightPressed = true;
           gm->playerInput.rightJustPressed = true;
+
         }
         break;
 
       case SDLK_SPACE:
-        a_pressed_this_frame = true;
-
-        if (gm->playerInput.aPressed) {
-          gm->playerInput.aJustPressed = false;
-
-        } else {
+        if (!e.key.repeat) {
+          a_pressed_this_frame = true;
           gm->playerInput.aPressed = true;
           gm->playerInput.aJustPressed = true;
+
+        }
+        break;
+
+    }
+  } else if (e.type == SDL_KEYUP) {
+    switch (e.key.keysym.sym) {
+      case SDLK_UP:
+        if (!up_pressed_this_frame) {
+          gm->playerInput.upPressed = false;
+          gm->playerInput.upJustPressed = false;
+
+        } else {
+          up_input_stale = true;
+        }
+        break;
+
+      case SDLK_DOWN:
+        if (!down_pressed_this_frame) {
+          gm->playerInput.downPressed = false;
+          gm->playerInput.downJustPressed = false;
+        } else {
+          down_input_stale = true;
+        }
+        break;
+
+      case SDLK_LEFT:
+        if (!left_pressed_this_frame) {
+          gm->playerInput.leftPressed = false;
+          gm->playerInput.leftJustPressed = false;
+        } else {
+          left_input_stale = true;
+        }
+        break;
+
+      case SDLK_RIGHT:
+        if (!right_pressed_this_frame) {
+          gm->playerInput.rightPressed = false;
+          gm->playerInput.rightJustPressed = false;
+        } else {
+          right_input_stale = true;
+        }
+        break;
+
+      case SDLK_SPACE:
+        if (!a_pressed_this_frame) {
+          gm->playerInput.aPressed = false;
+          gm->playerInput.aJustPressed = false;
+        } else {
+          a_input_stale = true;
         }
         break;
 
@@ -154,7 +221,6 @@ int main (int argc, char **argv) {
   gm = GameManager::getInstance();
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
-  SDL_Texture *texture = NULL;
   SDL_Event e;
 
   SDL_Point window_pos = {
@@ -240,44 +306,6 @@ int main (int argc, char **argv) {
    *    learn how to rotate a sine wave
    *    https://youtu.be/BPgq2AudoEo?t=834
    *
-   *
-   *    movement contollers....
-   *    surely there must be some pattern that will allow me to
-   *    plug in a controller to a sprite...
-   *    player controlled controller
-   *    two point oscillator controller...
-   *    n point oscillator controller
-   *    fn controller...
-   *    decorator pattern? dependency injection? i have no idea.
-   *    if using decorator pattern, the controller could be changed
-   *    at run time.
-   *
-   *
-   *    decorator might work. a la https://www.youtube.com/watch?v=j40kRwSm4VE,
-   *    could have abstract Controller
-   *    implement concrete StaticController (getNextPos(currentPos) returns currentPos)
-   *    e.g. Absract LinearDecorator Concrete PositiveLinearDecorator ?
-   *    wait...i think we actually have an abstract sprite, concrete TexturedSprite
-   *    that has an abstract ControllerDecorator
-   *    w/ this pattern, Sprite would an interface in another language...in c++
-   *    the equivalent of an interface is an abstract class w/ only pure virtual fns
-   *
-   *    i think decorator is wrong. seems like it gets used to add multiples
-   *    like if we wanted a thing to have multiple controllers?
-   *
-   *    what i really want is a controller class (or descendants of it) that is
-   *    flexible enough to react to user input, but also be controlled by a path
-   *
-   *    a Controller class being a member of sprites might be good enough...
-   *    Level::update can call controller on each sprite if its controller is not null
-   *    i made playerInput globally accessible via GM so particular controllers can
-   *    just peek the input. a PathController could have a path field and can get information
-   *    about its Sprite via dependancy injection (e.g. _controller = new PathController(this)
-   *    i think that will work
-   *
-   *
-   *    TODO:
-   *      probably "cleaner" to use a singleton for GM
    */
   if (window) {
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -286,7 +314,6 @@ int main (int argc, char **argv) {
       RealPoint heroPos = { 10.0, 10.0 };
       HeroSprite *heroSprite = new HeroSprite(heroPos, renderer);
       RealPoint rPos = { 0.0, 100.0 };
-      //TexturedSprite *testSprite = new TexturedSprite(p, 32, 32, "./slug_right.png", renderer);
       RectangularPrimitiveSprite *rSprite = new RectangularPrimitiveSprite(rPos, 300, 15);
       Path *path = new Path();
       RealPoint controllerPoint;
@@ -303,18 +330,22 @@ int main (int argc, char **argv) {
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
 
-      //SDL_Point heroPos2 = { 100, 100 };
-      //HeroSprite *heroSprite2 = new HeroSprite(heroPos2, renderer);
-      //testLevel->addSprite(heroSprite2);
-
       testLevel->addSprite(rSprite);
 
-      //texture = Util::loadTexture("./slug_right.png", renderer);
-
       unsigned int last_time = 0, current_time;
+      unsigned int start_time = 0;
       float dt;
 
       while (!quit) {
+        start_time = SDL_GetTicks();
+
+        // if keyup and keydown for the same key
+        // come in on the same frame, wait to clear
+        // them until the next frame
+        // TODO: test that this actually
+        // works by seeding inputs via SDL_PushEvent.
+        dropStaleInputs();
+
         clearFrameInputFlags();
 
         while(SDL_PollEvent(&e)) {
@@ -326,52 +357,24 @@ int main (int argc, char **argv) {
           }
         }
 
-        // now i think we can send levels per-frame input w/ justPressed "buttons"
-        // the level will iterate over its sprites and render them.
         cleanUpInput(gm);
-        //SDL_RenderClear(renderer);
-        // renderer, texture, source_rect, dest_rect
-        //SDL_RenderCopy(renderer, texture, NULL, &texture_dest_rect);
-        //SDL_RenderPresent(renderer);
-        current_time = SDL_GetTicks();
-        // if we are using a wait, shouldn't we always
-        // be sending the same dt?
-        // derp....
-        // or the wait should be before update and render or something
-        // could try monkeying around with the order,
-        // or could just try moving to
-        // std::this_thread::sleep_for(std::chrono::milliseconds(x))
-        // ^ requires c++ 11
-        dt = (current_time - last_time) / 1000.0f;
-        testLevel->update(dt);
-        //testLevel->update(1/60.0);
+        //dt = (current_time - last_time) / 1000.0f;
+        testLevel->update(1/60.0);
         testLevel->render(renderer);
 
-        //last_time = current_time;
-        // this value keeps oscillating by an order of magnitude...
-        // wtf
-        std::cout << current_time-last_time << std::endl;
-        if ((current_time-last_time) < SCREEN_TICKS_PER_FRAME) {
-          //SDL_Delay(SCREEN_TICKS_PER_FRAME - (current_time-last_time));
+        current_time = SDL_GetTicks();
+        if ((current_time-start_time) < SCREEN_TICKS_PER_FRAME) {
           std::this_thread::sleep_for(
             std::chrono::milliseconds(
-              SCREEN_TICKS_PER_FRAME - (current_time-last_time)
+              SCREEN_TICKS_PER_FRAME - (current_time-start_time)
+
             )
           );
         }
-
-        last_time = current_time;
-
-        // weekend's goal:
-        // create a level that draws controllable hero sprite
-        // and a primitive rectangle sprite that is controlled
-        // by a path
-
       }
     }
   }
 
-  //SDL_DestroyTexture(texture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
