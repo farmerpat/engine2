@@ -9,7 +9,7 @@
 #include "level.hpp"
 #include "path.hpp"
 #include "path_controller.hpp"
-#include "function_controller.hpp"
+#include "sine_function_of_x_controller.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -341,16 +341,15 @@ int main (int argc, char **argv) {
       // TODO:
       // makes more sense to pass RealPoint to FunctionController
       // constructor.
-      FunctionController *fc =
-        new FunctionController(fSprite, fPos.X(), fPos.Y());
+      SineFunctionOfXController *sfc =
+        new SineFunctionOfXController(fSprite, 25.0, 0.05);
 
-      fc->setMaxX(600.0);
-      fc->setMaxY(fPos.Y());
-      fc->setYInc(0.0);
-      fc->setXInc(1.5);
-      fc->setOscillating();
+      sfc->setMaxX(600.0);
+      // "speed"
+      sfc->setXInc(1.5);
+      sfc->setOscillating();
 
-      fSprite->_controller = fc;
+      fSprite->_controller = sfc;
 
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);

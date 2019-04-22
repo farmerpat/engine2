@@ -23,6 +23,7 @@ set(
   controller.cpp
   path_controller.cpp
   function_controller.cpp
+  sine_function_of_x_controller.cpp
   sprite.cpp
   hero_controller.cpp
   hero_sprite.cpp
