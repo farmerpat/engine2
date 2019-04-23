@@ -28,3 +28,15 @@ int GameManager::getScreenWidth() {
 int GameManager::getScreenHeight() {
   return this->_screenHeight;
 }
+
+void GameManager::setDrawHitBoxes() {
+  this->_drawHitBoxes = true;
+}
+
+void GameManager::clearDrawHitBoxes() {
+  this->_drawHitBoxes = false;
+}
+
+bool GameManager::getDrawHitBoxes() {
+  return this->_drawHitBoxes;
+}

@@ -52,6 +52,50 @@ void Level::update(float dt) {
   }
 }
 
+void Level::resolveCollisions() {
+  for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
+    Sprite *s1 = this->_sprites[i];
+
+    if (!s1->isActive()) {
+      continue;
+    }
+
+    for (std::vector<Sprite>::size_type j = 0; j < this->_sprites.size(); j++) {
+      if (j == i) {
+        continue;
+      }
+
+      Sprite *s2 = this->_sprites[j];
+
+      if (!s2->isActive()) {
+        continue;
+      }
+
+      if (s1->getLayer() & s2->getLayer()) {
+        SDL_Rect hb1 = s1->getGlobalHitBox();
+        SDL_Rect hb2 = s2->getGlobalHitBox();
+        if (SDL_HasIntersection(&hb1, &hb2)) {
+          // how to find which side collided...
+          // if i use SDL_IntersectRect instead, it will
+          // return the intersection rect.
+          // by inspecting the intersection rect, i could probably
+          // determine where i have to move s1 to resolve the collision
+          // e.g. if s1 bottom overlaps s2 top, can adjust by intersect rect height
+          // a la https://gamedev.stackexchange.com/questions/53476/resolving-2d-collision-with-rectangles
+          // should also take velocity into account when resolving collisions for best
+          // results i think. this may involve changing other controllers to use _velocity too
+          // https://gamedev.stackexchange.com/questions/5428/how-can-i-implement-rectangle-collision-response/5433#5433
+          // all of the above is about resolving collisions, for the shooter, i
+          // only need the hero and enemies to be told that they have been hit.
+          // this is enough for mvp
+          s1->collisionHandler(s2);
+
+        }
+      }
+    }
+  }
+}
+
 void Level::render(SDL_Renderer* renderer) {
   // probably store background clear color in gamemanager
   // and use that to clear first
@@ -66,8 +110,11 @@ void Level::render(SDL_Renderer* renderer) {
     // to _sprites[i] than to keep referencing the vector all over the place.
     // investigate.
 
-    this->_sprites[i]->render(renderer);
+    if (!this->_sprites[i]->isActive()) {
+      continue;
+    }
 
+    this->_sprites[i]->render(renderer);
 
     // we may actually want to be copying to level's own texture and
     // render copying that after this loop

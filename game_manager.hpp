@@ -11,6 +11,7 @@ class GameManager {
     int _screenHeight = 0;
     static GameManager *_instance;
     GameManager();
+    bool _drawHitBoxes = false;
     // (sh|c)ould make a Game class that's a friend
     // to just set window information
 
@@ -24,6 +25,9 @@ class GameManager {
     void setScreenHeight(int);
     int getScreenWidth();
     int getScreenHeight();
+    void setDrawHitBoxes();
+    void clearDrawHitBoxes();
+    bool getDrawHitBoxes();
 };
 
 #endif

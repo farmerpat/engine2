@@ -32,6 +32,18 @@ Sprite::~Sprite(void) {
   }
 }
 
+bool Sprite::isActive() {
+  return this->_active;
+}
+
+void Sprite::setActive() {
+  this->_active = true;
+}
+
+void Sprite::clearActive() {
+  this->_active = false;
+}
+
 RealPoint *Sprite::getPos(void) {
   return this->_pos;
 }
@@ -76,14 +88,6 @@ void Sprite::setVelocity(RealPoint vel) {
   this->_velocity->setY(vel.Y());
 }
 
-int Sprite::getWidth(void) {
-  return this->_width;
-}
-
-int Sprite::getHeight(void) {
-  return this->_height;
-}
-
 // TODO: does it make more sense
 // to just make RealPoint's x/y public?
 // there's so much getting and setting
@@ -96,4 +100,57 @@ void Sprite::move(float dt) {
   x += this->_velocity->X() * dt;
   y += this->_velocity->Y() * dt;
   this->setPos(x, y);
+}
+
+int Sprite::getWidth(void) {
+  return this->_width;
+}
+
+int Sprite::getHeight(void) {
+  return this->_height;
+}
+
+std::string Sprite::getTag() {
+  return this->_tag;
+}
+
+void Sprite::setTag(std::string t) {
+  this->_tag = t;
+}
+
+SDL_Rect Sprite::getGlobalHitBox() {
+  SDL_Rect ghb;
+  int x = this->_hitbox->x + (int)this->_pos->X();
+  int y = this->_hitbox->y + (int)this->_pos->Y();
+  ghb.x = x;
+  ghb.y = y;
+  ghb.w = this->_hitbox->w;
+  ghb.h = this->_hitbox->h;
+
+  return ghb;
+}
+
+SDL_Rect *Sprite::getHitBox() {
+  return this->_hitbox;
+}
+
+void Sprite::setHitBox(SDL_Rect hb) {
+  if (!this->_hitbox) {
+    this->_hitbox = new SDL_Rect();
+  }
+
+  this->_hitbox->x = hb.x;
+  this->_hitbox->y = hb.y;
+  this->_hitbox->w = hb.w;
+  this->_hitbox->h = hb.h;
+}
+
+void Sprite::collisionHandler(Sprite *other) { }
+
+int Sprite::getLayer() {
+  return this->_layer;
+}
+
+void Sprite::setLayer(int l) {
+  this->_layer = l;
 }

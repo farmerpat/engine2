@@ -225,6 +225,7 @@ int main (int argc, char **argv) {
   gm = GameManager::getInstance();
   gm->setScreenWidth(SCREEN_WIDTH);
   gm->setScreenHeight(SCREEN_HEIGHT);
+  gm->setDrawHitBoxes();
 
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
@@ -319,7 +320,16 @@ int main (int argc, char **argv) {
 
     if (renderer) {
       RealPoint heroPos = { 10.0, 10.0 };
+      SDL_Rect hb;
+      hb.x = 0;
+      hb.y = 0;
+      hb.w = 32;
+      hb.h = 32;
+
       HeroSprite *heroSprite = new HeroSprite(heroPos, renderer);
+      heroSprite->setHitBox(hb);
+      heroSprite->setLayer(1);
+
       RealPoint rPos = { 0.0, 100.0 };
       RectangularPrimitiveSprite *rSprite = new RectangularPrimitiveSprite(rPos, 300, 15);
       Path *path = new Path();
@@ -331,12 +341,22 @@ int main (int argc, char **argv) {
       controllerPoint.setY(rPos.Y());
       path->addNode(controllerPoint);
 
+      hb.w = 300;
+      hb.h = 15;
       PathController *pc = new PathController(rSprite, path);
       rSprite->_controller = pc;
+      rSprite->setHitBox(hb);
+      rSprite->setLayer(2);
 
       RealPoint fPos = { 20.0, 300.0 };
       RectangularPrimitiveSprite *fSprite =
         new RectangularPrimitiveSprite(fPos, 15, 15);
+
+      hb.w = 15;
+      hb.h = 15;
+      fSprite->setHitBox(hb);
+      fSprite->setLayer(1);
+      fSprite->setTag("enemy_ship");
 
       // TODO:
       // makes more sense to pass RealPoint to FunctionController
@@ -384,6 +404,7 @@ int main (int argc, char **argv) {
         cleanUpInput(gm);
         //dt = (current_time - last_time) / 1000.0f;
         testLevel->update(1/60.0);
+        testLevel->resolveCollisions();
         testLevel->render(renderer);
 
         current_time = SDL_GetTicks();

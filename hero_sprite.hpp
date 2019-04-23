@@ -14,9 +14,12 @@ class HeroSprite : public TexturedSprite {
   public:
     HeroSprite(RealPoint, SDL_Renderer*);
     ~HeroSprite();
+    void collisionHandler(Sprite*) override;
 
   private:
     float moveSpeed = 10.0f;
+    void takeDamage();
+    void die();
 
 };
 #endif

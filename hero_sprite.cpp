@@ -7,3 +7,17 @@ HeroSprite::HeroSprite (RealPoint pos, SDL_Renderer *renderer) :
 
 // bass class destructor is called automatically
 HeroSprite::~HeroSprite () { }
+
+void HeroSprite::collisionHandler(Sprite *other) {
+  if (other->getTag() == "enemy_ship") {
+    this->die();
+  }
+}
+
+void HeroSprite::takeDamage() {
+
+}
+
+void HeroSprite::die() {
+  this->clearActive();
+}

@@ -13,6 +13,7 @@ class Level {
     Level(SDL_Renderer*);
     ~Level();
     void update(float);
+    void resolveCollisions();
     void render(SDL_Renderer*);
     void addSprite(Sprite*);
 
