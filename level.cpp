@@ -116,10 +116,24 @@ void Level::render(SDL_Renderer* renderer) {
 
     this->_sprites[i]->render(renderer);
 
+    if (GameManager::getInstance()->getDrawHitBoxes()) {
+      if (this->_sprites[i]->getHitBox()) {
+        SDL_Rect hb = this->_sprites[i]->getGlobalHitBox();
+
+        Uint8 r;
+        Uint8 g;
+        Uint8 b;
+        Uint8 a;
+        SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+        SDL_SetRenderDrawColor(renderer, 17, 249, 44, 255);
+        SDL_RenderDrawRect(renderer, &hb);
+        SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+      }
+    }
+
     // we may actually want to be copying to level's own texture and
     // render copying that after this loop
-
-
   }
 
   SDL_RenderPresent(renderer);

@@ -120,12 +120,15 @@ void Sprite::setTag(std::string t) {
 
 SDL_Rect Sprite::getGlobalHitBox() {
   SDL_Rect ghb;
-  int x = this->_hitbox->x + (int)this->_pos->X();
-  int y = this->_hitbox->y + (int)this->_pos->Y();
-  ghb.x = x;
-  ghb.y = y;
-  ghb.w = this->_hitbox->w;
-  ghb.h = this->_hitbox->h;
+
+  if (this->_hitbox) {
+    int x = this->_hitbox->x + (int)this->_pos->X();
+    int y = this->_hitbox->y + (int)this->_pos->Y();
+    ghb.x = x;
+    ghb.y = y;
+    ghb.w = this->_hitbox->w;
+    ghb.h = this->_hitbox->h;
+  }
 
   return ghb;
 }
