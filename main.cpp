@@ -10,6 +10,7 @@
 #include "path.hpp"
 #include "path_controller.hpp"
 #include "sine_function_of_x_controller.hpp"
+#include "archimedes_spiral_parametric_function_controller.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -371,10 +372,25 @@ int main (int argc, char **argv) {
 
       fSprite->_controller = sfc;
 
+      RealPoint aPos = { 250.0, 400.0 };
+      RectangularPrimitiveSprite *aSprite =
+        new RectangularPrimitiveSprite(aPos, 25, 25);
+
+      hb.w = 25;
+      hb.h = 25;
+      aSprite->setHitBox(hb);
+      aSprite->setLayer(1);
+      aSprite->setTag("enemy_ship");
+
+      ArchimedesSpiralParametricFunctionController *aspfc =
+        new ArchimedesSpiralParametricFunctionController(aSprite, 100.0, 10.3, aPos.X(), aPos.Y());
+      aSprite->_controller = aspfc;
+
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
       testLevel->addSprite(rSprite);
       testLevel->addSprite(fSprite);
+      testLevel->addSprite(aSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
@@ -406,6 +422,7 @@ int main (int argc, char **argv) {
         testLevel->update(1/60.0);
         testLevel->resolveCollisions();
         testLevel->render(renderer);
+        // TODO: really have to remove disabled (add killed?) spites from list and delete them.
 
         current_time = SDL_GetTicks();
         if ((current_time-start_time) < SCREEN_TICKS_PER_FRAME) {

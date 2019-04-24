@@ -8,7 +8,7 @@ class FunctionController : public Controller {
   public:
     FunctionController(Sprite*);
     //~FunctionController();
-    void update(float) override;
+    virtual void update(float) override;
     // if continuous functions aren't
     // used, things may get weird
     virtual void calculateY();
