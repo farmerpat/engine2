@@ -11,6 +11,8 @@
 #include "path_controller.hpp"
 #include "sine_function_of_x_controller.hpp"
 #include "archimedes_spiral_parametric_function_controller.hpp"
+#include "circle_parametric_function_controller.hpp"
+#include "involute_of_a_circle_parametric_function_controller.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -386,11 +388,41 @@ int main (int argc, char **argv) {
         new ArchimedesSpiralParametricFunctionController(aSprite, 100.0, 10.3, aPos.X(), aPos.Y());
       aSprite->_controller = aspfc;
 
+      RealPoint cPos = { 550.0, 300.0 };
+      RectangularPrimitiveSprite *cSprite =
+        new RectangularPrimitiveSprite(cPos, 35, 35);
+
+      hb.w = 35;
+      hb.h = 35;
+      cSprite->setHitBox(hb);
+      cSprite->setLayer(1);
+      cSprite->setTag("enemy_ship");
+
+      CircleParametricFunctionController *cpfc =
+        new CircleParametricFunctionController(cSprite, 100.0, 10.0, cPos.X(), cPos.Y(), 15.0);
+      cSprite->_controller = cpfc;
+
+      RealPoint iPos = { 250.0, 100.0 };
+      RectangularPrimitiveSprite *iSprite =
+        new RectangularPrimitiveSprite(iPos, 35, 35);
+
+      hb.w = 15;
+      hb.h = 15;
+      iSprite->setHitBox(hb);
+      iSprite->setLayer(1);
+      iSprite->setTag("enemy_ship");
+
+      InvoluteOfACircleParametricFunctionController *ipfc =
+        new InvoluteOfACircleParametricFunctionController(iSprite, 100.0, 10.0, iPos.X(), iPos.Y(), 1.0);
+      iSprite->_controller = ipfc;
+
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
       testLevel->addSprite(rSprite);
       testLevel->addSprite(fSprite);
       testLevel->addSprite(aSprite);
+      testLevel->addSprite(cSprite);
+      testLevel->addSprite(iSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
