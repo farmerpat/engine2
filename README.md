@@ -15,6 +15,6 @@ Engine take 2
 1. open cmake gui
 2. Where is the source code: C:/Users/Patrick/source/repos/engine2
 3. Where to build the binaries: C:/Users/Patrick/source/repos/engine2/build
-4. <Configure>
-5. <Generate>
+4. \<Configure\>
+5. \<Generate\>
 6. Run make in build/ via cli
