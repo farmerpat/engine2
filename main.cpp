@@ -402,6 +402,8 @@ int main (int argc, char **argv) {
 
       CircleParametricFunctionController *cpfc =
         new CircleParametricFunctionController(cSprite, 100.0, 10.0, cPos.X(), cPos.Y(), 15.0);
+      cpfc->setLoop();
+      cpfc->setLoopTolerance(0.15);
       cSprite->_controller = cpfc;
 
       RealPoint iPos = { 250.0, 100.0 };
