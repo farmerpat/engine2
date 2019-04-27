@@ -5,14 +5,14 @@ project (engine)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
+
+IF(MINGW)
+  set(ENV{SDL2DIR} "c:/SDL2-2.0.9")
+ENDIF(MINGW)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-
-include_directories(${PROJECT_SOURCE_DIR})
-include_directories(${SDL2_INCLUDE_DIRS})
-include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 set(
   SOURCES
@@ -38,6 +38,6 @@ set(
 )
 
 add_executable(main main.cpp ${SOURCES})
-target_link_libraries(main ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(main SDL2::Main SDL2::Image)
 
 message("CMAKE_CXX_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")

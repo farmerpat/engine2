@@ -224,6 +224,8 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
   }
 }
 
+#undef main
+
 int main (int argc, char **argv) {
   gm = GameManager::getInstance();
   gm->setScreenWidth(SCREEN_WIDTH);
