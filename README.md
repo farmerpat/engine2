@@ -10,6 +10,7 @@ Engine take 2
 - installed mingw-w64 in C:\Program\ Files
 - added its bin/ to PATH
 - copied mingw32-make.exe to make.exe
+- https://github.com/aminosbh/sdl2-cmake-modules
 
 1. open cmake gui
 2. Where is the source code: C:/Users/Patrick/source/repos/engine2
