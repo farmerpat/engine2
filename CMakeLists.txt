@@ -26,7 +26,7 @@ set(
   parametric_function_controller.cpp
   sine_function_of_x_controller.cpp
   archimedes_spiral_parametric_function_controller.cpp
-  circle_parametric_function_controller.cpp
+  ellipse_parametric_function_controller.cpp
   involute_of_a_circle_parametric_function_controller.cpp
   sprite.cpp
   hero_controller.cpp

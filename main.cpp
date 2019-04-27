@@ -11,7 +11,7 @@
 #include "path_controller.hpp"
 #include "sine_function_of_x_controller.hpp"
 #include "archimedes_spiral_parametric_function_controller.hpp"
-#include "circle_parametric_function_controller.hpp"
+#include "ellipse_parametric_function_controller.hpp"
 #include "involute_of_a_circle_parametric_function_controller.hpp"
 #include <string>
 #include <iostream>
@@ -324,7 +324,7 @@ int main (int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (renderer) {
-      RealPoint heroPos = { 10.0, 10.0 };
+      RealPoint heroPos = { SCREEN_WIDTH/2.0, SCREEN_HEIGHT*(7/8.0) };
       SDL_Rect hb;
       hb.x = 0;
       hb.y = 0;
@@ -335,25 +335,7 @@ int main (int argc, char **argv) {
       heroSprite->setHitBox(hb);
       heroSprite->setLayer(1);
 
-      RealPoint rPos = { 0.0, 100.0 };
-      RectangularPrimitiveSprite *rSprite = new RectangularPrimitiveSprite(rPos, 300, 15);
-      Path *path = new Path();
-      RealPoint controllerPoint;
-      controllerPoint.setX(rPos.X());
-      controllerPoint.setY(rPos.Y());
-      path->addNode(controllerPoint);
-      controllerPoint.setX(rPos.X() + 300);
-      controllerPoint.setY(rPos.Y());
-      path->addNode(controllerPoint);
-
-      hb.w = 300;
-      hb.h = 15;
-      PathController *pc = new PathController(rSprite, path);
-      rSprite->_controller = pc;
-      rSprite->setHitBox(hb);
-      rSprite->setLayer(2);
-
-      RealPoint fPos = { 20.0, 300.0 };
+      RealPoint fPos = { 30.0, 300.0 };
       RectangularPrimitiveSprite *fSprite =
         new RectangularPrimitiveSprite(fPos, 15, 15);
 
@@ -369,28 +351,35 @@ int main (int argc, char **argv) {
       SineFunctionOfXController *sfc =
         new SineFunctionOfXController(fSprite, 25.0, 0.05);
 
+      sfc->setMinX(30.0);
       sfc->setMaxX(600.0);
       // "speed"
-      sfc->setXInc(1.5);
+      sfc->setXInc(2.5);
       sfc->setOscillating();
 
       fSprite->_controller = sfc;
 
-      RealPoint aPos = { 250.0, 400.0 };
-      RectangularPrimitiveSprite *aSprite =
-        new RectangularPrimitiveSprite(aPos, 25, 25);
+      RealPoint f2Pos = { 30.0, 280.0 };
+      RectangularPrimitiveSprite *f2Sprite =
+        new RectangularPrimitiveSprite(f2Pos, 15, 15);
 
-      hb.w = 25;
-      hb.h = 25;
-      aSprite->setHitBox(hb);
-      aSprite->setLayer(1);
-      aSprite->setTag("enemy_ship");
+      hb.w = 15;
+      hb.h = 15;
+      f2Sprite->setHitBox(hb);
+      f2Sprite->setLayer(1);
+      f2Sprite->setTag("enemy_ship");
 
-      ArchimedesSpiralParametricFunctionController *aspfc =
-        new ArchimedesSpiralParametricFunctionController(aSprite, 100.0, 10.3, aPos.X(), aPos.Y());
-      aSprite->_controller = aspfc;
+      SineFunctionOfXController *sfc2 =
+        new SineFunctionOfXController(f2Sprite, 25.0, 0.05);
 
-      RealPoint cPos = { 550.0, 300.0 };
+      sfc2->setMinX(30.0);
+      sfc2->setMaxX(600.0);
+      sfc2->setXInc(2.5);
+      sfc2->setOscillating();
+
+      f2Sprite->_controller = sfc2;
+
+      RealPoint cPos = { (SCREEN_WIDTH/2.0)-hb.w, 75.0 };
       RectangularPrimitiveSprite *cSprite =
         new RectangularPrimitiveSprite(cPos, 35, 35);
 
@@ -400,33 +389,20 @@ int main (int argc, char **argv) {
       cSprite->setLayer(1);
       cSprite->setTag("enemy_ship");
 
-      CircleParametricFunctionController *cpfc =
-        new CircleParametricFunctionController(cSprite, 100.0, 10.0, cPos.X(), cPos.Y(), 15.0);
+      EllipseParametricFunctionController *cpfc =
+        new EllipseParametricFunctionController(cSprite, 100.0, 5.0, cPos.X(), cPos.Y(), 200.0, 25.0);
+      // TODO:
+      // loop should be changed to calculate the values where t==0 and then
+      // where t==n when setLoop is called
       cpfc->setLoop();
       cpfc->setLoopTolerance(0.15);
       cSprite->_controller = cpfc;
 
-      RealPoint iPos = { 250.0, 100.0 };
-      RectangularPrimitiveSprite *iSprite =
-        new RectangularPrimitiveSprite(iPos, 35, 35);
-
-      hb.w = 15;
-      hb.h = 15;
-      iSprite->setHitBox(hb);
-      iSprite->setLayer(1);
-      iSprite->setTag("enemy_ship");
-
-      InvoluteOfACircleParametricFunctionController *ipfc =
-        new InvoluteOfACircleParametricFunctionController(iSprite, 100.0, 10.0, iPos.X(), iPos.Y(), 1.0);
-      iSprite->_controller = ipfc;
-
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
-      testLevel->addSprite(rSprite);
       testLevel->addSprite(fSprite);
-      testLevel->addSprite(aSprite);
+      testLevel->addSprite(f2Sprite);
       testLevel->addSprite(cSprite);
-      testLevel->addSprite(iSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
