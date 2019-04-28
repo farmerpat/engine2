@@ -393,6 +393,9 @@ int main (int argc, char **argv) {
       testLevel->addSprite(f2Sprite);
       testLevel->addSprite(eSprite);
 
+      gm->setCurrentLevel(testLevel);
+      gm->setWindowRenderer(renderer);
+
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
       float dt;

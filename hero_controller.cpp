@@ -27,6 +27,18 @@ void HeroController::update(float dt) {
       oldVelocity.setX(0.0);
 
     }
+
+    if (gm->playerInput.aJustPressed) {
+      // fire if we can (e.g. add time constraint later)
+      RealPoint vel = { 0.0, -175.0 };
+      RealPoint pos;
+      pos.setX(this->_sprite->getPos()->X());
+      pos.setY(this->_sprite->getPos()->Y());
+      pos.setX(pos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1);
+      PlayerBulletSprite *bullet = new PlayerBulletSprite(pos, vel, gm->getWindowRenderer());
+
+      gm->addSpriteToCurrentLevel(bullet);
+    }
   }
 
   this->_sprite->setVelocity(oldVelocity);

@@ -1,4 +1,6 @@
 #include "game_manager.hpp"
+#include "level.hpp"
+#include "sprite.hpp"
 
 GameManager* GameManager::_instance = 0;
 
@@ -39,4 +41,24 @@ void GameManager::clearDrawHitBoxes() {
 
 bool GameManager::getDrawHitBoxes() {
   return this->_drawHitBoxes;
+}
+
+void GameManager::addSpriteToCurrentLevel(Sprite *s) {
+  this->_currentLevel->addSprite(s);
+}
+
+void GameManager::setCurrentLevel(Level *l) {
+  this->_currentLevel = l;
+}
+
+Level *GameManager::getCurrentLevel() {
+  return this->_currentLevel;
+}
+
+void GameManager::setWindowRenderer(SDL_Renderer *r) {
+  this->_windowRenderer = r;
+}
+
+SDL_Renderer *GameManager::getWindowRenderer() {
+  return this->_windowRenderer;
 }
