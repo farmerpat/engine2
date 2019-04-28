@@ -17,16 +17,6 @@ void HeroController::update(float dt) {
   );
 
   if (gm) {
-    if (gm->playerInput.upPressed) {
-      oldVelocity.setY(-moveAmount);
-
-    } else if (gm->playerInput.downPressed) {
-      oldVelocity.setY(moveAmount);
-
-    } else {
-      oldVelocity.setY(0.0);
-    }
-
     if (gm->playerInput.leftPressed) {
       oldVelocity.setX(-moveAmount);
 
@@ -35,6 +25,7 @@ void HeroController::update(float dt) {
 
     } else {
       oldVelocity.setX(0.0);
+
     }
   }
 

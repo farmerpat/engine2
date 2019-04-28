@@ -95,10 +95,27 @@ void Sprite::setVelocity(RealPoint vel) {
 // if the compiler is smart enough
 // to optimize
 void Sprite::move(float dt) {
+  GameManager *gm = GameManager::getInstance();
   float x = this->_pos->X();
   float y = this->_pos->Y();
   x += this->_velocity->X() * dt;
   y += this->_velocity->Y() * dt;
+
+  if (this->_bounded) {
+    if (y < 0) {
+      y = 0;
+
+    } else if(y > (gm->getScreenHeight() - this->getHeight())) {
+      y = gm->getScreenHeight() - this->getHeight();
+    }
+
+    if (x < 0) {
+      x = 0;
+    } else if (x > (gm->getScreenWidth() - this->getWidth())) {
+      x = gm->getScreenWidth() - this->getWidth();
+    }
+  }
+
   this->setPos(x, y);
 }
 
@@ -156,4 +173,12 @@ int Sprite::getLayer() {
 
 void Sprite::setLayer(int l) {
   this->_layer = l;
+}
+
+void Sprite::setBounded() {
+  this->_bounded = true;
+}
+
+void Sprite::clearBounded() {
+  this->_bounded = false;
 }
