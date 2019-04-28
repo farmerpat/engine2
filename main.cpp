@@ -13,6 +13,7 @@
 #include "archimedes_spiral_parametric_function_controller.hpp"
 #include "ellipse_parametric_function_controller.hpp"
 #include "involute_of_a_circle_parametric_function_controller.hpp"
+#include "enemy_sprite.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -380,30 +381,17 @@ int main (int argc, char **argv) {
 
       f2Sprite->_controller = sfc2;
 
+      hb.w = 32;
+      hb.h = 32;
       RealPoint cPos = { (SCREEN_WIDTH/2.0)-hb.w, 75.0 };
-      RectangularPrimitiveSprite *cSprite =
-        new RectangularPrimitiveSprite(cPos, 35, 35);
 
-      hb.w = 35;
-      hb.h = 35;
-      cSprite->setHitBox(hb);
-      cSprite->setLayer(1);
-      cSprite->setTag("enemy_ship");
-
-      EllipseParametricFunctionController *cpfc =
-        new EllipseParametricFunctionController(cSprite, 100.0, 5.0, cPos.X(), cPos.Y(), 200.0, 25.0);
-      // TODO:
-      // loop should be changed to calculate the values where t==0 and then
-      // where t==n when setLoop is called
-      cpfc->setLoop();
-      cpfc->setLoopTolerance(0.15);
-      cSprite->_controller = cpfc;
+      EnemySprite *eSprite = new EnemySprite(cPos, hb, renderer);
 
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
       testLevel->addSprite(fSprite);
       testLevel->addSprite(f2Sprite);
-      testLevel->addSprite(cSprite);
+      testLevel->addSprite(eSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;

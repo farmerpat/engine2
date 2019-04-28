@@ -31,6 +31,7 @@ set(
   sprite.cpp
   hero_controller.cpp
   hero_sprite.cpp
+  enemy_sprite.cpp
   textured_sprite.cpp
   primitive_sprite.cpp
   rectangular_primitive_sprite.cpp
