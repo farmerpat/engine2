@@ -114,6 +114,8 @@ void Level::render(SDL_Renderer* renderer) {
       continue;
     }
 
+    // TODO remove killed sprites
+
     this->_sprites[i]->render(renderer);
 
     if (GameManager::getInstance()->getDrawHitBoxes()) {

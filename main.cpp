@@ -324,12 +324,13 @@ int main (int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (renderer) {
-      RealPoint heroPos = { SCREEN_WIDTH/2.0, SCREEN_HEIGHT*(7/8.0) };
+      RealPoint heroPos = { SCREEN_WIDTH/2.0, SCREEN_HEIGHT*(13/16.0) };
+      // TODO: move this to HeroSprite constructor
       SDL_Rect hb;
       hb.x = 0;
       hb.y = 0;
-      hb.w = 32;
-      hb.h = 32;
+      hb.w = 64;
+      hb.h = 64;
 
       HeroSprite *heroSprite = new HeroSprite(heroPos, renderer);
       heroSprite->setHitBox(hb);

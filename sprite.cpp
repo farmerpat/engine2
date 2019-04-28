@@ -104,15 +104,14 @@ void Sprite::move(float dt) {
   if (this->_bounded) {
     if (y < 0) {
       y = 0;
-
-    } else if(y > (gm->getScreenHeight() - this->getHeight())) {
-      y = gm->getScreenHeight() - this->getHeight();
+    } else if(y > (gm->getScreenHeight() - (this->getHeight() * this->_yScale))) {
+      y = gm->getScreenHeight() - (this->getHeight() * this->_yScale);
     }
 
     if (x < 0) {
       x = 0;
-    } else if (x > (gm->getScreenWidth() - this->getWidth())) {
-      x = gm->getScreenWidth() - this->getWidth();
+    } else if (x > (gm->getScreenWidth() - (this->getWidth() * this->_xScale))) {
+      x = gm->getScreenWidth() - (this->getWidth() * this->_xScale);
     }
   }
 
@@ -181,4 +180,20 @@ void Sprite::setBounded() {
 
 void Sprite::clearBounded() {
   this->_bounded = false;
+}
+
+void Sprite::setXScale(int s) {
+  this->_xScale = s;
+}
+
+void Sprite::setYScale(int s) {
+  this->_yScale = s;
+}
+
+int Sprite::getXScale() {
+  return this->_xScale;
+}
+
+int Sprite::getYScale() {
+  return this->_yScale;
 }

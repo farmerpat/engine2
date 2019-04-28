@@ -17,6 +17,8 @@ class Sprite {
     std::string _tag = "";
     bool _active = true;
     bool _bounded = false;
+    int _xScale = 1;
+    int _yScale = 1;
 
     SDL_Rect *_hitbox = 0;
     int _layer = 0;
@@ -31,6 +33,11 @@ class Sprite {
     void clearActive();
     void setBounded();
     void clearBounded();
+
+    void setXScale(int);
+    void setYScale(int);
+    int getXScale();
+    int getYScale();
     // made virtual because deleting a child instance,
     // say TexturedSprite via a Sprite*, won't call
     // textured sprite destructor (e.g. will leak memory)
