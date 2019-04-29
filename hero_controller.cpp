@@ -38,6 +38,8 @@ void HeroController::update(float dt) {
       PlayerBulletSprite *bullet = new PlayerBulletSprite(pos, vel, gm->getWindowRenderer());
 
       gm->addSpriteToCurrentLevel(bullet);
+      // TODO: maybe this should be left up to the bullet iteself?
+      gm->playSound("../assets/sounds/player_laser_shoot.wav");
     }
   }
 

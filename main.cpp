@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_mixer.h"
 #include "real_point.hpp"
 #include "game_manager.hpp"
 #include "util.hpp"
@@ -228,11 +229,6 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
 #undef main
 
 int main (int argc, char **argv) {
-  gm = GameManager::getInstance();
-  gm->setScreenWidth(SCREEN_WIDTH);
-  gm->setScreenHeight(SCREEN_HEIGHT);
-  gm->setDrawHitBoxes();
-
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
   SDL_Event e;
@@ -253,7 +249,33 @@ int main (int argc, char **argv) {
   texture_dest_rect.w = 32;
   texture_dest_rect.h = 32;
 
-  SDL_Init(SDL_INIT_EVERYTHING);
+  if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+    std::cout << "could not initialize sdl:" << std::endl;
+    std::cout << SDL_GetError() << std::endl;
+    std::cout << "bailing..." << std::endl;
+    return 1;
+  }
+
+  int imgFlags = IMG_INIT_PNG;
+
+  if (!(IMG_Init(imgFlags) & imgFlags)) {
+    std::cout << "could not initialize sdl IMG" << std::endl;
+    std::cout << IMG_GetError() << std::endl;
+    std::cout << "bailing..." << std::endl;
+    return 1;
+  }
+
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+    std::cout << "could not initialize sdl Mixer" << std::endl;
+    std::cout << Mix_GetError() << std::endl;
+    std::cout << "bailing..." << std::endl;
+    return 1;
+  }
+
+  gm = GameManager::getInstance();
+  gm->setScreenWidth(SCREEN_WIDTH);
+  gm->setScreenHeight(SCREEN_HEIGHT);
+  gm->setDrawHitBoxes();
 
   window = SDL_CreateWindow("fyf",
       window_pos.x,
@@ -441,9 +463,12 @@ int main (int argc, char **argv) {
     }
   }
 
+  delete gm;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
+  Mix_Quit();
+  IMG_Quit();
   SDL_Quit();
 
   return 0;

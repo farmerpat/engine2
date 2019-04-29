@@ -13,6 +13,7 @@ ENDIF(MINGW)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 set(
   SOURCES
@@ -41,6 +42,6 @@ set(
 )
 
 add_executable(main main.cpp ${SOURCES})
-target_link_libraries(main SDL2::Main SDL2::Image)
+target_link_libraries(main SDL2::Main SDL2::Image SDL2::Mixer)
 
 message("CMAKE_CXX_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
