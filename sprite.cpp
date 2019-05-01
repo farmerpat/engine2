@@ -30,6 +30,10 @@ Sprite::~Sprite(void) {
   if (this->_controller) {
     delete this->_controller;
   }
+
+  if (this->_aiController) {
+    delete this->_aiController;
+  }
 }
 
 bool Sprite::isActive() {

@@ -49,6 +49,14 @@ void Level::update(float dt) {
       }
       //sprite->controller->update(dt);
     }
+
+    if (sprite->_aiController) {
+      Controller *aic = sprite->_aiController;
+
+      if (aic) {
+        aic->update(dt);
+      }
+    }
   }
 }
 

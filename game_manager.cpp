@@ -110,3 +110,11 @@ void GameManager::loadSoundEffect(std::string file) {
     this->_soundEffectNames.push_back(file);
   }
 }
+
+Sprite *GameManager::getHero() {
+  return this->_hero;
+}
+
+void GameManager::setHero(Sprite *s) {
+  this->_hero = s;
+}

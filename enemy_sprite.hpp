@@ -5,6 +5,7 @@
 #include "real_point.hpp"
 #include "textured_sprite.hpp"
 #include "ellipse_parametric_function_controller.hpp"
+#include "shoot_if_hero_in_range_ai_controller.hpp"
 
 class EnemySprite : public TexturedSprite {
   public:

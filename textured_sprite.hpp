@@ -26,7 +26,7 @@ class TexturedSprite : public Sprite {
     SDL_Texture *getTexture();
 
   protected:
-    SDL_Texture *_texture;
+    SDL_Texture *_texture = 0;
 
 };
 #endif

@@ -21,6 +21,7 @@ class GameManager {
     GameManager();
     bool _drawHitBoxes = false;
     Level *_currentLevel = 0;
+    Sprite *_hero = 0;
     SDL_Renderer *_windowRenderer = 0;
     // (sh|c)ould make a Game class that's a friend
     // to just set window information
@@ -31,7 +32,7 @@ class GameManager {
     ~GameManager();
     int currentLevelIndex = -1;
     char numberOfPlayers = 1;
-    RealPoint heroPosition = { 0.0, 0.0 };
+    //RealPoint heroPosition = { 0.0, 0.0 };
     PlayerInput playerInput;
     void setScreenWidth(int);
     void setScreenHeight(int);
@@ -47,6 +48,8 @@ class GameManager {
     SDL_Renderer *getWindowRenderer();
     void playSound(std::string);
     void loadSoundEffect(std::string file);
+    Sprite *getHero();
+    void setHero(Sprite*);
 
 };
 #endif

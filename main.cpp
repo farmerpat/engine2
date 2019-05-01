@@ -5,6 +5,7 @@
 #include "game_manager.hpp"
 #include "util.hpp"
 #include "sprite.hpp"
+#include "piece.hpp"
 #include "hero_sprite.hpp"
 #include "rectangular_primitive_sprite.hpp"
 #include "level.hpp"
@@ -409,14 +410,19 @@ int main (int argc, char **argv) {
 
       EnemySprite *eSprite = new EnemySprite(cPos, hb, renderer);
 
+      RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
+      Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
+
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
       testLevel->addSprite(fSprite);
       testLevel->addSprite(f2Sprite);
       testLevel->addSprite(eSprite);
+      testLevel->addSprite(pinkPiece);
 
       gm->setCurrentLevel(testLevel);
       gm->setWindowRenderer(renderer);
+      gm->setHero(heroSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;

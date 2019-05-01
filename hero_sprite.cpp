@@ -14,6 +14,10 @@ HeroSprite::~HeroSprite () { }
 void HeroSprite::collisionHandler(Sprite *other) {
   if (other->getTag() == "enemy_ship") {
     this->die();
+  } else if (other->getTag() == "enemy_bullet") {
+    // TODO
+    // take damage instead and die circumstantially
+    this->die();
   }
 }
 

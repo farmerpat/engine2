@@ -26,6 +26,7 @@ class Sprite {
 
   public:
     Controller *_controller = 0;
+    Controller *_aiController = 0;
     Sprite(RealPoint);
     Sprite(RealPoint, int, int);
     bool isActive();

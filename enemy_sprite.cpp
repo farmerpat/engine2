@@ -15,6 +15,9 @@ EnemySprite::EnemySprite
     cpfc->setLoop();
     cpfc->setLoopTolerance(0.15);
     this->_controller = cpfc;
+
+    ShootIfHeroInRangeAIController *aic = new ShootIfHeroInRangeAIController(this);
+    this->_aiController = aic;
 }
 
 void EnemySprite::collisionHandler(Sprite *other) {

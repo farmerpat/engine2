@@ -30,9 +30,13 @@ set(
   ellipse_parametric_function_controller.cpp
   involute_of_a_circle_parametric_function_controller.cpp
   sprite.cpp
+  piece.cpp
   hero_controller.cpp
   hero_sprite.cpp
   enemy_sprite.cpp
+  enemy_bullet_sprite.cpp
+  enemy_bullet_controller.cpp
+  shoot_if_hero_in_range_ai_controller.cpp
   player_bullet_controller.cpp
   player_bullet_sprite.cpp
   textured_sprite.cpp
