@@ -19,6 +19,7 @@ set(
   SOURCES
   real_point.cpp
   util.cpp
+  config.cpp
   game_manager.cpp
   path.cpp
   controller.cpp

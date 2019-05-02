@@ -2,6 +2,7 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "real_point.hpp"
+#include "config.hpp"
 #include "game_manager.hpp"
 #include "util.hpp"
 #include "sprite.hpp"
@@ -230,6 +231,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
 #undef main
 
 int main (int argc, char **argv) {
+  Config config("../config.ini");
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
   SDL_Event e;
@@ -276,7 +278,10 @@ int main (int argc, char **argv) {
   gm = GameManager::getInstance();
   gm->setScreenWidth(SCREEN_WIDTH);
   gm->setScreenHeight(SCREEN_HEIGHT);
-  gm->setDrawHitBoxes();
+
+  if (config.query("draw_hitboxes") == "yes") {
+    gm->setDrawHitBoxes();
+  }
 
   window = SDL_CreateWindow("fyf",
       window_pos.x,
