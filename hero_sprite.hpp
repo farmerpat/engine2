@@ -19,7 +19,6 @@ class HeroSprite : public TexturedSprite {
   private:
     float moveSpeed = 10.0f;
     void takeDamage();
-    void die();
 
 };
 #endif

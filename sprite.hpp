@@ -16,6 +16,7 @@ class Sprite {
     RealPoint *_velocity = 0;
     std::string _tag = "";
     bool _active = true;
+    bool _alive = true;
     bool _bounded = false;
     int _xScale = 1;
     int _yScale = 1;
@@ -34,6 +35,8 @@ class Sprite {
     void clearActive();
     void setBounded();
     void clearBounded();
+    void kill();
+    bool isAlive();
 
     void setXScale(int);
     void setYScale(int);

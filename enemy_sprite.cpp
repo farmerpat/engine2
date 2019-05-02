@@ -22,8 +22,7 @@ EnemySprite::EnemySprite
 
 void EnemySprite::collisionHandler(Sprite *other) {
   if (other->getTag() == "player_bullet") {
-    this->clearActive();
-    other->clearActive();
-
+    other->kill();
+    this->kill();
   }
 }

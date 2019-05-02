@@ -14,6 +14,7 @@ class Level {
     ~Level();
     void update(float);
     void resolveCollisions();
+    void removeDeadSprites();
     void render(SDL_Renderer*);
     void addSprite(Sprite*);
 

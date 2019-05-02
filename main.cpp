@@ -453,6 +453,7 @@ int main (int argc, char **argv) {
         //dt = (current_time - last_time) / 1000.0f;
         testLevel->update(1/60.0);
         testLevel->resolveCollisions();
+        testLevel->removeDeadSprites();
         testLevel->render(renderer);
         // TODO: really have to remove disabled (add killed?) spites from list and delete them.
 

@@ -104,6 +104,20 @@ void Level::resolveCollisions() {
   }
 }
 
+void Level::removeDeadSprites() {
+
+  for (std::vector<Sprite*>::iterator it = this->_sprites.begin(); it != this->_sprites.end();) {
+    if (!(*it)->isAlive()) {
+      delete *it;
+      it = this->_sprites.erase(it);
+
+    } else {
+      it++;
+
+    }
+  }
+}
+
 void Level::render(SDL_Renderer* renderer) {
   // probably store background clear color in gamemanager
   // and use that to clear first

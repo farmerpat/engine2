@@ -201,3 +201,12 @@ int Sprite::getXScale() {
 int Sprite::getYScale() {
   return this->_yScale;
 }
+
+void Sprite::kill() {
+  this->clearActive();
+  this->_alive = false;
+}
+
+bool Sprite::isAlive() {
+  return this->_alive;
+}
