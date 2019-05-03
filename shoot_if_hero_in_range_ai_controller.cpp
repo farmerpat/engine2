@@ -1,19 +1,13 @@
 #include "shoot_if_hero_in_range_ai_controller.hpp"
 
-bool ShootIfHeroInRangeAIController::_canShoot = true;
-
 ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
   this->_sprite = s;
   // ultimately, grab the shot delay from the config
   // ms
   this->_shotDelay = 3000;
-  _canShoot = true;
 }
 
 void ShootIfHeroInRangeAIController::update(float dt) {
-  // get the hero pos from gm, get our sprite's pos from _sprite,
-  // if the center of our sprite , spawn an EnemyBulletSprite with a positive y velocity.
-  // if it's not too soon. will add timer, but start with intense spam for POC
   GameManager *gm = GameManager::getInstance();
 
   if (gm) {
@@ -40,15 +34,28 @@ void ShootIfHeroInRangeAIController::update(float dt) {
         EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
         gm->addSpriteToCurrentLevel(ebs);
         gm->playSound("../assets/sounds/player_laser_shoot.wav");
-        void *param = 0;
         _canShoot = false;
-        SDL_AddTimer(this->_shotDelay, this->timerCallBack, param);
+        this->_callbackTimerId = SDL_AddTimer(this->_shotDelay, this->timerCallBack, (void*)this);
 
       }
     }
   }
 }
 
-Uint32 ShootIfHeroInRangeAIController::timerCallBack(Uint32 inteveral, void *param) {
-  _canShoot = true;
+Uint32 ShootIfHeroInRangeAIController::timerCallBack(Uint32 inteveral, void *thisPtr) {
+  ShootIfHeroInRangeAIController *me = (ShootIfHeroInRangeAIController*)thisPtr;
+  me->setCanShoot();
+  me->removeTimer();
+}
+
+void ShootIfHeroInRangeAIController::setCanShoot() {
+  this->_canShoot = true;
+}
+
+void ShootIfHeroInRangeAIController::clearCanShoot() {
+  this->_canShoot = false;
+}
+
+void ShootIfHeroInRangeAIController::removeTimer() {
+  SDL_RemoveTimer(this->_callbackTimerId);
 }

@@ -413,6 +413,8 @@ int main (int argc, char **argv) {
       hb.h = 32;
       RealPoint cPos = { (SCREEN_WIDTH/2.0)-hb.w, 75.0 };
 
+      // TODO:
+      // start making enemy sprite classes with different controllers
       EnemySprite *eSprite = new EnemySprite(cPos, hb, renderer);
 
       cPos.setY(cPos.Y() + 100.0);
