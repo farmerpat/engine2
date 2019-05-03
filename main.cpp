@@ -415,6 +415,10 @@ int main (int argc, char **argv) {
 
       EnemySprite *eSprite = new EnemySprite(cPos, hb, renderer);
 
+      cPos.setY(cPos.Y() + 100.0);
+      cPos.setX(cPos.X() + 50.0);
+      EnemySprite  *eSprite2 = new EnemySprite(cPos, hb, renderer);
+
       RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
       Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
 
@@ -423,6 +427,7 @@ int main (int argc, char **argv) {
       testLevel->addSprite(fSprite);
       testLevel->addSprite(f2Sprite);
       testLevel->addSprite(eSprite);
+      testLevel->addSprite(eSprite2);
       testLevel->addSprite(pinkPiece);
 
       gm->setCurrentLevel(testLevel);
@@ -456,6 +461,7 @@ int main (int argc, char **argv) {
 
         cleanUpInput(gm);
         //dt = (current_time - last_time) / 1000.0f;
+        // should i be calculating this instead?
         testLevel->update(1/60.0);
         testLevel->resolveCollisions();
         testLevel->removeDeadSprites();
@@ -463,6 +469,11 @@ int main (int argc, char **argv) {
         // TODO: really have to remove disabled (add killed?) spites from list and delete them.
 
         current_time = SDL_GetTicks();
+        //std::cout <<
+          //"sleeping for : " <<
+          //SCREEN_TICKS_PER_FRAME - (current_time-start_time) <<
+          //std::endl;
+
         if ((current_time-start_time) < SCREEN_TICKS_PER_FRAME) {
           std::this_thread::sleep_for(
             std::chrono::milliseconds(

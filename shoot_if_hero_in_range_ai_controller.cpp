@@ -1,7 +1,13 @@
 #include "shoot_if_hero_in_range_ai_controller.hpp"
 
+bool ShootIfHeroInRangeAIController::_canShoot = true;
+
 ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
   this->_sprite = s;
+  // ultimately, grab the shot delay from the config
+  // ms
+  this->_shotDelay = 3000;
+  _canShoot = true;
 }
 
 void ShootIfHeroInRangeAIController::update(float dt) {
@@ -20,21 +26,29 @@ void ShootIfHeroInRangeAIController::update(float dt) {
       int myWidth = this->_sprite->getWidth() * this->_sprite->getXScale();
       int x = myPos->X() + myWidth / 2;
 
-      if (x >= heroPos->X() && x <= heroPos->X() + heroWidth) {
+      if (_canShoot && x >= heroPos->X() && x <= heroPos->X() + heroWidth) {
         // TODO:
         // clean this up. we did some of the math above.
         RealPoint vel = { 0.0, 175.0 };
         RealPoint bulletPos;
         bulletPos.setX(this->_sprite->getPos()->X());
         bulletPos.setY(this->_sprite->getPos()->Y());
-        bulletPos.setX(bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1);
+        bulletPos.setX(
+          bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
+        );
 
         EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
         gm->addSpriteToCurrentLevel(ebs);
         gm->playSound("../assets/sounds/player_laser_shoot.wav");
+        void *param = 0;
+        _canShoot = false;
+        SDL_AddTimer(this->_shotDelay, this->timerCallBack, param);
 
-        // get the level, add the sprite
       }
     }
   }
+}
+
+Uint32 ShootIfHeroInRangeAIController::timerCallBack(Uint32 inteveral, void *param) {
+  _canShoot = true;
 }
