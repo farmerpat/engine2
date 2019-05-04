@@ -4,9 +4,14 @@ ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
   Config config("../config.ini");
   std::string shotDelayS = config.query("enemy_shot_delay");
   Uint32 shotDelay = std::stoi(shotDelayS);
-  this->_sprite = s;
   //this->_shotDelay = 3000;
   this->_shotDelay = shotDelay;
+
+  std::string shotChanceS = config.query("enemy_shot_chance");
+  float shotChance = std::stof(shotChanceS);
+  this->_shotChance = shotChance;
+
+  this->_sprite = s;
 }
 
 void ShootIfHeroInRangeAIController::update(float dt) {
@@ -23,27 +28,40 @@ void ShootIfHeroInRangeAIController::update(float dt) {
       int x = myPos->X() + myWidth / 2;
 
       if (_canShoot && x >= heroPos->X() && x <= heroPos->X() + heroWidth) {
-        // TODO:
-        // clean this up. we did some of the math above.
-        RealPoint vel = { 0.0, 175.0 };
-        RealPoint bulletPos;
-        bulletPos.setX(this->_sprite->getPos()->X());
-        bulletPos.setY(this->_sprite->getPos()->Y());
-        bulletPos.setX(
-          bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
-        );
+        if (this->rngAllowShot()) {
+          // TODO:
+          // clean this up. we did some of the math above.
+          RealPoint vel = { 0.0, 175.0 };
+          RealPoint bulletPos;
+          bulletPos.setX(this->_sprite->getPos()->X());
+          bulletPos.setY(this->_sprite->getPos()->Y());
+          bulletPos.setX(
+              bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
+              );
 
-        bulletPos.setY(bulletPos.Y() + (this->_sprite->getHitBox()->h));
+          bulletPos.setY(bulletPos.Y() + (this->_sprite->getHitBox()->h));
 
-        EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
-        gm->addSpriteToCurrentLevel(ebs);
-        gm->playSound("../assets/sounds/player_laser_shoot.wav");
-        _canShoot = false;
-        this->_callbackTimerId = SDL_AddTimer(this->_shotDelay, this->timerCallBack, (void*)this);
+          EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
+          gm->addSpriteToCurrentLevel(ebs);
+          gm->playSound("../assets/sounds/player_laser_shoot.wav");
+          _canShoot = false;
+          this->_callbackTimerId = SDL_AddTimer(this->_shotDelay, this->timerCallBack, (void*)this);
+        }
 
       }
     }
   }
+}
+
+bool ShootIfHeroInRangeAIController::rngAllowShot() {
+  bool canShoot = false;
+  float rng = (rand() % 101) / 100.0;
+
+  if (rng <= this->_shotChance) {
+    canShoot = true;
+  }
+
+  return canShoot;
 }
 
 Uint32 ShootIfHeroInRangeAIController::timerCallBack(Uint32 inteveral, void *thisPtr) {

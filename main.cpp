@@ -25,6 +25,8 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <stdlib.h>
+#include <time.h>
 
 // TODO: use valgrind to check profiling, look for leaks, etc
 // TODO: use a namespace, you barbarian
@@ -235,9 +237,10 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
 #undef main
 
 int main (int argc, char **argv) {
+  srand(time(0));
   Config config("../config.ini");
-  SDL_Window *window = NULL;
-  SDL_Renderer *renderer = NULL;
+  SDL_Window *window = 0;
+  SDL_Renderer *renderer = 0;
   SDL_Event e;
 
   SDL_Point window_pos = {
