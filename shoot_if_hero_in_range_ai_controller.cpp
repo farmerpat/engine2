@@ -1,10 +1,12 @@
 #include "shoot_if_hero_in_range_ai_controller.hpp"
 
 ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
+  Config config("../config.ini");
+  std::string shotDelayS = config.query("enemy_shot_delay");
+  Uint32 shotDelay = std::stoi(shotDelayS);
   this->_sprite = s;
-  // ultimately, grab the shot delay from the config
-  // ms
-  this->_shotDelay = 3000;
+  //this->_shotDelay = 3000;
+  this->_shotDelay = shotDelay;
 }
 
 void ShootIfHeroInRangeAIController::update(float dt) {

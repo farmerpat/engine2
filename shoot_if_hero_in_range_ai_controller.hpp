@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "controller.hpp"
 #include "real_point.hpp"
+#include "config.hpp"
 #include "sprite.hpp"
 #include "game_manager.hpp"
 #include "enemy_bullet_sprite.hpp"

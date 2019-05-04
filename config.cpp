@@ -32,6 +32,11 @@ void Config::parseConfigFile(std::string fileName) {
   std::string line;
 
   while (std::getline(file, line)) {
+    // ignore comments and empty lines
+    if ((line.compare("") == 0) || line.at(0) == '#' || line.at(0) == '\n') {
+      continue;
+    }
+
     size_t equalIndex = line.find("=");
     std::string key = line.substr(0, equalIndex);
     std::string val = line.substr(equalIndex+1);
