@@ -33,6 +33,8 @@ void ShootIfHeroInRangeAIController::update(float dt) {
           bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
         );
 
+        bulletPos.setY(bulletPos.Y() + (this->_sprite->getHitBox()->h));
+
         EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
         gm->addSpriteToCurrentLevel(ebs);
         gm->playSound("../assets/sounds/player_laser_shoot.wav");

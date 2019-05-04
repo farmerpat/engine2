@@ -1,3 +1,6 @@
+// TODO:
+// i wonder how crazy it is to update/render/etc from w/it an sdl timer callback.
+// is there any benefit to doing this over sleeping as we do now?
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
@@ -16,7 +19,8 @@
 #include "archimedes_spiral_parametric_function_controller.hpp"
 #include "ellipse_parametric_function_controller.hpp"
 #include "involute_of_a_circle_parametric_function_controller.hpp"
-#include "enemy_sprite.hpp"
+#include "enemy_sprite_ellipsis.hpp"
+#include "enemy_sprite_sine.hpp"
 #include <string>
 #include <iostream>
 #include <chrono>
@@ -365,72 +369,26 @@ int main (int argc, char **argv) {
       heroSprite->setHitBox(hb);
       heroSprite->setLayer(1);
 
-      RealPoint fPos = { 30.0, 300.0 };
-      RectangularPrimitiveSprite *fSprite =
-        new RectangularPrimitiveSprite(fPos, 15, 15);
+      float amplitude = 25.0;
+      float freq = 0.05;
+      RealPoint fPos = { 30.0, 200.0 };
+      EnemySpriteSine *ess1 = new EnemySpriteSine(fPos, renderer, amplitude, freq);
 
-      hb.w = 15;
-      hb.h = 15;
-      fSprite->setHitBox(hb);
-      fSprite->setLayer(1);
-      fSprite->setTag("enemy_ship");
+      fPos.setY(250.0);
+      EnemySpriteSine *ess2 = new EnemySpriteSine(fPos, renderer, amplitude, freq);
 
-      // TODO:
-      // makes more sense to pass RealPoint to FunctionController
-      // constructor.
-      SineFunctionOfXController *sfc =
-        new SineFunctionOfXController(fSprite, 25.0, 0.05);
-
-      sfc->setMinX(30.0);
-      sfc->setMaxX(600.0);
-      // "speed"
-      sfc->setXInc(2.5);
-      sfc->setOscillating();
-
-      fSprite->_controller = sfc;
-
-      RealPoint f2Pos = { 30.0, 280.0 };
-      RectangularPrimitiveSprite *f2Sprite =
-        new RectangularPrimitiveSprite(f2Pos, 15, 15);
-
-      hb.w = 15;
-      hb.h = 15;
-      f2Sprite->setHitBox(hb);
-      f2Sprite->setLayer(1);
-      f2Sprite->setTag("enemy_ship");
-
-      SineFunctionOfXController *sfc2 =
-        new SineFunctionOfXController(f2Sprite, 25.0, 0.05);
-
-      sfc2->setMinX(30.0);
-      sfc2->setMaxX(600.0);
-      sfc2->setXInc(2.5);
-      sfc2->setOscillating();
-
-      f2Sprite->_controller = sfc2;
-
-      hb.w = 32;
-      hb.h = 32;
       RealPoint cPos = { (SCREEN_WIDTH/2.0)-hb.w, 75.0 };
 
-      // TODO:
-      // start making enemy sprite classes with different controllers
-      EnemySprite *eSprite = new EnemySprite(cPos, hb, renderer);
+      EnemySpriteEllipsis *ese1 = new EnemySpriteEllipsis(cPos, renderer, 200.0, 25.0);
 
-      cPos.setY(cPos.Y() + 100.0);
-      cPos.setX(cPos.X() + 50.0);
-      EnemySprite  *eSprite2 = new EnemySprite(cPos, hb, renderer);
-
-      RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
-      Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
+      //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
+      //Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
 
       Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
-      testLevel->addSprite(fSprite);
-      testLevel->addSprite(f2Sprite);
-      testLevel->addSprite(eSprite);
-      testLevel->addSprite(eSprite2);
-      testLevel->addSprite(pinkPiece);
+      testLevel->addSprite(ess1);
+      testLevel->addSprite(ess2);
+      testLevel->addSprite(ese1);
 
       gm->setCurrentLevel(testLevel);
       gm->setWindowRenderer(renderer);

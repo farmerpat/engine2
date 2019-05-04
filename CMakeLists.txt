@@ -35,6 +35,8 @@ set(
   hero_controller.cpp
   hero_sprite.cpp
   enemy_sprite.cpp
+  enemy_sprite_ellipsis.cpp
+  enemy_sprite_sine.cpp
   enemy_bullet_sprite.cpp
   enemy_bullet_controller.cpp
   shoot_if_hero_in_range_ai_controller.cpp

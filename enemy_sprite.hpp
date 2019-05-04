@@ -10,7 +10,7 @@
 class EnemySprite : public TexturedSprite {
   public:
     // it might make sense to just take a more generic Controller* instead
-    EnemySprite(RealPoint, SDL_Rect, SDL_Renderer*);
+    EnemySprite(RealPoint, SDL_Renderer*);
     void collisionHandler(Sprite*) override;
 };
 #endif
