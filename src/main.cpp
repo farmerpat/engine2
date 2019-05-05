@@ -298,59 +298,6 @@ int main (int argc, char **argv) {
       SDL_WINDOW_OPENGL);
 
   /*
-   * i want a sprite to be able to have a width/height,
-   * be positionable (have a controller? either input or AI),
-   * be animateable,
-   * and to be composed of a texture or a primitive shape,
-   * and to have a hitbox and have an optional collision callback
-   * could be either "static" or "dynamic", where static is like a
-   * tile? or a cannon or a spike that doesn't move.
-   * having a level have an optional tileset makes more sense
-   * that creating sprites for every single tile
-   * will need Tiled parser. can draw tilemap hitboxes in Tiled
-   * and convert to SDL_Rect(s)
-   *
-   * overall, i want the code to somehow be flexible
-   */
-
-  /*
-   * shower thoughts:
-   *  make a GameManager struct (single global instance) or class (singleton)
-   *  that doesn't depend on any other classes in the engine besides input.
-   *  for instance, it doesn't know what a Level is, but has an int currentLevelIndex
-   *  that can be called upon by another global LevelCollection to get access
-   *  to the current level (previously some Actors depended on Scene's existence)
-   *  ...this particular example might not solve that problem...
-   *  also, it can hold hero position w/o knowing what a HeroSprite (or whatever)
-   *  is. this may not be OOP best practices, but so what? classes depending on
-   *  eachother is fucked in my opinion
-   *
-   *  GM will also have playerInput array, number of players, etc
-   *  PlayerInput can be struct that gets written to in game loop
-   *  only boolens udlr, abxy, lt rt. hopefully pressed/justpressed. thassit
-   *  can just use playerInput alone to start.
-   *
-   *  eff the Game class, just have main for now.
-   *  main will have game loop. it will read input, and
-   *  update GameManager appropriately. It can then look
-   *  at its current level and ask it to render all its shit, handle collisions,
-   *  etc.
-   *
-   *  every sprite can have a pointer to an SDL_Rect hitbox to start.
-   *  in theory could (should?) also implement an array of hitboxes
-   *  (perhaps usually of length 1) that get checked for collisions.
-   *
-   *  maybe to start, i only care about hero collisions and other actors
-   *  colliding with static things/ eachother is a logic error...
-   *
-   *  sprite descendents all have render method that must be overriden
-   *  PrimitiveSprite, TexturedSprite
-   *  sprites should also have controllers that either read player input
-   *  or are driven by paths somehow. the most primitive sprites won't
-   *  move at all. others will have paths. others paths will change depending
-   *  on Hero's position.
-   *
-   *  could also specify animation paths as functions of time (e.g. i assume galaga)
    *  TODO:
    *    learn how to rotate a sine wave
    *    https://youtu.be/BPgq2AudoEo?t=834
@@ -372,25 +319,41 @@ int main (int argc, char **argv) {
       heroSprite->setHitBox(hb);
       heroSprite->setLayer(1);
 
+      // TODO: figure out why this would be half of the hitbox
+      //RealPoint cPos = { (SCREEN_WIDTH/2.0) - (ess2->getHitBox()->w*.5), 55.0 };
+      RealPoint cPos = { (SCREEN_WIDTH/2.0) - 16, 55.0 };
+      EnemySpriteEllipsis *ese1 = new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0);
+
       float amplitude = 25.0;
-      float freq = 0.05;
-      RealPoint fPos = { 30.0, 200.0 };
-      EnemySpriteSine *ess1 = new EnemySpriteSine(fPos, renderer, amplitude, freq);
+      float freq = 0.07;
+      RealPoint fPos = { 30.0, 110.0 };
 
-      fPos.setY(250.0);
-      EnemySpriteSine *ess2 = new EnemySpriteSine(fPos, renderer, amplitude, freq);
+      Level *testLevel = new Level(renderer);
+      float minx = 32.0;
+      float maxx = 617.0;
 
-      RealPoint cPos = { (SCREEN_WIDTH/2.0)-hb.w, 75.0 };
+      float step = 48.0;
+      int imax=9;
 
-      EnemySpriteEllipsis *ese1 = new EnemySpriteEllipsis(cPos, renderer, 200.0, 25.0);
+      for (int j=0; j<4; ++j) {
+        imax=9;
+        fPos.setY(fPos.Y()+40);
+
+        for (int i=0; i<9; ++i) {
+          testLevel->addSprite(
+            new EnemySpriteSine(
+              fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
+            )
+          );
+
+          imax--;
+        }
+      }
 
       //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
       //Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
 
-      Level *testLevel = new Level(renderer);
       testLevel->addSprite(heroSprite);
-      testLevel->addSprite(ess1);
-      testLevel->addSprite(ess2);
       testLevel->addSprite(ese1);
 
       gm->setCurrentLevel(testLevel);

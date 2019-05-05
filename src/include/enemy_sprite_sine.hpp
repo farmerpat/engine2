@@ -9,6 +9,6 @@
 
 class EnemySpriteSine : public EnemySprite {
   public:
-    EnemySpriteSine(RealPoint, SDL_Renderer*, float, float);
+    EnemySpriteSine(RealPoint, SDL_Renderer*, float, float, float=30.0, float=530.0);
 };
 #endif
