@@ -1,4 +1,4 @@
-#include "enemy_sprite.hpp"
+#include "include/enemy_sprite.hpp"
 
 EnemySprite::EnemySprite
 (RealPoint pos, SDL_Renderer *renderer) :

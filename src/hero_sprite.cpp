@@ -1,4 +1,4 @@
-#include "hero_sprite.hpp"
+#include "include/hero_sprite.hpp"
 
 HeroSprite::HeroSprite (RealPoint pos, SDL_Renderer *renderer) :
   TexturedSprite (pos, 32, 32, "../assets/player_single_frame.png", renderer) {

@@ -1,4 +1,4 @@
-#include "textured_sprite.hpp"
+#include "include/textured_sprite.hpp"
 
 TexturedSprite::TexturedSprite(RealPoint pos, int w, int h, std::string img, SDL_Renderer *r)
   : Sprite (pos, w, h) {

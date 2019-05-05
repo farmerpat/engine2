@@ -1,4 +1,4 @@
-#include "piece.hpp"
+#include "include/piece.hpp"
 
 Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
   : Sprite(pos) {

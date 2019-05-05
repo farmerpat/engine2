@@ -1,4 +1,4 @@
-#include "sprite.hpp"
+#include "include/sprite.hpp"
 
 Sprite::Sprite(RealPoint pos) {
   this->setPos(pos);

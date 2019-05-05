@@ -1,4 +1,4 @@
-#include "parametric_function_controller.hpp"
+#include "include/parametric_function_controller.hpp"
 #include <cmath>
 
 ParametricFunctionController::ParametricFunctionController

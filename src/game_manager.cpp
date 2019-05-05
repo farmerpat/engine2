@@ -1,6 +1,6 @@
-#include "game_manager.hpp"
-#include "level.hpp"
-#include "sprite.hpp"
+#include "include/game_manager.hpp"
+#include "include/level.hpp"
+#include "include/sprite.hpp"
 
 GameManager* GameManager::_instance = 0;
 

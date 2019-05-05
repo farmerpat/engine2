@@ -1,4 +1,4 @@
-#include "primitive_sprite.hpp"
+#include "include/primitive_sprite.hpp"
 
 PrimitiveSprite::PrimitiveSprite(RealPoint p)
   : Sprite(p) {

@@ -1,4 +1,4 @@
-#include "enemy_sprite_ellipsis.hpp"
+#include "include/enemy_sprite_ellipsis.hpp"
 
 EnemySpriteEllipsis::EnemySpriteEllipsis(RealPoint pos, SDL_Renderer* renderer, float a, float b) :
  EnemySprite(pos, renderer) {

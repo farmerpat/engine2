@@ -1,4 +1,4 @@
-#include "player_bullet_controller.hpp"
+#include "include/player_bullet_controller.hpp"
 
 PlayerBulletController::PlayerBulletController(Sprite *s) {
   this->_sprite = s;

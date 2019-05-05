@@ -1,4 +1,4 @@
-#include "util.hpp"
+#include "include/util.hpp"
 
 SDL_Texture* Util::loadTexture (std::string file, SDL_Renderer *renderer) {
   SDL_Texture *texture = NULL;

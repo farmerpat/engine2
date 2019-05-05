@@ -1,4 +1,4 @@
-#include "enemy_sprite_sine.hpp"
+#include "include/enemy_sprite_sine.hpp"
 
 EnemySpriteSine::EnemySpriteSine(RealPoint pos, SDL_Renderer* renderer, float a, float f) :
   EnemySprite(pos, renderer) {

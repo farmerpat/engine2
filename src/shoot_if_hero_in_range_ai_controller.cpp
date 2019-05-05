@@ -1,4 +1,4 @@
-#include "shoot_if_hero_in_range_ai_controller.hpp"
+#include "include/shoot_if_hero_in_range_ai_controller.hpp"
 
 ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
   Config config("../config.ini");

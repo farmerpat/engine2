@@ -1,4 +1,4 @@
-#include "path_controller.hpp"
+#include "include/path_controller.hpp"
 #include <iostream>
 
 PathController::PathController(Sprite* s, Path* p) {

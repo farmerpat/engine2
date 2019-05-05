@@ -1,4 +1,4 @@
-#include "function_controller.hpp"
+#include "include/function_controller.hpp"
 
 FunctionController::FunctionController(Sprite *s) {
   this->_sprite = s;

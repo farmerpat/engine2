@@ -1,4 +1,4 @@
-#include "archimedes_spiral_parametric_function_controller.hpp"
+#include "include/archimedes_spiral_parametric_function_controller.hpp"
 
 ArchimedesSpiralParametricFunctionController::ArchimedesSpiralParametricFunctionController
 (Sprite* s, double tmax, float scale = 1.0, float xoff = 0, float yoff = 0) :

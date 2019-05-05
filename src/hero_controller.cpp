@@ -1,4 +1,4 @@
-#include "hero_controller.hpp"
+#include "include/hero_controller.hpp"
 
 HeroController::HeroController() { }
 

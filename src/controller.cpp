@@ -1,4 +1,4 @@
-#include "controller.hpp"
+#include "include/controller.hpp"
 
 Controller::~Controller(void) { }
 //Controller::Controller(Sprite *s) {

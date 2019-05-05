@@ -1,4 +1,4 @@
-#include "enemy_bullet_controller.hpp"
+#include "include/enemy_bullet_controller.hpp"
 
 // TODO this could just be a bullet controller that only
 // moves on update and deletes the sprite if off-screen

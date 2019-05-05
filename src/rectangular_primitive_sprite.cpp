@@ -1,4 +1,4 @@
-#include "rectangular_primitive_sprite.hpp"
+#include "include/rectangular_primitive_sprite.hpp"
 #include <iostream>
 
 RectangularPrimitiveSprite::RectangularPrimitiveSprite(RealPoint p) :

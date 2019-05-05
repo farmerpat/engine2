@@ -39,38 +39,38 @@ find_package(SDL2_mixer REQUIRED)
 
 set(
   SOURCES
-  real_point.cpp
-  util.cpp
-  config.cpp
-  game_manager.cpp
-  path.cpp
-  controller.cpp
-  path_controller.cpp
-  function_controller.cpp
-  parametric_function_controller.cpp
-  sine_function_of_x_controller.cpp
-  archimedes_spiral_parametric_function_controller.cpp
-  ellipse_parametric_function_controller.cpp
-  involute_of_a_circle_parametric_function_controller.cpp
-  sprite.cpp
-  piece.cpp
-  hero_controller.cpp
-  hero_sprite.cpp
-  enemy_sprite.cpp
-  enemy_sprite_ellipsis.cpp
-  enemy_sprite_sine.cpp
-  enemy_bullet_sprite.cpp
-  enemy_bullet_controller.cpp
-  shoot_if_hero_in_range_ai_controller.cpp
-  player_bullet_controller.cpp
-  player_bullet_sprite.cpp
-  textured_sprite.cpp
-  primitive_sprite.cpp
-  rectangular_primitive_sprite.cpp
-  level.cpp
+  src/real_point.cpp
+  src/util.cpp
+  src/config.cpp
+  src/game_manager.cpp
+  src/path.cpp
+  src/controller.cpp
+  src/path_controller.cpp
+  src/function_controller.cpp
+  src/parametric_function_controller.cpp
+  src/sine_function_of_x_controller.cpp
+  src/archimedes_spiral_parametric_function_controller.cpp
+  src/ellipse_parametric_function_controller.cpp
+  src/involute_of_a_circle_parametric_function_controller.cpp
+  src/sprite.cpp
+  src/piece.cpp
+  src/hero_controller.cpp
+  src/hero_sprite.cpp
+  src/enemy_sprite.cpp
+  src/enemy_sprite_ellipsis.cpp
+  src/enemy_sprite_sine.cpp
+  src/enemy_bullet_sprite.cpp
+  src/enemy_bullet_controller.cpp
+  src/shoot_if_hero_in_range_ai_controller.cpp
+  src/player_bullet_controller.cpp
+  src/player_bullet_sprite.cpp
+  src/textured_sprite.cpp
+  src/primitive_sprite.cpp
+  src/rectangular_primitive_sprite.cpp
+  src/level.cpp
 )
 
-add_executable(main main.cpp ${SOURCES})
+add_executable(main src/main.cpp ${SOURCES})
 target_link_libraries(main SDL2::Main SDL2::Image SDL2::Mixer)
 
 IF(MINGW)

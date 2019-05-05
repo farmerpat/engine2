@@ -1,4 +1,4 @@
-#include "sine_function_of_x_controller.hpp"
+#include "include/sine_function_of_x_controller.hpp"
 
 SineFunctionOfXController::SineFunctionOfXController(Sprite *s, float a=1.0, float f=1.0) :
   FunctionController(s) {
