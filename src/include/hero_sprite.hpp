@@ -1,6 +1,7 @@
 #ifndef HERO_SPRITE_HPP
 #define HERO_SPRITE_HPP
 
+#include <memory>
 #include "textured_sprite.hpp"
 #include "hero_controller.hpp"
 
@@ -14,7 +15,7 @@ class HeroSprite : public TexturedSprite {
   public:
     HeroSprite(RealPoint, SDL_Renderer*);
     ~HeroSprite();
-    void collisionHandler(Sprite*) override;
+    void collisionHandler(std::unique_ptr<Sprite>&) override;
 
   private:
     float moveSpeed = 10.0f;

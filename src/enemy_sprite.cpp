@@ -18,7 +18,7 @@ EnemySprite::EnemySprite
     this->_aiController = aic;
 }
 
-void EnemySprite::collisionHandler(Sprite *other) {
+void EnemySprite::collisionHandler(std::unique_ptr<Sprite> &other) {
   if (other->getTag() == "player_bullet") {
     other->kill();
     this->kill();

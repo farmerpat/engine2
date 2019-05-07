@@ -1,6 +1,7 @@
 #ifndef ENEMY_SPRITE_HPP
 #define ENEMY_SPRITE_HPP
 
+#include <memory>
 #include "SDL.h"
 #include "real_point.hpp"
 #include "textured_sprite.hpp"
@@ -11,6 +12,6 @@ class EnemySprite : public TexturedSprite {
   public:
     // it might make sense to just take a more generic Controller* instead
     EnemySprite(RealPoint, SDL_Renderer*);
-    void collisionHandler(Sprite*) override;
+    void collisionHandler(std::unique_ptr<Sprite>&) override;
 };
 #endif

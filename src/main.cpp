@@ -1,6 +1,3 @@
-// TODO:
-// i wonder how crazy it is to update/render/etc from w/it an sdl timer callback.
-// is there any benefit to doing this over sleeping as we do now?
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
@@ -22,6 +19,7 @@
 #include "include/enemy_sprite_ellipsis.hpp"
 #include "include/enemy_sprite_sine.hpp"
 #include <string>
+#include <memory>
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -315,14 +313,18 @@ int main (int argc, char **argv) {
       hb.w = 64;
       hb.h = 64;
 
-      HeroSprite *heroSprite = new HeroSprite(heroPos, renderer);
+      std::unique_ptr<Sprite> heroSprite = std::unique_ptr<Sprite>(
+        new HeroSprite(heroPos, renderer)
+      );
       heroSprite->setHitBox(hb);
       heroSprite->setLayer(1);
 
       // TODO: figure out why this would be half of the hitbox
       //RealPoint cPos = { (SCREEN_WIDTH/2.0) - (ess2->getHitBox()->w*.5), 55.0 };
       RealPoint cPos = { (SCREEN_WIDTH/2.0) - 16, 55.0 };
-      EnemySpriteEllipsis *ese1 = new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0);
+      std::unique_ptr<Sprite> ese1 = std::unique_ptr<Sprite>(
+        new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0)
+      );
 
       float amplitude = 25.0;
       float freq = 0.07;
@@ -340,12 +342,12 @@ int main (int argc, char **argv) {
         fPos.setY(fPos.Y()+40);
 
         for (int i=0; i<9; ++i) {
-          testLevel->addSprite(
+          std::unique_ptr<Sprite> sprite = std::unique_ptr<Sprite>(
             new EnemySpriteSine(
-              fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
+                fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
             )
           );
-
+          testLevel->addSprite(std::move(sprite));
           imax--;
         }
       }
@@ -353,12 +355,11 @@ int main (int argc, char **argv) {
       //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
       //Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
 
-      testLevel->addSprite(heroSprite);
-      testLevel->addSprite(ese1);
+      testLevel->addSprite(std::move(heroSprite));
+      testLevel->addSprite(std::move(ese1));
 
       gm->setCurrentLevel(testLevel);
       gm->setWindowRenderer(renderer);
-      gm->setHero(heroSprite);
 
       unsigned int last_time = 0, current_time;
       unsigned int start_time = 0;
@@ -388,11 +389,10 @@ int main (int argc, char **argv) {
         cleanUpInput(gm);
         //dt = (current_time - last_time) / 1000.0f;
         // should i be calculating this instead?
+        testLevel->removeDeadSprites();
         testLevel->update(1/60.0);
         testLevel->resolveCollisions();
-        testLevel->removeDeadSprites();
         testLevel->render(renderer);
-        // TODO: really have to remove disabled (add killed?) spites from list and delete them.
 
         current_time = SDL_GetTicks();
         //std::cout <<

@@ -5,14 +5,7 @@ Level::Level(SDL_Renderer*) {
 }
 
 Level::~Level() {
-  // iterate over the sprites and free them
-  // free _texture
-
-  for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
-    delete this->_sprites[i];
-  }
-  // TODO:
-  // do we want to erase and shrink this like in path?
+  this->_sprites.clear();
 
   if (_texture) {
     SDL_DestroyTexture(this->_texture);
@@ -20,34 +13,14 @@ Level::~Level() {
 }
 
 void Level::update(float dt) {
-  for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
-    Sprite *sprite = this->_sprites[i];
+  for (auto &sprite : this->_sprites) {
 
     if (sprite->_controller) {
-      // maybe its bombing b/c it doesn't know
-      // what kind of controller it is?
-      // but then what is the point of polymorphism?
-      // or maybe its because this is an arg to hero constructor
-      // and this wasn't cast to sprite?
-
-      // do i really have to dynamically cast this?
-      // then what's the point?
-      // maybe try creating HeroController and HeroSprite
-      // separately and then adding it?
-      // don't see how that would make a difference
-      //
-      // maybe its because HeroController has a memeber (sprite)
-      // that Controller does not.
-      //
-      // it appears that it wasn't from passing "this" as arg.
-      // i removed that and it bombed anyway
-      //HeroController *c = std::dynamic_cast<HeroController*>(sprite->controller);
       Controller *c = sprite->_controller;
 
       if (c) {
         c->update(dt);
       }
-      //sprite->controller->update(dt);
     }
 
     if (sprite->_aiController) {
@@ -61,19 +34,16 @@ void Level::update(float dt) {
 }
 
 void Level::resolveCollisions() {
-  for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
-    Sprite *s1 = this->_sprites[i];
+  for (auto &s1 : this->_sprites) {
 
     if (!s1->isActive()) {
       continue;
     }
 
-    for (std::vector<Sprite>::size_type j = 0; j < this->_sprites.size(); j++) {
-      if (j == i) {
+    for (auto &s2 : this->_sprites) {
+      if (s1 == s2) {
         continue;
       }
-
-      Sprite *s2 = this->_sprites[j];
 
       if (!s2->isActive()) {
         continue;
@@ -105,17 +75,14 @@ void Level::resolveCollisions() {
 }
 
 void Level::removeDeadSprites() {
-
-  for (std::vector<Sprite*>::iterator it = this->_sprites.begin(); it != this->_sprites.end();) {
-    if (!(*it)->isAlive()) {
-      delete *it;
-      it = this->_sprites.erase(it);
-
-    } else {
-      it++;
-
-    }
-  }
+  this->_sprites.erase(
+    std::remove_if(
+      this->_sprites.begin(),
+      this->_sprites.end(),
+      [](auto const &sprite) { return !sprite || !sprite->isAlive(); }
+    ),
+    this->_sprites.end()
+  );
 }
 
 void Level::render(SDL_Renderer* renderer) {
@@ -126,23 +93,15 @@ void Level::render(SDL_Renderer* renderer) {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
 
-  for (std::vector<Sprite>::size_type i = 0; i < this->_sprites.size(); i++) {
-    // TODO:
-    // it seems like it would be faster to get a reference
-    // to _sprites[i] than to keep referencing the vector all over the place.
-    // investigate.
-
-    if (!this->_sprites[i]->isActive()) {
+  for (auto &sprite : this->_sprites) {
+    if (!sprite->isActive()) {
       continue;
     }
-
-    // TODO remove killed sprites
-
-    this->_sprites[i]->render(renderer);
+    sprite->render(renderer);
 
     if (GameManager::getInstance()->getDrawHitBoxes()) {
-      if (this->_sprites[i]->getHitBox()) {
-        SDL_Rect hb = this->_sprites[i]->getGlobalHitBox();
+      if (sprite->getHitBox()) {
+        SDL_Rect hb = sprite->getGlobalHitBox();
 
         Uint8 r;
         Uint8 g;
@@ -155,14 +114,19 @@ void Level::render(SDL_Renderer* renderer) {
 
       }
     }
-
-    // we may actually want to be copying to level's own texture and
-    // render copying that after this loop
   }
 
   SDL_RenderPresent(renderer);
 }
 
-void Level::addSprite(Sprite* sprite) {
-  this->_sprites.push_back(sprite);
+void Level::addSprite(std::unique_ptr<Sprite> sprite) {
+  this->_sprites.push_back(std::move(sprite));
+}
+
+std::unique_ptr<Sprite> &Level::getSpriteByTag(std::string tag) {
+  for (auto &sprite : this->_sprites) {
+    if (sprite->getTag() == tag) {
+      return sprite;
+    }
+  }
 }

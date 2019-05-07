@@ -50,8 +50,8 @@ bool GameManager::getDrawHitBoxes() {
   return this->_drawHitBoxes;
 }
 
-void GameManager::addSpriteToCurrentLevel(Sprite *s) {
-  this->_currentLevel->addSprite(s);
+void GameManager::addSpriteToCurrentLevel(std::unique_ptr<Sprite> s) {
+  this->_currentLevel->addSprite(move(s));
 }
 
 void GameManager::setCurrentLevel(Level *l) {
@@ -117,4 +117,40 @@ Sprite *GameManager::getHero() {
 
 void GameManager::setHero(Sprite *s) {
   this->_hero = s;
+}
+
+RealPoint *GameManager::getHeroPos() {
+  return this->_heroPos;
+}
+
+int GameManager::getHeroWidth() {
+  return this->_heroWidth;
+}
+
+int GameManager::getHeroHeight() {
+  return this->_heroHeight;
+}
+
+void GameManager::setHeroPos(RealPoint *hp) {
+  this->_heroPos = hp;
+}
+
+void GameManager::setHeroWidth(int w) {
+  this->_heroWidth = w;
+}
+
+void GameManager::setHeroHeight(int h) {
+  this->_heroHeight = h;
+}
+
+bool GameManager::getHeroIsAlive() {
+  return this->_heroIsAlive;
+}
+
+void GameManager::setHeroIsAlive() {
+  this->_heroIsAlive = true;
+}
+
+void GameManager::clearHeroIsAlive() {
+  this->_heroIsAlive = false;
 }

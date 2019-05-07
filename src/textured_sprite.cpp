@@ -28,6 +28,5 @@ void TexturedSprite::render(SDL_Renderer *renderer) {
   texture_dest_rect.w = this->getWidth() * this->_xScale;
   texture_dest_rect.h = this->getHeight() * this->_yScale;
 
-  // renderer, texture, source_rect, dest_rect
   SDL_RenderCopy(renderer, this->_texture, NULL, &texture_dest_rect);
 }

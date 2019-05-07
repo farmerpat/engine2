@@ -2,6 +2,8 @@
 #define LEVEL_HPP
 
 #include <vector>
+#include <memory>
+#include <algorithm>
 #include "SDL.h"
 #include "textured_sprite.hpp"
 #include "game_manager.hpp"
@@ -16,15 +18,11 @@ class Level {
     void resolveCollisions();
     void removeDeadSprites();
     void render(SDL_Renderer*);
-    void addSprite(Sprite*);
+    void addSprite(std::unique_ptr<Sprite>);
+    std::unique_ptr<Sprite> &getSpriteByTag(std::string);
 
   protected:
-    std::vector<Sprite*> _sprites;
-    // e.g. the hero sprite is the only one
-    // that needs to get input.
-    // in Pengine2d i think i sent
-    // controller input to all of them,
-    // which is slower
+    std::vector<std::unique_ptr<Sprite>> _sprites;
     Sprite *_hero;
     SDL_Texture *_texture;
 

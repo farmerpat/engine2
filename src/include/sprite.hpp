@@ -7,6 +7,7 @@
 #include "controller.hpp"
 #include "game_manager.hpp"
 #include <string>
+#include <memory>
 
 class Sprite {
   protected:
@@ -37,6 +38,7 @@ class Sprite {
     void clearBounded();
     void kill();
     bool isAlive();
+    bool offScreen();
 
     void setXScale(int);
     void setYScale(int);
@@ -69,7 +71,12 @@ class Sprite {
     SDL_Rect *getHitBox();
     void setHitBox(SDL_Rect);
 
-    virtual void collisionHandler(Sprite*);
+    // NOTE: passing unique_ptr(s) by reference
+    // may result in problems...think on whether
+    // or not a better solutions exists.
+    // should they be shared_ptr instead? that seems
+    // computationally expensive...
+    virtual void collisionHandler(std::unique_ptr<Sprite>&);
 
     int getLayer();
     void setLayer(int);

@@ -168,7 +168,7 @@ void Sprite::setHitBox(SDL_Rect hb) {
   this->_hitbox->h = hb.h;
 }
 
-void Sprite::collisionHandler(Sprite *other) { }
+void Sprite::collisionHandler(std::unique_ptr<Sprite> &other) { }
 
 int Sprite::getLayer() {
   return this->_layer;
@@ -209,4 +209,34 @@ void Sprite::kill() {
 
 bool Sprite::isAlive() {
   return this->_alive;
+}
+
+bool Sprite::offScreen() {
+  bool pred = false;
+  GameManager *gm = GameManager::getInstance();
+  float x = this->_pos->X();
+  float y = this->_pos->Y();
+  int width = 0;
+  int height = 0;
+
+  if (gm) {
+    int screenHeight = gm->getScreenHeight();
+    int screenWidth = gm->getScreenWidth();
+
+    if (this->_hitbox) {
+      width = this->_hitbox->w;
+      height = this->_hitbox->h;
+
+      if (((x+width) < 0) ||
+          ((y+height) < 0) ||
+          (x > screenWidth) ||
+          (y > screenHeight)
+      ) {
+        pred = true;
+
+      }
+    }
+  }
+
+  return pred;
 }

@@ -5,7 +5,11 @@ PlayerBulletController::PlayerBulletController(Sprite *s) {
 }
 
 void PlayerBulletController::update(float dt) {
-  // TODO:
-  // if the pos if off screen, flag the sprite for destruction
-  this->_sprite->move(dt);
+  if (this->_sprite) {
+    this->_sprite->move(dt);
+
+    if (this->_sprite->offScreen()) {
+      this->_sprite->kill();
+    }
+  }
 }

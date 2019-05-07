@@ -35,9 +35,12 @@ void HeroController::update(float dt) {
       pos.setX(this->_sprite->getPos()->X());
       pos.setY(this->_sprite->getPos()->Y());
       pos.setX(pos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1);
-      PlayerBulletSprite *bullet = new PlayerBulletSprite(pos, vel, gm->getWindowRenderer());
 
-      gm->addSpriteToCurrentLevel(bullet);
+      std::unique_ptr<Sprite> bullet = std::unique_ptr<Sprite>(
+        new PlayerBulletSprite(pos, vel, gm->getWindowRenderer())
+      );
+
+      gm->addSpriteToCurrentLevel(std::move(bullet));
       // TODO: maybe this should be left up to the bullet iteself?
       gm->playSound("../assets/sounds/player_laser_shoot.wav");
     }

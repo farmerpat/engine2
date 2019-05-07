@@ -4,8 +4,7 @@ ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
   Config config("../config.ini");
   std::string shotDelayS = config.query("enemy_shot_delay");
   Uint32 shotDelay = std::stoi(shotDelayS);
-  //this->_shotDelay = 3000;
-  this->_shotDelay = shotDelay;
+  this->_frameShotDelay = shotDelay;
 
   std::string shotChanceS = config.query("enemy_shot_chance");
   float shotChance = std::stof(shotChanceS);
@@ -15,19 +14,23 @@ ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
 }
 
 void ShootIfHeroInRangeAIController::update(float dt) {
+  this->_frameShotDelayCounter++;
+
+  if (this->_frameShotDelayCounter >= this->_frameShotDelay) {
+    this->_canShoot = true;
+  }
+
   GameManager *gm = GameManager::getInstance();
 
   if (gm) {
-    Sprite *hero = gm->getHero();
-
-    if (hero) {
-      RealPoint *heroPos = hero->getPos();
-      int heroWidth = hero->getWidth();
+    if (gm->getHeroIsAlive()) {
+      RealPoint *heroPos = gm->getHeroPos();
+      int heroWidth = gm->getHeroWidth();
       RealPoint *myPos = this->_sprite->getPos();
       int myWidth = this->_sprite->getWidth() * this->_sprite->getXScale();
       int x = myPos->X() + myWidth / 2;
 
-      if (_canShoot && x >= heroPos->X() && x <= heroPos->X() + heroWidth) {
+      if (_canShoot && x >= gm->getHeroPos()->X() && x <= gm->getHeroPos()->X() + heroWidth) {
         if (this->rngAllowShot()) {
           // TODO:
           // clean this up. we did some of the math above.
@@ -36,18 +39,22 @@ void ShootIfHeroInRangeAIController::update(float dt) {
           bulletPos.setX(this->_sprite->getPos()->X());
           bulletPos.setY(this->_sprite->getPos()->Y());
           bulletPos.setX(
-              bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
-              );
+            bulletPos.X()+(this->_sprite->getWidth() *.5 * this->_sprite->getXScale()) - 1
+          );
 
           bulletPos.setY(bulletPos.Y() + (this->_sprite->getHitBox()->h));
 
-          EnemyBulletSprite *ebs = new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer());
-          gm->addSpriteToCurrentLevel(ebs);
+          std::unique_ptr<Sprite> ebs = std::unique_ptr<Sprite>(
+            new EnemyBulletSprite(bulletPos, vel, gm->getWindowRenderer())
+          );
+
+          gm->addSpriteToCurrentLevel(std::move(ebs));
           gm->playSound("../assets/sounds/player_laser_shoot.wav");
           _canShoot = false;
-          this->_callbackTimerId = SDL_AddTimer(this->_shotDelay, this->timerCallBack, (void*)this);
-        }
 
+          this->_frameShotDelayCounter = 0;
+
+        }
       }
     }
   }
