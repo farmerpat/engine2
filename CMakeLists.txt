@@ -62,6 +62,7 @@ set(
   src/enemy_sprite.cpp
   src/enemy_sprite_ellipsis.cpp
   src/enemy_sprite_sine.cpp
+  src/matrix_of_sprites.cpp
   src/enemy_bullet_sprite.cpp
   src/enemy_bullet_controller.cpp
   src/shoot_if_hero_in_range_ai_controller.cpp

@@ -18,6 +18,7 @@
 #include "include/involute_of_a_circle_parametric_function_controller.hpp"
 #include "include/enemy_sprite_ellipsis.hpp"
 #include "include/enemy_sprite_sine.hpp"
+#include "include/matrix_of_sprites.hpp"
 #include <string>
 #include <memory>
 #include <iostream>
@@ -312,6 +313,8 @@ int main (int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (renderer) {
+      Level *testLevel = new Level(renderer);
+
       RealPoint heroPos = { SCREEN_WIDTH/2.0, SCREEN_HEIGHT*(13/16.0) };
       // TODO: move this to HeroSprite constructor
       SDL_Rect hb;
@@ -329,15 +332,26 @@ int main (int argc, char **argv) {
       // TODO: figure out why this would be half of the hitbox
       //RealPoint cPos = { (SCREEN_WIDTH/2.0) - (ess2->getHitBox()->w*.5), 55.0 };
       RealPoint cPos = { (SCREEN_WIDTH/2.0) - 16, 55.0 };
+
       std::unique_ptr<Sprite> ese1 = std::unique_ptr<Sprite>(
         new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0)
       );
+
+      RealPoint fPos = { 30.0, 110.0 };
+      std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
+        new MatrixOfSprites(
+          fPos, 16, 16, 10, 2, 20, 20, 2, 2, "assets/enemy1_single_frame.png", renderer
+        )
+      );
+
+      testLevel->addSprite(std::move(mat));
+
+      /*
 
       float amplitude = 25.0;
       float freq = 0.07;
       RealPoint fPos = { 30.0, 110.0 };
 
-      Level *testLevel = new Level(renderer);
       float minx = 32.0;
       float maxx = 617.0;
 
@@ -358,6 +372,7 @@ int main (int argc, char **argv) {
           imax--;
         }
       }
+      */
 
       //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
       //Piece *pinkPiece = new Piece(pPos, "assets/pink_block.png", renderer);
