@@ -1,7 +1,7 @@
 #include "include/hero_sprite.hpp"
 
 HeroSprite::HeroSprite (RealPoint pos, SDL_Renderer *renderer) :
-  TexturedSprite (pos, 32, 32, "../assets/player_single_frame.png", renderer) {
+  TexturedSprite (pos, 32, 32, "assets/player_single_frame.png", renderer) {
   this->_controller = new HeroController(this);
   this->setBounded();
   this->setXScale(2);

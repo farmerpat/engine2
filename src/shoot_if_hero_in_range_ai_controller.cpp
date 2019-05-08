@@ -1,7 +1,7 @@
 #include "include/shoot_if_hero_in_range_ai_controller.hpp"
 
 ShootIfHeroInRangeAIController::ShootIfHeroInRangeAIController(Sprite *s) {
-  Config config("../config.ini");
+  Config config("config.ini");
   std::string shotDelayS = config.query("enemy_shot_delay");
   Uint32 shotDelay = std::stoi(shotDelayS);
   this->_frameShotDelay = shotDelay;
@@ -49,7 +49,7 @@ void ShootIfHeroInRangeAIController::update(float dt) {
           );
 
           gm->addSpriteToCurrentLevel(std::move(ebs));
-          gm->playSound("../assets/sounds/player_laser_shoot.wav");
+          gm->playSound("assets/sounds/player_laser_shoot.wav");
           _canShoot = false;
 
           this->_frameShotDelayCounter = 0;
@@ -62,7 +62,7 @@ void ShootIfHeroInRangeAIController::update(float dt) {
 
 bool ShootIfHeroInRangeAIController::rngAllowShot() {
   bool canShoot = false;
-  float rng = (rand() % 101) / 100.0;
+  float rng = (rand() % 1001) / 1000.0;
 
   if (rng <= this->_shotChance) {
     canShoot = true;

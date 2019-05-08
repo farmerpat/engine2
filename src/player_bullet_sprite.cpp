@@ -6,7 +6,7 @@
 // if it goes off-screen
 //*****************************************************************************
 PlayerBulletSprite::PlayerBulletSprite(RealPoint pos, RealPoint vel, SDL_Renderer *ren) :
-  TexturedSprite(pos, 2, 8, "../assets/player_bullet_single_frame.png", ren) {
+  TexturedSprite(pos, 2, 8, "assets/player_bullet_single_frame.png", ren) {
     int scale = 2;
 
     this->_hitbox = new SDL_Rect();

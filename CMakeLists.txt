@@ -30,8 +30,11 @@ IF(MINGW)
   configure_file("dlls/libvorbis-0.dll" "." COPYONLY)
   configure_file("dlls/libvorbisfile-3.dll" "." COPYONLY)
 
-  configure_file("config.ini" "." COPYONLY)
 ENDIF(MINGW)
+
+file(GLOB ASSETS_DIR "assets/*")
+file(COPY ${ASSETS_DIR} DESTINATION "./assets")
+configure_file("config.ini" "." COPYONLY)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)

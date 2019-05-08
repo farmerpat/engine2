@@ -2,7 +2,7 @@
 
 EnemySprite::EnemySprite
 (RealPoint pos, SDL_Renderer *renderer) :
-  TexturedSprite(pos, 16, 16, "../assets/enemy1_single_frame.png", renderer) {
+  TexturedSprite(pos, 16, 16, "assets/enemy1_single_frame.png", renderer) {
     SDL_Rect hitBox;
     hitBox.x = 0;
     hitBox.y = 0;

@@ -21,6 +21,7 @@ class Sprite {
     bool _bounded = false;
     int _xScale = 1;
     int _yScale = 1;
+    bool _isAggregate = false;
 
     SDL_Rect *_hitbox = 0;
     int _layer = 0;
@@ -77,6 +78,8 @@ class Sprite {
     // should they be shared_ptr instead? that seems
     // computationally expensive...
     virtual void collisionHandler(std::unique_ptr<Sprite>&);
+    virtual bool isCollidingWith(std::unique_ptr<Sprite>&);
+    bool isAggregate();
 
     int getLayer();
     void setLayer(int);

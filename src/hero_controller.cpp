@@ -42,7 +42,7 @@ void HeroController::update(float dt) {
 
       gm->addSpriteToCurrentLevel(std::move(bullet));
       // TODO: maybe this should be left up to the bullet iteself?
-      gm->playSound("../assets/sounds/player_laser_shoot.wav");
+      gm->playSound("assets/sounds/player_laser_shoot.wav");
     }
   }
 

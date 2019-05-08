@@ -50,9 +50,19 @@ void Level::resolveCollisions() {
       }
 
       if (s1->getLayer() & s2->getLayer()) {
-        SDL_Rect hb1 = s1->getGlobalHitBox();
-        SDL_Rect hb2 = s2->getGlobalHitBox();
-        if (SDL_HasIntersection(&hb1, &hb2)) {
+        // TODO:
+        // can't expect a "normal" sprite to know how to deal with an aggregate,
+        // so let the aggregate tell us
+        // eventually, aggregates should be standardized in some way so that
+        // we can handle the case where two aggregates collide. at that point,
+        // an AggregateSprite class ought to be created. atm i just don't know
+        // what that should look like.
+        if (s2->isAggregate()) {
+          if (s2->isCollidingWith(s1)) {
+            s1->collisionHandler(s2);
+
+          }
+        } else if (s1->isCollidingWith(s2)) {
           // how to find which side collided...
           // if i use SDL_IntersectRect instead, it will
           // return the intersection rect.

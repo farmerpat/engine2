@@ -1,6 +1,6 @@
 #include "include/config.hpp"
 
-Config::Config (std::string file="../config.ini") {
+Config::Config (std::string file="config.ini") {
   this->parseConfigFile(file);
 }
 

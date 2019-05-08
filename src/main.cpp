@@ -21,6 +21,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <thread>
 #include <stdlib.h>
@@ -235,8 +236,14 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
 #undef main
 
 int main (int argc, char **argv) {
+  std::ofstream file;
+  file.open("cout.txt");
+  std::streambuf* sbuf = std::cout.rdbuf();
+  std::cout.rdbuf(file.rdbuf());
+
+  std::cout << "fucking main" << std::endl;
   srand(time(0));
-  Config config("../config.ini");
+  Config config("config.ini");
   SDL_Window *window = 0;
   SDL_Renderer *renderer = 0;
   SDL_Event e;
@@ -353,7 +360,7 @@ int main (int argc, char **argv) {
       }
 
       //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
-      //Piece *pinkPiece = new Piece(pPos, "../assets/pink_block.png", renderer);
+      //Piece *pinkPiece = new Piece(pPos, "assets/pink_block.png", renderer);
 
       testLevel->addSprite(std::move(heroSprite));
       testLevel->addSprite(std::move(ese1));
@@ -420,5 +427,6 @@ int main (int argc, char **argv) {
   IMG_Quit();
   SDL_Quit();
 
+  file.close();
   return 0;
 }

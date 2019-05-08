@@ -170,6 +170,20 @@ void Sprite::setHitBox(SDL_Rect hb) {
 
 void Sprite::collisionHandler(std::unique_ptr<Sprite> &other) { }
 
+bool Sprite::isCollidingWith(std::unique_ptr<Sprite> &other) {
+    bool pred = false;
+    if (this->_hitbox && other->_hitbox) {
+        SDL_Rect hb1 = this->getGlobalHitBox();
+        SDL_Rect hb2 = other->getGlobalHitBox();
+
+        if (SDL_HasIntersection(&hb1, &hb2)) {
+            pred = true;
+        }
+    }
+
+    return pred;
+}
+
 int Sprite::getLayer() {
   return this->_layer;
 }
@@ -239,4 +253,8 @@ bool Sprite::offScreen() {
   }
 
   return pred;
+}
+
+bool Sprite::isAggregate() {
+    return this->_isAggregate;
 }
