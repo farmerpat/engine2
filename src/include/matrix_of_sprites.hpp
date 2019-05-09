@@ -6,10 +6,10 @@
 #include "util.hpp"
 #include <string>
 #include <memory>
+#include <vector>
 
 class MatrixOfSprites : public Sprite {
   public:
-    // _pos, width, height, num_rows, num_cols, x_padding, y_padding,
     MatrixOfSprites(RealPoint, int, int, int, int, int, int, int, int, std::string, SDL_Renderer*);
     virtual ~MatrixOfSprites();
     void render(SDL_Renderer*);
@@ -24,6 +24,7 @@ class MatrixOfSprites : public Sprite {
     int _numRows = 0;
     int _xPad = 0;
     int _yPad = 0;
+    std::vector<std::vector<int>> _matrix;
 
 };
 #endif

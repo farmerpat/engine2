@@ -1,6 +1,7 @@
 #include "include/matrix_of_sprites.hpp"
+#include <iostream>
+#include <fstream>
 
-// _pos, width, height, num_rows, num_cols, x_padding, y_padding,
 MatrixOfSprites::MatrixOfSprites
   (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r)
   : Sprite (pos, w, h) {
@@ -12,12 +13,59 @@ MatrixOfSprites::MatrixOfSprites
   this->_texture = Util::loadTexture(img, r);
   this->setXScale(xScale);
   this->setYScale(yScale);
+
+  //std::vector<std::vector<int>> this->_matrix(this->_numRows, std::vector<int>(this->_numCols,1));
+  this->_matrix.resize(this->_numRows);
+
+  for (int i=0; i<this->_numRows; i++) {
+    this->_matrix[i].resize(this->_numCols);
+  }
+
+  for (int i=0; i<this->_numRows; i++) {
+    this->_matrix.push_back(std::vector<int>(this->_numCols, 1));
+    //for (int j=0; j<this->_numRows; j++) {
+      //this->_matrix[i][j] = 1;
+      //this->_matrix.at(i).at(j) = 1;
+    //}
+  }
+
+  for (int i=0; i<this->_numRows; i++) {
+    for (int j=0; j<this->_numCols; j++) {
+      int &val = this->_matrix[i][j];
+
+      if (val == 1) {
+
+        std::cout <<"fyf\n";
+      } else {
+        std::cout << "no es fyf\n";
+      }
+    }
+  }
+
+  //for (auto &row : this->_matrix) {
+    //for (auto &value : row) {
+      //if (value == 1) {
+        //std::cout <<"fyf alot\n";
+      //} else {
+        //std::cout << "no es fyf\n";
+      //}
+    //}
+  //}
+
+  // store an array (vector?) of 1s that will be zeroed when they are not to be displayed
+  //this->_matrix = (char*)malloc(sizeof(char)*nRows*nCols);
 }
 
 MatrixOfSprites::~MatrixOfSprites() {
   if (this->_texture) {
     SDL_DestroyTexture(this->_texture);
   }
+
+  for (auto row : this->_matrix) {
+    row.clear();
+  }
+
+  this->_matrix.clear();
 }
 
 void MatrixOfSprites::render(SDL_Renderer *renderer) {
