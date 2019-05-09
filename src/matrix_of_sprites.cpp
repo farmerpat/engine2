@@ -14,19 +14,8 @@ MatrixOfSprites::MatrixOfSprites
   this->setXScale(xScale);
   this->setYScale(yScale);
 
-  //std::vector<std::vector<int>> this->_matrix(this->_numRows, std::vector<int>(this->_numCols,1));
-  this->_matrix.resize(this->_numRows);
-
-  for (int i=0; i<this->_numRows; i++) {
-    this->_matrix[i].resize(this->_numCols);
-  }
-
   for (int i=0; i<this->_numRows; i++) {
     this->_matrix.push_back(std::vector<int>(this->_numCols, 1));
-    //for (int j=0; j<this->_numRows; j++) {
-      //this->_matrix[i][j] = 1;
-      //this->_matrix.at(i).at(j) = 1;
-    //}
   }
 
   for (int i=0; i<this->_numRows; i++) {
