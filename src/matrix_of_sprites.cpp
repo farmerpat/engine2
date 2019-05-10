@@ -3,7 +3,7 @@
 #include <fstream>
 
 MatrixOfSprites::MatrixOfSprites
-  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r)
+  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, int **map = 0)
   : Sprite (pos, w, h) {
 
   this->_numRows = nRows;
@@ -18,31 +18,14 @@ MatrixOfSprites::MatrixOfSprites
     this->_matrix.push_back(std::vector<int>(this->_numCols, 1));
   }
 
-  for (int i=0; i<this->_numRows; i++) {
-    for (int j=0; j<this->_numCols; j++) {
-      int &val = this->_matrix[i][j];
+  if (map) {
+    for (int i=0; i<this->_numRows; i++) {
+      for (int j=0; j<this->_numCols; j++) {
+        this->_matrix[i][j] = *(*(map+i)+j);
 
-      if (val == 1) {
-
-        std::cout <<"fyf\n";
-      } else {
-        std::cout << "no es fyf\n";
       }
     }
   }
-
-  //for (auto &row : this->_matrix) {
-    //for (auto &value : row) {
-      //if (value == 1) {
-        //std::cout <<"fyf alot\n";
-      //} else {
-        //std::cout << "no es fyf\n";
-      //}
-    //}
-  //}
-
-  // store an array (vector?) of 1s that will be zeroed when they are not to be displayed
-  //this->_matrix = (char*)malloc(sizeof(char)*nRows*nCols);
 }
 
 MatrixOfSprites::~MatrixOfSprites() {
@@ -65,17 +48,18 @@ void MatrixOfSprites::render(SDL_Renderer *renderer) {
   int y;
 
   for (int i=0; i<this->_numRows; i++) {
-    x = xBase + (i * (this->_width + this->_xPad));
+    y = yBase + (i * (this->_width + this->_yPad));
 
     for (int j=0; j<this->_numCols; j++) {
-      y = yBase + (j * (this->_height + this->_yPad));
-      texture_dest_rect.x = x;
-      texture_dest_rect.y = y;
-      texture_dest_rect.w = this->getWidth() * this->_xScale;
-      texture_dest_rect.h = this->getHeight() * this->_yScale;
+      if (this->_matrix[i][j]) {
+        x = xBase + (j * (this->_height + this->_xPad));
+        texture_dest_rect.x = x;
+        texture_dest_rect.y = y;
+        texture_dest_rect.w = this->getWidth() * this->_xScale;
+        texture_dest_rect.h = this->getHeight() * this->_yScale;
 
-      SDL_RenderCopy(renderer, this->_texture, NULL, &texture_dest_rect);
-
+        SDL_RenderCopy(renderer, this->_texture, NULL, &texture_dest_rect);
+      }
     }
   }
 }

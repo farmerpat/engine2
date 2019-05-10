@@ -333,31 +333,51 @@ int main (int argc, char **argv) {
         new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0)
       );
 
-      float amplitude = 25.0;
-      float freq = 0.07;
-      RealPoint fPos = { 30.0, 110.0 };
-
       Level *testLevel = new Level(renderer);
-      float minx = 32.0;
-      float maxx = 617.0;
 
-      float step = 48.0;
-      int imax=9;
+      int map[2][10] = {
+        { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+        { 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 }
+      };
 
-      for (int j=0; j<4; ++j) {
-        imax=9;
-        fPos.setY(fPos.Y()+40);
+      int *mapRows[2] = { map[0], map[1] };
+      int **ptrMap = mapRows;
 
-        for (int i=0; i<9; ++i) {
-          std::unique_ptr<Sprite> sprite = std::unique_ptr<Sprite>(
-            new EnemySpriteSine(
-                fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
-            )
-          );
-          testLevel->addSprite(std::move(sprite));
-          imax--;
-        }
-      }
+      RealPoint mPos = { 30.0, 110.0 };
+      std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
+        new MatrixOfSprites(
+          mPos, 16, 16, 2, 10, 30, 30, 2, 2, "assets/enemy1_single_frame.png", renderer, mapRows
+        )
+      );
+
+      testLevel->addSprite(std::move(mat));
+
+      // TODO: move this to its own level.
+      // actually, move the above to one too.
+      //float amplitude = 25.0;
+      //float freq = 0.07;
+      //RealPoint fPos = { 30.0, 110.0 };
+
+      //float minx = 32.0;
+      //float maxx = 617.0;
+
+      //float step = 48.0;
+      //int imax=9;
+
+      //for (int j=0; j<4; ++j) {
+        //imax=9;
+        //fPos.setY(fPos.Y()+40);
+
+        //for (int i=0; i<9; ++i) {
+          //std::unique_ptr<Sprite> sprite = std::unique_ptr<Sprite>(
+            //new EnemySpriteSine(
+                //fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
+            //)
+          //);
+          //testLevel->addSprite(std::move(sprite));
+          //imax--;
+        //}
+      //}
 
       //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
       //Piece *pinkPiece = new Piece(pPos, "assets/pink_block.png", renderer);

@@ -10,7 +10,7 @@
 
 class MatrixOfSprites : public Sprite {
   public:
-    MatrixOfSprites(RealPoint, int, int, int, int, int, int, int, int, std::string, SDL_Renderer*);
+    MatrixOfSprites(RealPoint, int, int, int, int, int, int, int, int, std::string, SDL_Renderer*, int**);
     virtual ~MatrixOfSprites();
     void render(SDL_Renderer*);
     void collisionHandler(std::unique_ptr<Sprite>&) override;
