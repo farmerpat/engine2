@@ -15,6 +15,12 @@ class MatrixOfSprites : public Sprite {
     void render(SDL_Renderer*);
     void collisionHandler(std::unique_ptr<Sprite>&) override;
     bool isCollidingWith(std::unique_ptr<Sprite>&) override;
+    int getFirstNonEmptyColumnIndex();
+    int getLastNonEmptyColumnIndex();
+    int getXPad();
+    int getYPad();
+    int getNumCols();
+    int getNumRows();
 
   protected:
     SDL_Texture *_texture = 0;

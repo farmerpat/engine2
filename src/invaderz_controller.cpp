@@ -15,23 +15,35 @@ void InvaderzController::update(float dt) {
   RealPoint *pos = this->_sprite->getPos();
   float x = pos->X();
 
-  if (this->_movingRight) {
-    if (x < this->_xMax) {
-      x += this->_incX;
-      pos->setX(x);
+  int xMin = this->_xMin -
+    (this->_sprite->getFirstNonEmptyColumnIndex()*
+    (this->_sprite->getWidth()+this->_sprite->getXPad()));
 
+  int xMax = this->_xMax +
+    (((this->_sprite->getNumCols()-1) - this->_sprite->getLastNonEmptyColumnIndex())*
+     (this->_sprite->getWidth()+this->_sprite->getXPad()));
+
+  if (xMin!=-1 && xMax!=-1) {
+    if (this->_movingRight) {
+      if (x < xMax) {
+        x += this->_incX;
+        pos->setX(x);
+
+      } else {
+        this->_movingRight = false;
+
+      }
     } else {
-      this->_movingRight = false;
+      if (x > xMin) {
+        x -= this->_incX;
+        pos->setX(x);
 
+      } else {
+        this->_movingRight = true;
+
+      }
     }
   } else {
-    if (x > this->_xMin) {
-      x -= this->_incX;
-      pos->setX(x);
-
-    } else {
-      this->_movingRight = true;
-
-    }
+    this->_sprite->kill();
   }
 }

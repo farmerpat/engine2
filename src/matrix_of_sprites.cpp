@@ -139,3 +139,62 @@ bool MatrixOfSprites::isCollidingWith(std::unique_ptr<Sprite> &other) {
 
   return false;
 }
+
+int MatrixOfSprites::getXPad() {
+  return this->_xPad;
+}
+
+int MatrixOfSprites::getYPad() {
+  return this->_yPad;
+}
+
+int MatrixOfSprites::getNumCols() {
+  return this->_numCols;
+}
+
+int MatrixOfSprites::getNumRows() {
+  return this->_numRows;
+}
+
+int MatrixOfSprites::getFirstNonEmptyColumnIndex() {
+  int index = -1;
+  for (int j=0; j<this->_numCols; j++) {
+    bool someOnes = false;
+
+    for (int i=0; i<this->_numRows; i++) {
+      if (this->_matrix[i][j]) {
+        someOnes = true;
+        break;
+      }
+    }
+
+    if (someOnes) {
+      index = j;
+      break;
+    }
+  }
+
+  return index;
+}
+
+int MatrixOfSprites::getLastNonEmptyColumnIndex() {
+  int index = -1;
+
+  for (int j=this->_numCols-1; j>-1; j--) {
+    bool someOnes = false;
+    for (int i=0; i<this->_numRows; i++) {
+      if (this->_matrix[i][j]) {
+        someOnes = true;
+        break;
+
+      }
+    }
+
+    if (someOnes) {
+      index = j;
+      break;
+    }
+  }
+
+  return index;
+}
