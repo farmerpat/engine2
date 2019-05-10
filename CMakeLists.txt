@@ -68,6 +68,8 @@ set(
   src/shoot_if_hero_in_range_ai_controller.cpp
   src/player_bullet_controller.cpp
   src/player_bullet_sprite.cpp
+  src/invaderz_controller.cpp
+  src/invaderz_matrix.cpp
   src/textured_sprite.cpp
   src/primitive_sprite.cpp
   src/rectangular_primitive_sprite.cpp

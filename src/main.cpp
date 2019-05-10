@@ -19,6 +19,7 @@
 #include "include/enemy_sprite_ellipsis.hpp"
 #include "include/enemy_sprite_sine.hpp"
 #include "include/matrix_of_sprites.hpp"
+#include "include/invaderz_matrix.hpp"
 #include <string>
 #include <memory>
 #include <iostream>
@@ -344,9 +345,15 @@ int main (int argc, char **argv) {
       int **ptrMap = mapRows;
 
       RealPoint mPos = { 30.0, 110.0 };
+      //std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
+        //new MatrixOfSprites(
+          //mPos, 16, 16, 2, 10, 30, 30, 2, 2, "assets/enemy1_single_frame.png", renderer, mapRows
+        //)
+      //);
+
       std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
-        new MatrixOfSprites(
-          mPos, 16, 16, 2, 10, 30, 30, 2, 2, "assets/enemy1_single_frame.png", renderer, mapRows
+        new InvaderzMatrix(
+          mPos, 16, 16, 2, 10, 30, 30, 2, 2, renderer, mapRows
         )
       );
 

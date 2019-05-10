@@ -1,6 +1,4 @@
 #include "include/matrix_of_sprites.hpp"
-#include <iostream>
-#include <fstream>
 
 MatrixOfSprites::MatrixOfSprites
   (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, int **map = 0)
