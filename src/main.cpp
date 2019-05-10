@@ -18,6 +18,7 @@
 #include "include/involute_of_a_circle_parametric_function_controller.hpp"
 #include "include/enemy_sprite_ellipsis.hpp"
 #include "include/enemy_sprite_sine.hpp"
+#include "include/matrix_of_sprites.hpp"
 #include <string>
 #include <memory>
 #include <iostream>

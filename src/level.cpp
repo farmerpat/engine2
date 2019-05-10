@@ -1,7 +1,16 @@
 #include "include/level.hpp"
 
 Level::Level(SDL_Renderer*) {
-  // make _texture the whole size of the renderer
+  // when HeroController adds a sprite during update,
+  // we get a segfault when _sprite's capacity == _sprite's size
+  // strangely the segfault does not appear when _aiController
+  // adds a sprite. this mitigates that issue
+
+  // a more flexible approach might be
+  // store the ptrs to be added in a separate
+  // container and adding them before we
+  // call removeDeadSprites
+  this->_sprites.reserve(100);
 }
 
 Level::~Level() {
@@ -13,7 +22,11 @@ Level::~Level() {
 }
 
 void Level::update(float dt) {
-  for (auto &sprite : this->_sprites) {
+  std::vector<std::unique_ptr<Sprite>>::size_type i, len;
+  len = this->_sprites.size();
+
+  for (i=0; i<len; i++) {
+    std::unique_ptr<Sprite> &sprite = this->_sprites[i];
 
     if (sprite->_controller) {
       Controller *c = sprite->_controller;
