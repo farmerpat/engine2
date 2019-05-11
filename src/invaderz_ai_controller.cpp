@@ -44,7 +44,11 @@ void InvaderzAiController::updateFrameShotDelay() {
 
         }
       } else {
-        // ignore the dead sprite somehow
+        // ignore the dead sprites w/ -1 as a flag.
+        // this should be faster than keeping/updating our
+        // own copy of the sprite matrix
+        this->_frameShotDelayCounterMatrix[i][j] = -1;
+
       }
     }
   }
@@ -66,6 +70,10 @@ void InvaderzAiController::update(float dt) {
 
     for (int i=0; i<rows; i++) {
       for (int j=0; j<cols; j++) {
+        if (this->_frameShotDelayCounterMatrix[i][j] == -1) {
+          continue;
+        }
+
         SDL_Rect hb = this->_sprite->getHitBoxAt(i, j);
 
         if (this->_canShootMatrix[i][j] && hb.x >= heroX && (hb.x <= heroX + heroWidth)) {
