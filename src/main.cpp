@@ -336,12 +336,13 @@ int main (int argc, char **argv) {
 
       Level *testLevel = new Level(renderer);
 
-      int map[2][10] = {
+      int map[3][10] = {
         { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
-        { 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 }
+        { 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
       };
 
-      int *mapRows[2] = { map[0], map[1] };
+      int *mapRows[3] = { map[0], map[1], map[2] };
       int **ptrMap = mapRows;
 
       RealPoint mPos = { 30.0, 110.0 };
@@ -353,7 +354,7 @@ int main (int argc, char **argv) {
 
       std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
         new InvaderzMatrix(
-          mPos, 16, 16, 2, 10, 30, 30, 2, 2, renderer, mapRows
+          mPos, 16, 16, 3, 10, 30, 30, 2, 2, renderer, mapRows
         )
       );
 

@@ -70,6 +70,7 @@ set(
   src/player_bullet_sprite.cpp
   src/invaderz_controller.cpp
   src/invaderz_matrix.cpp
+  src/invaderz_ai_controller.cpp
   src/textured_sprite.cpp
   src/primitive_sprite.cpp
   src/rectangular_primitive_sprite.cpp

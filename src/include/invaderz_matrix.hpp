@@ -4,6 +4,7 @@
 #include "matrix_of_sprites.hpp"
 #include "real_point.hpp"
 #include "invaderz_controller.hpp"
+#include "invaderz_ai_controller.hpp"
 #include <string>
 
 class InvaderzMatrix : public MatrixOfSprites {

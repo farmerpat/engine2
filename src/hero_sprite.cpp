@@ -19,20 +19,34 @@ HeroSprite::HeroSprite (RealPoint pos, SDL_Renderer *renderer) :
     gm->setHeroHeight(this->_height*this->_yScale);
     gm->setHeroIsAlive();
   }
+
+  Config config("config.ini");
+  std::string heroHpS = config.query("hero_hp");
+  Uint32 heroHp = std::stoi(heroHpS);
+  this->_hp = heroHp;
+
 }
 
 // bass class destructor is called automatically
 HeroSprite::~HeroSprite () { }
 
 void HeroSprite::collisionHandler(std::unique_ptr<Sprite> &other) {
-  if (other->getTag() == "enemy_ship" ||
-      other->getTag() == "enemy_bullet") {
-
+  if (other->getTag() == "enemy_ship") {
     this->kill();
-    if (other->getTag() == "enemy_bullet") {
-      other->kill();
-    }
 
+  } else if (other->getTag() == "enemy_bullet") {
+
+    this->takeDamage();
+    other->kill();
+
+  }
+}
+
+void HeroSprite::takeDamage() {
+  this->_hp--;
+
+  if (this->_hp <= 0) {
+    this->kill();
     GameManager *gm = GameManager::getInstance();
 
     if (gm) {
@@ -40,8 +54,4 @@ void HeroSprite::collisionHandler(std::unique_ptr<Sprite> &other) {
 
     }
   }
-}
-
-void HeroSprite::takeDamage() {
-
 }

@@ -198,3 +198,32 @@ int MatrixOfSprites::getLastNonEmptyColumnIndex() {
 
   return index;
 }
+
+std::vector<std::vector<int>> const MatrixOfSprites::getMatrix() {
+  return this->_matrix;
+}
+
+// TODO:
+// optimize this. e.g. can isCollidingWith use this?
+SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {
+  SDL_Rect hb;
+
+  int height = this->_height;
+  int width = this->_width;
+  int xPad = this->_xPad;
+  int yPad = this->_yPad;
+  int xScale = this->_xScale;
+  int yScale = this->_yScale;
+
+  int yBase = (int)this->getPos()->Y();
+  int xBase = (int)this->getPos()->X();
+  int y = yBase + (row * (height + yPad));
+  int x = xBase + (col * (width + xPad));
+
+  hb.y = y;
+  hb.x = x;
+  hb.w = width * xScale;
+  hb.h = height * yScale;
+
+  return hb;
+}

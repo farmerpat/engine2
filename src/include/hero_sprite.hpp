@@ -4,6 +4,7 @@
 #include <memory>
 #include "textured_sprite.hpp"
 #include "hero_controller.hpp"
+#include "config.hpp"
 
 // TODO:
 //  consider using a config.ini file that will
@@ -20,6 +21,7 @@ class HeroSprite : public TexturedSprite {
   private:
     float moveSpeed = 10.0f;
     void takeDamage();
+    int _hp = 4;
 
 };
 #endif
