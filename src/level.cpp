@@ -108,14 +108,16 @@ void Level::removeDeadSprites() {
   );
 }
 
-void Level::render(SDL_Renderer* renderer) {
+void Level::renderBackgroundElements(SDL_Renderer *renderer) {
   // probably store background clear color in gamemanager
   // and use that to clear first
-
-  // keep a background color somewhere and use that.
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
 
+  // iterate over _backgroundElements and render them
+}
+
+void Level::renderSprites(SDL_Renderer *renderer) {
   for (auto &sprite : this->_sprites) {
     if (!sprite->isActive()) {
       continue;
@@ -139,11 +141,30 @@ void Level::render(SDL_Renderer* renderer) {
     }
   }
 
+}
+
+void Level::renderUiElements(SDL_Renderer *renderer) {
+  // iterate over _uiElements and render them
+}
+
+void Level::render(SDL_Renderer* renderer) {
+  this->renderBackgroundElements(renderer);
+  this->renderSprites(renderer);
+  this->renderUiElements(renderer);
+
   SDL_RenderPresent(renderer);
+}
+
+void Level::addBackgroundElement(std::unique_ptr<Sprite> sprite) {
+  this->_backgroundElements.push_back(std::move(sprite));
 }
 
 void Level::addSprite(std::unique_ptr<Sprite> sprite) {
   this->_sprites.push_back(std::move(sprite));
+}
+
+void Level::addUiElement(std::unique_ptr<Sprite> sprite) {
+  this->_uiElements.push_back(std::move(sprite));
 }
 
 std::unique_ptr<Sprite> &Level::getSpriteByTag(std::string tag) {
