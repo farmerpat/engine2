@@ -22,6 +22,9 @@ class TexturedSprite : public Sprite {
     // will need some kind of a "move toward" function to work way
     // toward a target point
     void render(SDL_Renderer*);
+    // TODO:
+    // i think update only gets called on Controllers. e.g. this could/should?
+    // be removed
     void update(float);
     SDL_Texture *getTexture();
 

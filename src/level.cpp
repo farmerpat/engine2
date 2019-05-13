@@ -144,7 +144,13 @@ void Level::renderSprites(SDL_Renderer *renderer) {
 }
 
 void Level::renderUiElements(SDL_Renderer *renderer) {
-  // iterate over _uiElements and render them
+  for (auto &sprite : this->_uiElements) {
+    if (!sprite->isActive()) {
+      continue;
+    }
+
+    sprite->render(renderer);
+  }
 }
 
 void Level::render(SDL_Renderer* renderer) {
