@@ -30,6 +30,10 @@ IF(MINGW)
   configure_file("dlls/libvorbis-0.dll" "." COPYONLY)
   configure_file("dlls/libvorbisfile-3.dll" "." COPYONLY)
 
+  # SDL ttf libs
+  configure_file("dlls/SDL2_ttf.dll" "." COPYONLY)
+  configure_file("dlls/libfreetype-6.dll" "." COPYONLY)
+
 ENDIF(MINGW)
 
 file(GLOB ASSETS_DIR "assets/*")
@@ -39,6 +43,7 @@ configure_file("config.ini" "." COPYONLY)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 set(
   SOURCES
@@ -75,10 +80,11 @@ set(
   src/primitive_sprite.cpp
   src/rectangular_primitive_sprite.cpp
   src/level.cpp
+  src/ui_text.cpp
 )
 
 add_executable(main src/main.cpp ${SOURCES})
-target_link_libraries(main SDL2::Main SDL2::Image SDL2::Mixer)
+target_link_libraries(main SDL2::Main SDL2::Image SDL2::Mixer SDL2::TTF)
 
 IF(MINGW)
   # this increased main.exe by .1M. I have no idea what it included

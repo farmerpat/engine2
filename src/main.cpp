@@ -1,6 +1,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
+#include "SDL_ttf.h"
 #include "include/real_point.hpp"
 #include "include/config.hpp"
 #include "include/game_manager.hpp"
@@ -20,6 +21,7 @@
 #include "include/enemy_sprite_sine.hpp"
 #include "include/matrix_of_sprites.hpp"
 #include "include/invaderz_matrix.hpp"
+#include "include/ui_text.hpp"
 #include <string>
 #include <memory>
 #include <iostream>
@@ -288,6 +290,13 @@ int main (int argc, char **argv) {
     return 1;
   }
 
+  if (TTF_Init() == -1) {
+    std::cout << "could not initialize sdl TTF" << std::endl;
+    std::cout << TTF_GetError() << std::endl;
+    std::cout << "bailing..." << std::endl;
+    return 1;
+  }
+
   gm = GameManager::getInstance();
   gm->setScreenWidth(SCREEN_WIDTH);
   gm->setScreenHeight(SCREEN_HEIGHT);
@@ -395,6 +404,13 @@ int main (int argc, char **argv) {
       testLevel->addSprite(std::move(heroSprite));
       testLevel->addSprite(std::move(ese1));
 
+      RealPoint fontPos { 0.0, 0.0 };
+      std::unique_ptr<Sprite> fyfText = std::unique_ptr<Sprite>(
+        new UiText(fontPos, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25, renderer)
+      );
+
+      testLevel->addUiElement(std::move(fyfText));
+
       gm->setCurrentLevel(testLevel);
       gm->setWindowRenderer(renderer);
 
@@ -453,6 +469,7 @@ int main (int argc, char **argv) {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
+  TTF_Quit();
   Mix_Quit();
   IMG_Quit();
   SDL_Quit();
