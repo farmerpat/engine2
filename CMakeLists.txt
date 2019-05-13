@@ -83,6 +83,7 @@ set(
   src/ui_text.cpp
   src/levels/sine_enemies_level.cpp
   src/levels/invaderz_matrix_level.cpp
+  src/piece_controller.cpp
   src/levels/puzzle_level.cpp
 )
 

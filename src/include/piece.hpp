@@ -7,6 +7,7 @@
 #include "SDL_image.h"
 #include "real_point.hpp"
 #include "sprite.hpp"
+#include "piece_controller.hpp"
 
 class Piece : public Sprite {
   public:
