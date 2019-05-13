@@ -2,6 +2,15 @@
 
 HeroSprite::HeroSprite (RealPoint pos, SDL_Renderer *renderer) :
   TexturedSprite (pos, 32, 32, "assets/player_single_frame.png", renderer) {
+
+  SDL_Rect hb;
+  hb.x = 0;
+  hb.y = 0;
+  hb.w = 64;
+  hb.h = 64;
+
+  this->setHitBox(hb);
+  this->setLayer(1);
   this->_controller = new HeroController(this);
   this->setBounded();
   this->setXScale(2);

@@ -81,6 +81,9 @@ set(
   src/rectangular_primitive_sprite.cpp
   src/level.cpp
   src/ui_text.cpp
+  src/levels/sine_enemies_level.cpp
+  src/levels/invaderz_matrix_level.cpp
+  src/levels/puzzle_level.cpp
 )
 
 add_executable(main src/main.cpp ${SOURCES})

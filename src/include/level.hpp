@@ -13,7 +13,7 @@
 class Level {
   public:
     Level(SDL_Renderer*);
-    ~Level();
+    virtual ~Level();
     void update(float);
     void resolveCollisions();
     void removeDeadSprites();

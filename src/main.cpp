@@ -1,3 +1,11 @@
+#include <string>
+#include <memory>
+#include <iostream>
+#include <fstream>
+#include <chrono>
+#include <thread>
+#include <stdlib.h>
+#include <time.h>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
@@ -7,29 +15,10 @@
 #include "include/game_manager.hpp"
 #include "include/util.hpp"
 #include "include/sprite.hpp"
-#include "include/piece.hpp"
-#include "include/hero_sprite.hpp"
-#include "include/rectangular_primitive_sprite.hpp"
 #include "include/level.hpp"
-#include "include/path.hpp"
-#include "include/path_controller.hpp"
-#include "include/sine_function_of_x_controller.hpp"
-#include "include/archimedes_spiral_parametric_function_controller.hpp"
-#include "include/ellipse_parametric_function_controller.hpp"
-#include "include/involute_of_a_circle_parametric_function_controller.hpp"
-#include "include/enemy_sprite_ellipsis.hpp"
-#include "include/enemy_sprite_sine.hpp"
-#include "include/matrix_of_sprites.hpp"
-#include "include/invaderz_matrix.hpp"
-#include "include/ui_text.hpp"
-#include <string>
-#include <memory>
-#include <iostream>
-#include <fstream>
-#include <chrono>
-#include <thread>
-#include <stdlib.h>
-#include <time.h>
+#include "include/levels/invaderz_matrix_level.hpp"
+#include "include/levels/sine_enemies_level.hpp"
+#include "include/levels/puzzle_level.hpp"
 
 // TODO: use valgrind to check profiling, look for leaks, etc
 // TODO: use a namespace, you barbarian
@@ -322,94 +311,8 @@ int main (int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (renderer) {
-      RealPoint heroPos = { SCREEN_WIDTH/2.0, SCREEN_HEIGHT*(13/16.0) };
-      // TODO: move this to HeroSprite constructor
-      SDL_Rect hb;
-      hb.x = 0;
-      hb.y = 0;
-      hb.w = 64;
-      hb.h = 64;
-
-      std::unique_ptr<Sprite> heroSprite = std::unique_ptr<Sprite>(
-        new HeroSprite(heroPos, renderer)
-      );
-      heroSprite->setHitBox(hb);
-      heroSprite->setLayer(1);
-
-      // TODO: figure out why this would be half of the hitbox
-      //RealPoint cPos = { (SCREEN_WIDTH/2.0) - (ess2->getHitBox()->w*.5), 55.0 };
-      RealPoint cPos = { (SCREEN_WIDTH/2.0) - 16, 55.0 };
-      std::unique_ptr<Sprite> ese1 = std::unique_ptr<Sprite>(
-        new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0)
-      );
-
-      Level *testLevel = new Level(renderer);
-
-      int map[3][10] = {
-        //{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
-        //{ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-      };
-
-      int *mapRows[3] = { map[0], map[1], map[2] };
-      int **ptrMap = mapRows;
-
-      RealPoint mPos = { 30.0, 110.0 };
-      //std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
-        //new MatrixOfSprites(
-          //mPos, 16, 16, 2, 10, 30, 30, 2, 2, "assets/enemy1_single_frame.png", renderer, mapRows
-        //)
-      //);
-
-      std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
-        new InvaderzMatrix(
-          mPos, 16, 16, 3, 10, 30, 30, 2, 2, renderer, mapRows
-        )
-      );
-
-      testLevel->addSprite(std::move(mat));
-
-      // TODO: move this to its own level.
-      // actually, move the above to one too.
-      //float amplitude = 25.0;
-      //float freq = 0.07;
-      //RealPoint fPos = { 30.0, 110.0 };
-
-      //float minx = 32.0;
-      //float maxx = 617.0;
-
-      //float step = 48.0;
-      //int imax=9;
-
-      //for (int j=0; j<4; ++j) {
-        //imax=9;
-        //fPos.setY(fPos.Y()+40);
-
-        //for (int i=0; i<9; ++i) {
-          //std::unique_ptr<Sprite> sprite = std::unique_ptr<Sprite>(
-            //new EnemySpriteSine(
-                //fPos, renderer, amplitude, freq, minx+(i*step), maxx-(imax*step)
-            //)
-          //);
-          //testLevel->addSprite(std::move(sprite));
-          //imax--;
-        //}
-      //}
-
-      //RealPoint pPos = { (SCREEN_WIDTH/2.0), (SCREEN_HEIGHT/2.0) };
-      //Piece *pinkPiece = new Piece(pPos, "assets/pink_block.png", renderer);
-
-      testLevel->addSprite(std::move(heroSprite));
-      testLevel->addSprite(std::move(ese1));
-
-      RealPoint fontPos { 0.0, 0.0 };
-      std::unique_ptr<Sprite> fyfText = std::unique_ptr<Sprite>(
-        new UiText(fontPos, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25, renderer)
-      );
-
-      testLevel->addUiElement(std::move(fyfText));
+      //Level *testLevel = new InvaderzMatrixLevel(renderer);
+      Level *testLevel = new PuzzleLevel(renderer);
 
       gm->setCurrentLevel(testLevel);
       gm->setWindowRenderer(renderer);
@@ -462,6 +365,9 @@ int main (int argc, char **argv) {
           );
         }
       }
+
+      delete testLevel;
+
     }
   }
 

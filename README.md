@@ -1,5 +1,7 @@
 Engine take 2
 -------------
+*TODO*
+- make a controllers directory and use it.
 
 *Building on Windows*
 - Download SDL2\_image 64 bit runtime dlls (theres several of them that SDL2\_image depend on as well) and copy them to c:/windows/system32 to get the program to run.  Some people suggest that putting the dlls in the same folder as the exe will work, so that is probably something to try out...it would be much easier for other people to run the game, and I wouldn't have to statically link for windows. i wonder if a similar approach is possible for linux
