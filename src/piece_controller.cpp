@@ -5,6 +5,7 @@ PieceController::PieceController(Piece *p) {
 }
 
 void PieceController::update(float dt) {
+  this->_gravityFrameCounter++;
   GameManager *gm = GameManager::getInstance();
   int move = 0;
 
@@ -32,7 +33,10 @@ void PieceController::update(float dt) {
   // keep this in bounds
   newPos.setX(newPos.X()+move);
 
-  newPos.setY(newPos.Y()+this->_gravity);
+  if (this->_gravityFrameCounter >= this->_gravityFrameDelay) {
+    this->_gravityFrameCounter = 0;
+    newPos.setY(newPos.Y()+this->_gravity);
+  }
 
   this->_piece->setPos(newPos);
 }

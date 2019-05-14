@@ -114,7 +114,12 @@ void Level::renderBackgroundElements(SDL_Renderer *renderer) {
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   SDL_RenderClear(renderer);
 
-  // iterate over _backgroundElements and render them
+  for (auto &sprite : this->_backgroundElements) {
+    if (!sprite->isActive()) {
+      continue;
+    }
+    sprite->render(renderer);
+  }
 }
 
 void Level::renderSprites(SDL_Renderer *renderer) {
@@ -140,7 +145,6 @@ void Level::renderSprites(SDL_Renderer *renderer) {
       }
     }
   }
-
 }
 
 void Level::renderUiElements(SDL_Renderer *renderer) {

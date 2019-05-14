@@ -8,6 +8,7 @@
 #include "../level.hpp"
 #include "../sprite.hpp"
 #include "../piece.hpp"
+#include "../matrix_of_sprites.hpp"
 
 class PuzzleLevel : public Level {
   public:
