@@ -7,14 +7,14 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer) : Level(renderer) {
     int screenWidth = gm->getScreenWidth();
     int screenHeight = gm->getScreenHeight();
 
-    RealPoint pPos = { (screenWidth/2.0), (screenHeight/2.0) };
+    RealPoint pPos = { (screenWidth/2.0), 0.0 };
     std::unique_ptr<Sprite> pinkPiece = std::unique_ptr<Sprite>(
       new Piece(pPos, "assets/pink_block.png", renderer)
     );
 
     // TODO:
     // really, we want a level controller to add these when there are no active pieces.
-    // when the pieces go OOB, the die. when all the matrix bits are sucked up into the
+    // when the pieces go OOB, they die. when all the matrix bits are sucked up into the
     // bg, the piece dies.
     this->addSprite(std::move(pinkPiece));
 
@@ -111,6 +111,8 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer) : Level(renderer) {
     this->addBackgroundElement(std::move(mat));
 
   }
+
+  this->_levelController = new PuzzleLevelController(this);
 }
 
 PuzzleLevel::~PuzzleLevel() {

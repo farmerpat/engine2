@@ -6,6 +6,7 @@ Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
     this->_height = this->_blockWidth * this->_numRows;
     this->_blockTexture = Util::loadTexture(file, renderer);
     this->_controller = new PieceController(this);
+    this->_tag = "puzzle_piece";
 }
 
 Piece::~Piece() {

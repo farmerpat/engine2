@@ -9,6 +9,8 @@
 #include "../sprite.hpp"
 #include "../piece.hpp"
 #include "../matrix_of_sprites.hpp"
+#include "../level_controller.hpp"
+#include "../puzzle_level_controller.hpp"
 
 class PuzzleLevel : public Level {
   public:

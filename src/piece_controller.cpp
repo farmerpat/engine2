@@ -1,4 +1,5 @@
 #include "include/piece_controller.hpp"
+#include <iostream>
 
 PieceController::PieceController(Piece *p) {
   this->_piece = p;
@@ -16,6 +17,7 @@ void PieceController::update(float dt) {
 
   if (gm) {
     if (gm->playerInput.leftJustPressed) {
+      // keep it in bounds
       move = -this->_moveSize;
 
     } else if (gm->playerInput.rightJustPressed) {
@@ -30,12 +32,17 @@ void PieceController::update(float dt) {
     }
   }
 
+  // TODO:
   // keep this in bounds
   newPos.setX(newPos.X()+move);
 
   if (this->_gravityFrameCounter >= this->_gravityFrameDelay) {
     this->_gravityFrameCounter = 0;
     newPos.setY(newPos.Y()+this->_gravity);
+
+    if (newPos.Y() > gm->getScreenHeight()) {
+      this->_piece->kill();
+    }
   }
 
   this->_piece->setPos(newPos);
