@@ -32,5 +32,7 @@ class Level {
     void renderBackgroundElements(SDL_Renderer*);
     void renderSprites(SDL_Renderer*);
     void renderUiElements(SDL_Renderer*);
+    // TODO (asap) init and add a level controller
+
 };
 #endif

@@ -18,8 +18,10 @@ class PieceController : public Controller {
     // i think that these should be coming from Piece
     // or from GameManager, or from somewhere...
     // e.g. should be "blockWidth" or something
-    int _moveSize = 25;
-    float _gravity = 0.2;
+    int _moveSize = 8;
+    int _gravity = 8;
+    int _gravityFrameCounter = 0;
+    int _gravityFrameDelay = 30;
 };
 
 #endif
