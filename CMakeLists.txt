@@ -85,6 +85,8 @@ set(
   src/levels/invaderz_matrix_level.cpp
   src/piece_controller.cpp
   src/levels/puzzle_level.cpp
+  src/level_controller.cpp
+  src/puzzle_level_controller.cpp
 )
 
 add_executable(main src/main.cpp ${SOURCES})

@@ -9,6 +9,9 @@
 #include "game_manager.hpp"
 #include "controller.hpp"
 #include "hero_controller.hpp"
+#include "level_controller.hpp"
+
+class LevelController;
 
 class Level {
   public:
@@ -22,6 +25,7 @@ class Level {
     void addSprite(std::unique_ptr<Sprite>);
     void addUiElement(std::unique_ptr<Sprite>);
     std::unique_ptr<Sprite> &getSpriteByTag(std::string);
+    std::vector<std::unique_ptr<Sprite>> const &getSprites();
 
   protected:
     std::vector<std::unique_ptr<Sprite>> _backgroundElements;
@@ -32,6 +36,7 @@ class Level {
     void renderBackgroundElements(SDL_Renderer*);
     void renderSprites(SDL_Renderer*);
     void renderUiElements(SDL_Renderer*);
+    LevelController *_levelController = 0;
     // TODO (asap) init and add a level controller
 
 };

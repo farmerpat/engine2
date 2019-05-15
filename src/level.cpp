@@ -22,6 +22,7 @@ Level::~Level() {
 }
 
 void Level::update(float dt) {
+  // TODO: break this up and call controllers on all the things
   std::vector<std::unique_ptr<Sprite>>::size_type i, len;
   len = this->_sprites.size();
 
@@ -43,6 +44,10 @@ void Level::update(float dt) {
         aic->update(dt);
       }
     }
+  }
+
+  if (this->_levelController) {
+    this->_levelController->update(dt);
   }
 }
 
@@ -183,4 +188,8 @@ std::unique_ptr<Sprite> &Level::getSpriteByTag(std::string tag) {
       return sprite;
     }
   }
+}
+
+std::vector<std::unique_ptr<Sprite>> const &Level::getSprites() {
+  return this->_sprites;
 }
