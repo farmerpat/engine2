@@ -19,6 +19,7 @@ class Piece : public Sprite {
     void update(float);
     int getBitAt(int,int);
     void setBitAt(int,int,int);
+    bool someBlockSet();
 
   protected:
     SDL_Texture *_blockTexture = 0;

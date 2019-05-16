@@ -83,5 +83,9 @@ void PieceController::update(float dt) {
     }
   }
 
+  if (!this->_piece->someBlockSet()) {
+    this->_piece->kill();
+  }
+
   this->_piece->setPos(newPos);
 }

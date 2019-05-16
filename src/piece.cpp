@@ -63,3 +63,19 @@ int Piece::getBitAt(int x,int y) {
 void Piece::setBitAt(int x,int y,int val) {
   this->_blockMap[x][y] = val;
 }
+
+bool Piece::someBlockSet() {
+  bool pred = false;
+
+  for (int i=0; i<this->_numRows; i++) {
+    for (int j=0; j<this->_numCols; j++) {
+      if (this->_blockMap[i][j] != 0) {
+        pred = true;
+        break;
+
+      }
+    }
+  }
+
+  return pred;
+}
