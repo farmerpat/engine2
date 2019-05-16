@@ -199,7 +199,7 @@ int MatrixOfSprites::getLastNonEmptyColumnIndex() {
   return index;
 }
 
-std::vector<std::vector<int>> const MatrixOfSprites::getMatrix() {
+std::vector<std::vector<int>> const MatrixOfSprites::getMatrix() const {
   return this->_matrix;
 }
 
@@ -226,4 +226,12 @@ SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {
   hb.h = height * yScale;
 
   return hb;
+}
+
+int MatrixOfSprites::getBitAt(int x,int y) {
+  return this->_matrix[x][y];
+}
+
+void MatrixOfSprites::setBitAt(int x ,int y ,int val) {
+  this->_matrix[x][y] = val;
 }

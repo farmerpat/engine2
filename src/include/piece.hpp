@@ -17,6 +17,8 @@ class Piece : public Sprite {
     void rotateCounterClockwise();
     void render(SDL_Renderer*);
     void update(float);
+    int getBitAt(int,int);
+    void setBitAt(int,int,int);
 
   protected:
     SDL_Texture *_blockTexture = 0;

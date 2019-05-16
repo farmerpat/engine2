@@ -1,5 +1,4 @@
 #include "include/piece_controller.hpp"
-#include <iostream>
 
 PieceController::PieceController(Piece *p) {
   this->_piece = p;
@@ -26,9 +25,48 @@ void PieceController::update(float dt) {
     }
 
     if (gm->playerInput.aJustPressed) {
-      // somehow set the correct blocks
-      // in the background, and clear
-      // the corresponding blocks in this->_piece
+      Level *l = gm->getCurrentLevel();
+      if (l) {
+        PuzzleLevel *pl = static_cast<PuzzleLevel*>(l);
+
+        if (pl) {
+          // maybe we don't even care about getting the matrix.
+          // maybe we
+          //const std::vector<std::vector<int>> bgMat = pl->getBackgroundMatrix();
+          RealPoint *spritePos = this->_piece->getPos();
+          std::shared_ptr<MatrixOfSprites> bgMat = pl->getBackgroundMatrix();
+          int matRows = bgMat->getNumRows();
+          int matCols = bgMat->getNumCols();
+          int cellWidth = bgMat->getWidth();
+          int cellHeight = bgMat->getHeight();
+          RealPoint *bgMatPos = bgMat->getPos();
+          int relativeXZero = (int)bgMatPos->X();
+          int relativeYZero = (int)bgMatPos->Y();
+          int pieceMatrixPositionX = (int)spritePos->X() - relativeXZero;
+          int pieceMatrixPositionY = (int)spritePos->Y() - relativeYZero;
+
+          // if its inside the bg matrix
+          if (pieceMatrixPositionX >=0 && pieceMatrixPositionY>=0) {
+            pieceMatrixPositionX /= cellWidth;
+            pieceMatrixPositionY /= cellHeight;
+
+            // at present, there are 3 rows and 3 cols in a piece.
+            // this could be updated to be more flexible
+            for (int i=0; i<3; i++) {
+              for (int j=0; j<3; j++) {
+                // i have no idea why these are backwards
+                if (bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
+                  if (this->_piece->getBitAt(j,i) == 1) {
+                    bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
+                    this->_piece->setBitAt(j,i,0);
+
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

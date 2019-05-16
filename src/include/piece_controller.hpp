@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "controller.hpp"
 #include "piece.hpp"
+#include "levels/puzzle_level.hpp"
 #include "game_manager.hpp"
 
 class Piece;

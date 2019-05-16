@@ -16,6 +16,12 @@ class PuzzleLevel : public Level {
   public:
     PuzzleLevel(SDL_Renderer*);
     ~PuzzleLevel();
+    std::shared_ptr<MatrixOfSprites> getBackgroundMatrix();
+    void render(SDL_Renderer*);
+
+  protected:
+    std::shared_ptr<MatrixOfSprites> _backgroundMatrix;
+
 };
 
 #endif

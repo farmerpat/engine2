@@ -99,7 +99,7 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer) : Level(renderer) {
     int **ptrMap = mapRows;
 
     RealPoint mPos = { 192, 32 };
-    std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
+    this->_backgroundMatrix = std::shared_ptr<MatrixOfSprites>(
       new MatrixOfSprites(
         mPos, 8, 8, 64, 32, 0, 0, 1, 1, "../assets/gray_bg_block.png", renderer, mapRows
 
@@ -108,12 +108,27 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer) : Level(renderer) {
 
     //delete ptrMap;
 
-    this->addBackgroundElement(std::move(mat));
-
   }
 
   this->_levelController = new PuzzleLevelController(this);
 }
 
 PuzzleLevel::~PuzzleLevel() {
+}
+
+std::shared_ptr<MatrixOfSprites> PuzzleLevel::getBackgroundMatrix() {
+  return this->_backgroundMatrix;
+}
+
+void PuzzleLevel::render(SDL_Renderer *renderer) {
+  Level::renderBackgroundElements(renderer);
+
+  if (this->_backgroundMatrix) {
+    this->_backgroundMatrix->render(renderer);
+  }
+
+  Level::renderSprites(renderer);
+  Level::renderUiElements(renderer);
+
+  SDL_RenderPresent(renderer);
 }

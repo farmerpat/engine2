@@ -21,7 +21,9 @@ class MatrixOfSprites : public Sprite {
     int getYPad();
     int getNumCols();
     int getNumRows();
-    std::vector<std::vector<int>> const getMatrix();
+    int getBitAt(int,int);
+    void setBitAt(int,int,int);
+    std::vector<std::vector<int>> const getMatrix() const;
     SDL_Rect getHitBoxAt(int, int);
 
   protected:

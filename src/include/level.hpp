@@ -20,7 +20,7 @@ class Level {
     void update(float);
     void resolveCollisions();
     void removeDeadSprites();
-    void render(SDL_Renderer*);
+    virtual void render(SDL_Renderer*);
     void addBackgroundElement(std::unique_ptr<Sprite>);
     void addSprite(std::unique_ptr<Sprite>);
     void addUiElement(std::unique_ptr<Sprite>);

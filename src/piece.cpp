@@ -53,3 +53,13 @@ void Piece::render(SDL_Renderer* renderer) {
 }
 
 void Piece::update(float dt) { }
+
+// these are literally duplicated in MatrixOfSprites
+// seems like an opportunity for a class (except a vector instead of an array)
+int Piece::getBitAt(int x,int y) {
+  return this->_blockMap[x][y];
+}
+
+void Piece::setBitAt(int x,int y,int val) {
+  this->_blockMap[x][y] = val;
+}
