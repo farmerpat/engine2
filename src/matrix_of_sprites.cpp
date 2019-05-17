@@ -1,6 +1,23 @@
 #include "include/matrix_of_sprites.hpp"
 
 MatrixOfSprites::MatrixOfSprites
+  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, std::vector<std::vector<int>> map)
+  : Sprite (pos, w, h) {
+
+  this->_numRows = nRows;
+  this->_numCols = nCols;
+  this->_xPad = xPad;
+  this->_yPad = yPad;
+  this->_texture = Util::loadTexture(img, r);
+  this->setXScale(xScale);
+  this->setYScale(yScale);
+  this->_isAggregate = true;
+  this->setLayer(1);
+
+  this->_matrix = map;
+}
+
+MatrixOfSprites::MatrixOfSprites
   (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, int **map = 0)
   : Sprite (pos, w, h) {
 

@@ -1,9 +1,11 @@
 #ifndef PUZZLE_LEVEL_HPP
 #define PUZZLE_LEVEL_HPP
 
+#include <string>
 #include <memory>
 #include "SDL.h"
 #include "../real_point.hpp"
+#include "../util.hpp"
 #include "../game_manager.hpp"
 #include "../level.hpp"
 #include "../sprite.hpp"
@@ -14,13 +16,15 @@
 
 class PuzzleLevel : public Level {
   public:
-    PuzzleLevel(SDL_Renderer*);
+    PuzzleLevel(SDL_Renderer*, std::string, std::string);
     ~PuzzleLevel();
     std::shared_ptr<MatrixOfSprites> getBackgroundMatrix();
     void render(SDL_Renderer*);
 
   protected:
     std::shared_ptr<MatrixOfSprites> _backgroundMatrix;
+    std::string _levelFileName;
+    std::string _piecesFileName;
 
 };
 
