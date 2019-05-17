@@ -1,6 +1,7 @@
 #ifndef PIECE_HPP
 #define PIECE_HPP
 
+#include <vector>
 #include <string>
 #include "util.hpp"
 #include "SDL.h"
@@ -12,6 +13,7 @@
 class Piece : public Sprite {
   public:
     Piece(RealPoint, std::string, SDL_Renderer*);
+    Piece(RealPoint, std::string, SDL_Renderer*, std::vector<std::vector<int>>);
     ~Piece();
     void rotateClockwise();
     void rotateCounterClockwise();
@@ -23,7 +25,7 @@ class Piece : public Sprite {
 
   protected:
     SDL_Texture *_blockTexture = 0;
-    int _blockMap[3][3] = { {1, 1, 1}, {1, 0, 1}, {1, 1, 1} };
+    std::vector<std::vector<int>> _blockMap;
     char _blockWidth = 8;
     char _numCols = 3;
     char _numRows = 3;

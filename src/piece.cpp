@@ -1,5 +1,15 @@
 #include "include/piece.hpp"
 
+Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer, std::vector<std::vector<int>> map)
+  : Sprite(pos) {
+    this->_width = this->_blockWidth * this->_numCols;
+    this->_height = this->_blockWidth * this->_numRows;
+    this->_blockTexture = Util::loadTexture(file, renderer);
+    this->_controller = new PieceController(this);
+    this->_tag = "puzzle_piece";
+    this->_blockMap = map;
+}
+
 Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
   : Sprite(pos) {
     this->_width = this->_blockWidth * this->_numCols;
@@ -7,6 +17,15 @@ Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
     this->_blockTexture = Util::loadTexture(file, renderer);
     this->_controller = new PieceController(this);
     this->_tag = "puzzle_piece";
+
+    for (int i=0; i<3; i++) {
+      std::vector<int> row;
+      for (int j=0; j<3; j++) {
+        row.push_back(1);
+      }
+
+      this->_blockMap.push_back(row);
+    }
 }
 
 Piece::~Piece() {

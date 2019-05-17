@@ -11,6 +11,7 @@ void PuzzleLevelController::update(float dt) {
   if (!this->_puzzleLevel->getBackgroundMatrix()->someEmptyBlocks()) {
     // open a win modal, and tell the gm to transition to the next
     // level somehow...
+
     std::cout << "you are super player!\n";
 
   } else {
@@ -46,8 +47,9 @@ void PuzzleLevelController::deployPiece() {
     SDL_Renderer *renderer = gm->getWindowRenderer();
 
     RealPoint pPos = { (screenWidth/2.0), 0.0 };
+    std::vector<std::vector<int>> map = { {1,1,1}, {1,0,1}, {1,1,1}};
     std::unique_ptr<Sprite> pinkPiece = std::unique_ptr<Sprite>(
-      new Piece(pPos, "assets/pink_block.png", renderer)
+      new Piece(pPos, "assets/pink_block.png", renderer, map)
     );
 
     this->_puzzleLevel->addSprite(std::move(pinkPiece));
