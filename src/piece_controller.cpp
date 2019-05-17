@@ -52,18 +52,44 @@ void PieceController::update(float dt) {
 
             // at present, there are 3 rows and 3 cols in a piece.
             // this could be updated to be more flexible
+            bool allowFlip = true;
+
             for (int i=0; i<3; i++) {
+              if (!allowFlip) break;
               for (int j=0; j<3; j++) {
                 // i have no idea why these are backwards
-                if (bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
-                  if (this->_piece->getBitAt(j,i) == 1) {
-                    bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
-                    this->_piece->setBitAt(j,i,0);
+                // figure out a way to optionally make sure that all the blocks can be flipped
+                // before flipping any
+                if (this->_piece->getBitAt(j,i) == 1) {
+                  if (!bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
+                    allowFlip = false;
+                    break;
 
                   }
                 }
               }
             }
+
+            if (allowFlip) {
+              for (int i=0; i<3; i++) {
+                for (int j=0; j<3; j++) {
+                    bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
+                    this->_piece->setBitAt(j,i,0);
+
+                }
+              }
+            }
+
+            /*
+             if (bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
+               if (this->_piece->getBitAt(j,i) == 1) {
+                 bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
+                 this->_piece->setBitAt(j,i,0);
+
+               }
+             }
+           */
+
           }
         }
       }

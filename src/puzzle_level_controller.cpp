@@ -1,19 +1,30 @@
 #include "include/puzzle_level_controller.hpp"
+#include <iostream>
 
-PuzzleLevelController::PuzzleLevelController(Level *level) : LevelController(level) {}
+PuzzleLevelController::PuzzleLevelController(PuzzleLevel *level) : LevelController() {
+  this->_puzzleLevel = level;
+}
 
 PuzzleLevelController::~PuzzleLevelController() {}
 
 void PuzzleLevelController::update(float dt) {
-  // if theres no active pieces on the screen, add a a new one.
-  if (!this->pieceOnScreen()) {
-    this->deployPiece();
+  if (!this->_puzzleLevel->getBackgroundMatrix()->someEmptyBlocks()) {
+    // open a win modal, and tell the gm to transition to the next
+    // level somehow...
+    std::cout << "you are super player!\n";
+
+  } else {
+    // if theres no active pieces on the screen, add a a new one.
+    if (!this->pieceOnScreen()) {
+      this->deployPiece();
+
+    }
   }
 }
 
 bool PuzzleLevelController::pieceOnScreen() {
   bool pred = false;
-  const std::vector<std::unique_ptr<Sprite>> &sprites = this->_level->getSprites();
+  const std::vector<std::unique_ptr<Sprite>> &sprites = this->_puzzleLevel->getSprites();
 
   for (auto &sprite : sprites) {
     if (sprite->getTag() == "puzzle_piece") {
@@ -39,6 +50,6 @@ void PuzzleLevelController::deployPiece() {
       new Piece(pPos, "assets/pink_block.png", renderer)
     );
 
-    this->_level->addSprite(std::move(pinkPiece));
+    this->_puzzleLevel->addSprite(std::move(pinkPiece));
   }
 }

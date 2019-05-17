@@ -25,6 +25,7 @@ class MatrixOfSprites : public Sprite {
     void setBitAt(int,int,int);
     std::vector<std::vector<int>> const getMatrix() const;
     SDL_Rect getHitBoxAt(int, int);
+    bool someEmptyBlocks();
 
   protected:
     SDL_Texture *_texture = 0;

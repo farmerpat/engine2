@@ -8,9 +8,10 @@ class Level;
 
 class LevelController : public Controller {
   public:
+    LevelController();
     LevelController(Level*);
     ~LevelController();
-    void update(float dt) { }
+    virtual void update(float dt) { }
 
   protected:
     Level *_level;

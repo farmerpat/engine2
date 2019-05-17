@@ -235,3 +235,22 @@ int MatrixOfSprites::getBitAt(int x,int y) {
 void MatrixOfSprites::setBitAt(int x ,int y ,int val) {
   this->_matrix[x][y] = val;
 }
+
+// again, this is basically identical to the code in piece.cpp
+// plz do objectify
+bool MatrixOfSprites::someEmptyBlocks() {
+  bool pred = false;
+
+  for (int i=0; i<this->_numRows; i++) {
+    if (pred) break;
+    for (int j=0; j<this->_numCols; j++) {
+      if (this->_matrix[i][j] == 0) {
+        pred = true;
+        break;
+
+      }
+    }
+  }
+
+  return pred;
+}
