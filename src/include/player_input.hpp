@@ -6,6 +6,7 @@ struct PlayerInput {
   bool upJustPressed = false;
   bool downPressed = false;
   bool downJustPressed = false;
+  bool downHeld = false;
   bool leftPressed = false;
   bool leftJustPressed = false;
   bool rightPressed = false;

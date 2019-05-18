@@ -81,6 +81,8 @@ void MatrixOfSprites::render(SDL_Renderer *renderer) {
   }
 }
 
+// TODO: this seems so specific to invaderz that making collisionHandler
+// an object probably makes more sense.
 void MatrixOfSprites::collisionHandler(std::unique_ptr<Sprite> &other) {
   SDL_Rect theirHitBox = other->getGlobalHitBox();
   SDL_Rect myHitBox;

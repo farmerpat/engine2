@@ -80,6 +80,7 @@ void dropStaleInputs () {
   if (down_input_stale) {
     gm->playerInput.downPressed = false;
     gm->playerInput.downJustPressed = false;
+    gm->playerInput.downHeld = false;
     down_input_stale = false;
   }
 
@@ -165,6 +166,13 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
           gm->playerInput.downPressed = true;
           gm->playerInput.downJustPressed = true;
 
+        } else {
+          // this is quick and dirty. i should be setting
+          // my own frame delay for held buttons.
+          down_pressed_this_frame = false;
+          gm->playerInput.downPressed = true;
+          gm->playerInput.downHeld = true;
+
         }
         break;
 
@@ -228,6 +236,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!down_pressed_this_frame) {
           gm->playerInput.downPressed = false;
           gm->playerInput.downJustPressed = false;
+          gm->playerInput.downHeld = false;
         } else {
           down_input_stale = true;
         }

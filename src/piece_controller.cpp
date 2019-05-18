@@ -8,6 +8,7 @@ void PieceController::update(float dt) {
   this->_gravityFrameCounter++;
   GameManager *gm = GameManager::getInstance();
   int move = 0;
+  bool downAccel = false;
 
   RealPoint newPos(
     this->_piece->getPos()->X(),
@@ -22,6 +23,10 @@ void PieceController::update(float dt) {
     } else if (gm->playerInput.rightJustPressed) {
       move = this->_moveSize;
 
+    }
+
+    if (gm->playerInput.downHeld) {
+      downAccel = true;
     }
 
     if (gm->playerInput.aJustPressed) {
@@ -73,9 +78,11 @@ void PieceController::update(float dt) {
             if (allowFlip) {
               for (int i=0; i<3; i++) {
                 for (int j=0; j<3; j++) {
+                  if (this->_piece->getBitAt(j,i) == 1) {
                     bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
                     this->_piece->setBitAt(j,i,0);
 
+                  }
                 }
               }
             }
@@ -110,6 +117,10 @@ void PieceController::update(float dt) {
 
     if (newPos.Y() > gm->getScreenHeight()) {
       this->_piece->kill();
+    }
+  } else {
+    if (downAccel) {
+      this->_gravityFrameCounter += 50;
     }
   }
 
