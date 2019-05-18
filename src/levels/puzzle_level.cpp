@@ -1,6 +1,7 @@
 #include "../include/levels/puzzle_level.hpp"
 #include <iostream>
 
+// TODO: there's only ~56 bg rows on screen. clean up the level txt file
 PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std::string piecesFileName)
   : Level(renderer) {
 
@@ -18,8 +19,10 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
 
       )
     );
+
+    this->generatePieceList();
   } else {
-    std::cout << "puzzle_level can find file(s)";
+    std::cout << "puzzle_level can't find file(s)";
   }
 
   /*
@@ -58,4 +61,30 @@ void PuzzleLevel::render(SDL_Renderer *renderer) {
   Level::renderUiElements(renderer);
 
   SDL_RenderPresent(renderer);
+}
+
+void PuzzleLevel::generatePieceList() {
+  int i=0;
+  std::vector<std::vector<int>> allPieces = Util::csvToVectorOfVectorsOfInts(this->_piecesFileName);
+  std::vector<std::vector<int>> piece;
+
+  for (auto &line : allPieces) {
+    if (i == 3) {
+      i=0;
+      this->_pieceList.push_back(piece);
+      piece.clear();
+    }
+
+    piece.push_back(line);
+    i++;
+  }
+
+  if (i == 3) {
+    this->_pieceList.push_back(piece);
+  }
+}
+
+std::vector<std::vector<int>> PuzzleLevel::grabRandomPieceMap() {
+  int index = Util::getRandomIntInRange(this->_pieceList.size());
+  return this->_pieceList[index];
 }

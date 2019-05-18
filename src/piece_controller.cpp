@@ -93,6 +93,10 @@ void PieceController::update(float dt) {
           }
         }
       }
+    } else if (gm->playerInput.xJustPressed) {
+      this->_piece->rotateCounterClockwise();
+    } else if (gm->playerInput.yJustPressed) {
+      this->_piece->rotateClockwise();
     }
   }
 

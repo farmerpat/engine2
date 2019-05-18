@@ -118,3 +118,11 @@ std::vector<std::vector<int>> Util::csvToVectorOfVectorsOfInts(std::string f) {
 
   return v;
 }
+
+int Util::getRandomIntInRange(int exclusiveUpperBound) {
+  std::random_device rd;
+  std::mt19937 eng(rd());
+  std::uniform_int_distribution<> dist(0, exclusiveUpperBound-1);
+
+  return dist(eng);
+}

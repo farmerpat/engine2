@@ -20,11 +20,14 @@ class PuzzleLevel : public Level {
     ~PuzzleLevel();
     std::shared_ptr<MatrixOfSprites> getBackgroundMatrix();
     void render(SDL_Renderer*);
+    std::vector<std::vector<int>> grabRandomPieceMap();
 
   protected:
     std::shared_ptr<MatrixOfSprites> _backgroundMatrix;
+    std::vector<std::vector<std::vector<int>>> _pieceList;
     std::string _levelFileName;
     std::string _piecesFileName;
+    void generatePieceList();
 
 };
 

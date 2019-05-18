@@ -3,10 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
+#include <random>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include <fstream>
 
 class Util {
   public:
@@ -17,6 +18,7 @@ class Util {
     static int getNumColsInCsvFile(std::string);
     static std::vector<std::string> fileToVector(std::string);
     static std::vector<std::vector<int>> csvToVectorOfVectorsOfInts(std::string);
+    static int getRandomIntInRange(int);
 
 };
 #endif

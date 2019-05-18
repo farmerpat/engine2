@@ -47,6 +47,8 @@ static bool down_input_stale = false;
 static bool left_input_stale = false;
 static bool right_input_stale = false;
 static bool a_input_stale = false;
+static bool x_input_stale = false;
+static bool y_input_stale = false;
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
@@ -98,6 +100,18 @@ void dropStaleInputs () {
     gm->playerInput.aJustPressed = false;
     a_input_stale = false;
   }
+
+  if (x_input_stale) {
+    gm->playerInput.xPressed = false;
+    gm->playerInput.xJustPressed = false;
+    x_input_stale = false;
+  }
+
+  if (y_input_stale) {
+    gm->playerInput.yPressed = false;
+    gm->playerInput.yJustPressed = false;
+    y_input_stale = false;
+  }
 }
 
 // probably move this and parsePlayerInput
@@ -121,6 +135,14 @@ void cleanUpInput(GameManager *gm) {
 
   if (!a_pressed_this_frame) {
     gm->playerInput.aJustPressed = false;
+  }
+
+  if (!x_pressed_this_frame) {
+    gm->playerInput.xJustPressed = false;
+  }
+
+  if (!y_pressed_this_frame) {
+    gm->playerInput.yJustPressed = false;
   }
 }
 
@@ -173,6 +195,22 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         }
         break;
 
+      case SDLK_a:
+        if (!e.key.repeat) {
+          x_pressed_this_frame = true;
+          gm->playerInput.xPressed = true;
+          gm->playerInput.xJustPressed = true;
+        }
+        break;
+
+      case SDLK_s:
+        if (!e.key.repeat) {
+          y_pressed_this_frame = true;
+          gm->playerInput.yPressed = true;
+          gm->playerInput.yJustPressed = true;
+        }
+        break;
+
     }
   } else if (e.type == SDL_KEYUP) {
     switch (e.key.keysym.sym) {
@@ -222,6 +260,23 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         }
         break;
 
+      case SDLK_a:
+        if (!x_pressed_this_frame) {
+          gm->playerInput.xPressed = false;
+          gm->playerInput.xJustPressed = false;
+        } else {
+          x_input_stale = true;
+        }
+        break;
+
+      case SDLK_s:
+        if (!y_pressed_this_frame) {
+          gm->playerInput.yPressed = false;
+          gm->playerInput.yJustPressed = false;
+        } else {
+          y_input_stale = true;
+        }
+        break;
     }
   }
 }
