@@ -15,15 +15,15 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     RealPoint mPos = { 192, 32 };
     this->_backgroundMatrix = std::shared_ptr<MatrixOfSprites>(
       new MatrixOfSprites(
-        mPos, 8, 8, 64, 32, 0, 0, 1, 1, "../assets/gray_bg_block.png", renderer, map
+        mPos, 8, 8, 64, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer, map
 
       )
     );
 
     // TODO: i guess rm this. or at least stop doing it if its not going to be used
-    this->generatePieceList();
+    //this->generatePieceList();
   } else {
-    std::cout << "puzzle_level can't find file(s)";
+    std::cout << "puzzle_level can't find file(s)\n";
   }
 
   /*
