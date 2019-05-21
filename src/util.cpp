@@ -120,9 +120,19 @@ std::vector<std::vector<int>> Util::csvToVectorOfVectorsOfInts(std::string f) {
 }
 
 int Util::getRandomIntInRange(int exclusiveUpperBound) {
+#ifdef __MINGW32__
+  // already done in main
+  //srand(time(0));
+  int r = (rand() % exclusiveUpperBound);
+
+  return r;
+
+#else
   std::random_device rd;
   std::mt19937 eng(rd());
   std::uniform_int_distribution<> dist(0, exclusiveUpperBound-1);
 
   return dist(eng);
+
+#endif
 }

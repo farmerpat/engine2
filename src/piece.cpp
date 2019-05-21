@@ -34,36 +34,6 @@ Piece::~Piece() {
   }
 }
 
-void Piece::rotateClockwise() {
-  std::vector<std::vector<int>> tempBlockMap = { {0,0,0}, {0,0,0}, {0,0,0} };
-  tempBlockMap[0][0] = this->_blockMap[2][0];
-  tempBlockMap[0][1] = this->_blockMap[1][0];
-  tempBlockMap[0][2] = this->_blockMap[0][0];
-  tempBlockMap[1][0] = this->_blockMap[2][1];
-  tempBlockMap[1][1] = this->_blockMap[1][1];
-  tempBlockMap[1][2] = this->_blockMap[0][1];
-  tempBlockMap[2][0] = this->_blockMap[2][2];
-  tempBlockMap[2][1] = this->_blockMap[1][2];
-  tempBlockMap[2][2] = this->_blockMap[0][2];
-
-  this->_blockMap = tempBlockMap;
-}
-
-void Piece::rotateCounterClockwise() {
-  std::vector<std::vector<int>> tempBlockMap = { {0,0,0}, {0,0,0}, {0,0,0} };
-
-  tempBlockMap[0][0] = this->_blockMap[0][2];
-  tempBlockMap[0][1] = this->_blockMap[1][2];
-  tempBlockMap[0][2] = this->_blockMap[2][2];
-  tempBlockMap[1][0] = this->_blockMap[0][1];
-  tempBlockMap[1][1] = this->_blockMap[1][1];
-  tempBlockMap[1][2] = this->_blockMap[2][1];
-  tempBlockMap[2][0] = this->_blockMap[0][0];
-  tempBlockMap[2][1] = this->_blockMap[1][0];
-  tempBlockMap[2][2] = this->_blockMap[2][0];
-  this->_blockMap = tempBlockMap;
-}
-
 void Piece::render(SDL_Renderer* renderer) {
   // put the texture everywhere we have a 1 on the map
   RealPoint thisBlockPos;

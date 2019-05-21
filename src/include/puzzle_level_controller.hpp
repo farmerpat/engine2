@@ -7,8 +7,9 @@
 #include "level_controller.hpp"
 #include "level.hpp"
 #include "sprite.hpp"
-#include "piece.hpp"
-#include "levels/puzzle_level.hpp"
+//#include "piece.hpp"
+//#include "o_piece.hpp"
+//#include "levels/puzzle_level.hpp"
 
 class PuzzleLevel;
 

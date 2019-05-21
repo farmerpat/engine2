@@ -87,6 +87,7 @@ set(
   src/levels/puzzle_level.cpp
   src/level_controller.cpp
   src/puzzle_level_controller.cpp
+  src/o_piece.cpp
 )
 
 add_executable(main src/main.cpp ${SOURCES})

@@ -20,6 +20,7 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
       )
     );
 
+    // TODO: i guess rm this. or at least stop doing it if its not going to be used
     this->generatePieceList();
   } else {
     std::cout << "puzzle_level can't find file(s)";

@@ -4,7 +4,14 @@
 #include <string>
 #include <vector>
 #include <fstream>
+
+#ifdef __MINGW32__
+#include <stdlib.h>
+#include <time.h>
+#else
 #include <random>
+#endif
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"

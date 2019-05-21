@@ -11,7 +11,10 @@
 // we could automatically generate bg holes on the fly
 // from rotations of the pieces in the pool.
 
+#include "include/piece.hpp"
+#include "include/o_piece.hpp"
 #include "include/puzzle_level_controller.hpp"
+#include "include/levels/puzzle_level.hpp"
 #include <iostream>
 
 PuzzleLevelController::PuzzleLevelController(PuzzleLevel *level) : LevelController() {
@@ -59,16 +62,24 @@ void PuzzleLevelController::deployPiece() {
     SDL_Renderer *renderer = gm->getWindowRenderer();
 
     RealPoint pPos = { (screenWidth/2.0), 0.0 };
-    //std::vector<std::vector<int>> map = { {1,1,1}, {1,0,1}, {1,1,1}};
-    std::vector<std::vector<int>> map = this->_puzzleLevel->grabRandomPieceMap();
+    // a factory instead of this.
+    //std::vector<std::vector<int>> map = this->_puzzleLevel->grabRandomPieceMap();
+
     // TODO: rotate the piece randomly?
 
     // do i want to to just keep randomly sending peices? do i want intelligently
     // send them only pieces they can use or do i want to send garabge
     // sometimes (e.g. pick a piece shape from the list randomly)?
     // or do i just want to generate pieces completely randomly?
+    //std::unique_ptr<Sprite> pinkPiece = std::unique_ptr<Sprite>(
+      //new Piece(pPos, "assets/pink_block.png", renderer, map)
+    //);
+
+    // TODO: implement a PieceFactory class to get a specific piece (given an enum I guess)
+    // or return a random one
+
     std::unique_ptr<Sprite> pinkPiece = std::unique_ptr<Sprite>(
-      new Piece(pPos, "assets/pink_block.png", renderer, map)
+      new OPiece(pPos, renderer)
     );
 
     this->_puzzleLevel->addSprite(std::move(pinkPiece));

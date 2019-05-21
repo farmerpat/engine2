@@ -14,14 +14,19 @@ class Piece : public Sprite {
   public:
     Piece(RealPoint, std::string, SDL_Renderer*);
     Piece(RealPoint, std::string, SDL_Renderer*, std::vector<std::vector<int>>);
-    ~Piece();
-    void rotateClockwise();
-    void rotateCounterClockwise();
+    virtual ~Piece();
     void render(SDL_Renderer*);
     void update(float);
     int getBitAt(int,int);
     void setBitAt(int,int,int);
     bool someBlockSet();
+    virtual void rotateClockwise() {};
+    virtual void rotateCounterClockwise() {};
+    // TODO: if i don't end up adding the ability to expand, rename these
+    virtual void distortLeft()  {};
+    virtual void distortRight() {};
+    virtual void distortUp() {};
+    virtual void distortDown() {};
 
   protected:
     SDL_Texture *_blockTexture = 0;

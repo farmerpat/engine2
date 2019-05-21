@@ -47,6 +47,7 @@ static bool down_input_stale = false;
 static bool left_input_stale = false;
 static bool right_input_stale = false;
 static bool a_input_stale = false;
+static bool b_input_stale = false;
 static bool x_input_stale = false;
 static bool y_input_stale = false;
 
@@ -102,6 +103,12 @@ void dropStaleInputs () {
     a_input_stale = false;
   }
 
+  if (b_input_stale) {
+    gm->playerInput.bPressed = false;
+    gm->playerInput.bJustPressed = false;
+    b_input_stale = false;
+  }
+
   if (x_input_stale) {
     gm->playerInput.xPressed = false;
     gm->playerInput.xJustPressed = false;
@@ -136,6 +143,10 @@ void cleanUpInput(GameManager *gm) {
 
   if (!a_pressed_this_frame) {
     gm->playerInput.aJustPressed = false;
+  }
+
+  if (!b_pressed_this_frame) {
+    gm->playerInput.bJustPressed = false;
   }
 
   if (!x_pressed_this_frame) {
@@ -219,6 +230,14 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         }
         break;
 
+      case SDLK_d:
+        if (!e.key.repeat) {
+          b_pressed_this_frame = true;
+          gm->playerInput.bPressed = true;
+          gm->playerInput.bJustPressed = true;
+        }
+        break;
+
     }
   } else if (e.type == SDL_KEYUP) {
     switch (e.key.keysym.sym) {
@@ -284,6 +303,15 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
           gm->playerInput.yJustPressed = false;
         } else {
           y_input_stale = true;
+        }
+        break;
+
+      case SDLK_d:
+        if (!b_pressed_this_frame) {
+          gm->playerInput.bPressed = false;
+          gm->playerInput.bJustPressed = false;
+        } else {
+          b_input_stale = true;
         }
         break;
     }

@@ -1,4 +1,5 @@
 #include "include/piece_controller.hpp"
+#include "include/piece.hpp"
 
 PieceController::PieceController(Piece *p) {
   this->_piece = p;
@@ -16,17 +17,30 @@ void PieceController::update(float dt) {
   );
 
   if (gm) {
-    if (gm->playerInput.leftJustPressed) {
-      // keep it in bounds
-      move = -this->_moveSize;
+    if (gm->playerInput.bPressed) {
+      // then the d-pad should warp the piece, not move it
+      if (gm->playerInput.leftJustPressed) {
+        this->_piece->distortLeft();
+      } else if (gm->playerInput.rightJustPressed) {
+        this->_piece->distortRight();
+      } else if (gm->playerInput.upJustPressed) {
+        this->_piece->distortUp();
+      } else if (gm->playerInput.downJustPressed) {
+        this->_piece->distortDown();
+      }
+    } else {
+      if (gm->playerInput.leftJustPressed) {
+        // keep it in bounds
+        move = -this->_moveSize;
 
-    } else if (gm->playerInput.rightJustPressed) {
-      move = this->_moveSize;
+      } else if (gm->playerInput.rightJustPressed) {
+        move = this->_moveSize;
 
-    }
+      }
 
-    if (gm->playerInput.downHeld) {
-      downAccel = true;
+      if (gm->playerInput.downHeld) {
+        downAccel = true;
+      }
     }
 
     if (gm->playerInput.aJustPressed) {
