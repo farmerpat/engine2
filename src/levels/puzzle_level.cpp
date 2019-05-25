@@ -39,7 +39,7 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     )
   );
 
-  RealPoint p2 = { 3.0, 50.0 };
+  RealPoint p2 = { 3.0, 5.0 };
   std::vector<std::vector<int>> m2 = {
     { 0, 1, 1 },
     { 0, 1, 1 },

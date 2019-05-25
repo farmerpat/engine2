@@ -15,10 +15,6 @@ Level::Level(SDL_Renderer*) {
 
 Level::~Level() {
   this->_sprites.clear();
-
-  if (_texture) {
-    SDL_DestroyTexture(this->_texture);
-  }
 }
 
 void Level::update(float dt) {

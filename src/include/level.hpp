@@ -31,13 +31,10 @@ class Level {
     std::vector<std::unique_ptr<Sprite>> _backgroundElements;
     std::vector<std::unique_ptr<Sprite>> _sprites;
     std::vector<std::unique_ptr<Sprite>> _uiElements;
-    Sprite *_hero;
-    SDL_Texture *_texture;
     void renderBackgroundElements(SDL_Renderer*);
     void renderSprites(SDL_Renderer*);
     void renderUiElements(SDL_Renderer*);
     LevelController *_levelController = 0;
-    // TODO (asap) init and add a level controller
 
 };
 #endif
