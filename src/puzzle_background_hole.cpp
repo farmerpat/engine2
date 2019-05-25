@@ -3,6 +3,17 @@
 PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, std::vector<std::vector<int>> map) {
   this->_parentMatrixPos = pos;
   this->_holeMap = map;
+
+  std::unique_ptr<PuzzleBackgroundHoleController> deathController =
+    std::unique_ptr<PuzzleBackgroundHoleController>(
+        new DeathTimerPuzzleBackgroundHoleController(this, 480)
+    );
+
+  this->_controllers.push_back(std::move(deathController));
+}
+
+PuzzleBackgroundHole::~PuzzleBackgroundHole() {
+  this->_controllers.clear();
 }
 
 void PuzzleBackgroundHole::addController(std::unique_ptr<PuzzleBackgroundHoleController> ctrl) {
@@ -23,8 +34,11 @@ void PuzzleBackgroundHole::update() {
 
   for (i=0; i<len; i++) {
     std::unique_ptr<PuzzleBackgroundHoleController> &ctrl = this->_controllers[i];
-    ctrl->update();
 
+    // TODO: otherwise, remove it!
+    if (ctrl->isActive()) {
+      ctrl->update();
+    }
   }
 }
 

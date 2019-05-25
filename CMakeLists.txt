@@ -90,6 +90,7 @@ set(
   src/o_piece.cpp
   src/puzzle_background_hole.cpp
   src/puzzle_background_hole_controller.cpp
+  src/death_timer_puzzle_background_hole_controller.cpp
 
 )
 
