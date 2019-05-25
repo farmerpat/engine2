@@ -405,7 +405,7 @@ int main (int argc, char **argv) {
     if (renderer) {
       //Level *testLevel = new InvaderzMatrixLevel(renderer);
       Level *testLevel = new PuzzleLevel(
-        renderer, "assets/level_maps/level0.txt", "assets/piece_lists/level0_pieces.txt"
+        renderer, "assets/level_maps/levelfull.txt", "assets/piece_lists/level0_pieces.txt"
       );
 
       gm->setCurrentLevel(testLevel);

@@ -88,6 +88,9 @@ set(
   src/level_controller.cpp
   src/puzzle_level_controller.cpp
   src/o_piece.cpp
+  src/puzzle_background_hole.cpp
+  src/puzzle_background_hole_controller.cpp
+
 )
 
 add_executable(main src/main.cpp ${SOURCES})

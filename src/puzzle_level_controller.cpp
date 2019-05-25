@@ -24,12 +24,57 @@ PuzzleLevelController::PuzzleLevelController(PuzzleLevel *level) : LevelControll
 PuzzleLevelController::~PuzzleLevelController() {}
 
 void PuzzleLevelController::update(float dt) {
-  if (!this->_puzzleLevel->getBackgroundMatrix()->someEmptyBlocks()) {
+  if (!this->_puzzleLevel->getBackgroundMatrix()->someEmptyBlocks() &&
+      this->_puzzleLevel->getBgHoles().size() == 0
+      ) {
     // open a win modal, and tell the gm to transition to the next
     // level somehow...
     std::cout << "you are super player!\n";
 
   } else {
+    // TODO: its better to just clobber the bg matrix map with one entirely
+    // consisting of ones...probably do that instead
+    // set the entire matrix to 1s
+    std::shared_ptr<MatrixOfSprites> bgMatrix = this->_puzzleLevel->getBackgroundMatrix();
+
+    int rows = this->_puzzleLevel->getBackgroundMatrix()->getNumRows();
+    int cols =  this->_puzzleLevel->getBackgroundMatrix()->getNumCols();
+
+    for (int i=0; i<rows; i++) {
+      for (int j=0; j<cols; j++) {
+        this->_puzzleLevel->getBackgroundMatrix()->setBitAt(i, j, 1);
+
+      }
+    }
+
+    // iterate over _bgHoles, call update on each of them, then clear the appropriate bits
+    // in bg matrix
+    std::vector<std::shared_ptr<PuzzleBackgroundHole>>::size_type i, len;
+    std::vector<std::shared_ptr<PuzzleBackgroundHole>> holes = this->_puzzleLevel->getBgHoles();
+    len = holes.size();
+
+    for (i=0; i<len; i++) {
+      std::shared_ptr<PuzzleBackgroundHole> &pbh = holes[i];
+      pbh->update();
+
+      if (pbh->isAlive()) {
+        RealPoint mp = pbh->getMatrixPos();
+        std::vector<std::vector<int>> holeMap = pbh->getHoleMap();
+        int startRow = (int)mp.X();
+        int startCol = (int)mp.Y();
+        int endRow = startRow+3;
+        int endCol = startCol+3;
+
+        for (int i=0, row=startRow; row<endRow; row++, i++) {
+          for (int j=0, col=startCol; col<endCol; col++, j++) {
+            //this->_puzzleLevel->getBackgroundMatrix()->setBitAt(startRow, startCol, holeMap[i][j]);
+            this->_puzzleLevel->getBackgroundMatrix()->setBitAt(row, col, holeMap[i][j]);
+          }
+        }
+      }
+      // remove the dead ones...
+    }
+
     // if theres no active pieces on the screen, add a a new one.
     if (!this->pieceOnScreen()) {
       this->deployPiece();

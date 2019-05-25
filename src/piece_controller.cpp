@@ -93,6 +93,8 @@ void PieceController::update(float dt) {
               for (int i=0; i<3; i++) {
                 for (int j=0; j<3; j++) {
                   if (this->_piece->getBitAt(j,i) == 1) {
+                    // tell it to flip the hole bit somehow
+                    pl->setBgHoleBit(pieceMatrixPositionX, pieceMatrixPositionY, i, j, 1);
                     bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
                     this->_piece->setBitAt(j,i,0);
 
