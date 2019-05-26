@@ -6,7 +6,10 @@
 #include "real_point.hpp"
 #include "puzzle_background_hole_controller.hpp"
 #include "death_timer_puzzle_background_hole_controller.hpp"
+#include "oscillate_right_left_puzzle_background_hole_controller.hpp"
 
+// TODO:
+// if want fade out effect on kill, use texture instead of emptiness
 class PuzzleBackgroundHoleController;
 
 class PuzzleBackgroundHole {
@@ -18,6 +21,7 @@ class PuzzleBackgroundHole {
     void kill();
     void update();
     RealPoint getMatrixPos();
+    void setMatrixPos(RealPoint);
     std::vector<std::vector<int>> getHoleMap();
     void setBitAt(int, int, int);
 

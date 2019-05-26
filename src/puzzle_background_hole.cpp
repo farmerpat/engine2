@@ -9,7 +9,14 @@ PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, std::vector<std::vecto
         new DeathTimerPuzzleBackgroundHoleController(this, 480)
     );
 
-  this->_controllers.push_back(std::move(deathController));
+  //this->_controllers.push_back(std::move(deathController));
+
+  std::unique_ptr<PuzzleBackgroundHoleController> moveController =
+    std::unique_ptr<PuzzleBackgroundHoleController>(
+        new OscillateRightLeftPuzzleBackgroundHoleController(this, 4)
+    );
+
+  this->_controllers.push_back(std::move(moveController));
 }
 
 PuzzleBackgroundHole::~PuzzleBackgroundHole() {
@@ -44,6 +51,10 @@ void PuzzleBackgroundHole::update() {
 
 RealPoint PuzzleBackgroundHole::getMatrixPos() {
   return this->_parentMatrixPos;
+}
+
+void PuzzleBackgroundHole::setMatrixPos(RealPoint newPos) {
+  this->_parentMatrixPos = newPos;
 }
 
 std::vector<std::vector<int>> PuzzleBackgroundHole::getHoleMap() {
