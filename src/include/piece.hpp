@@ -31,7 +31,7 @@ class Piece : public Sprite {
   protected:
     SDL_Texture *_blockTexture = 0;
     std::vector<std::vector<int>> _blockMap;
-    char _blockWidth = 8;
+    int _blockWidth = 8;
     char _numCols = 3;
     char _numRows = 3;
 

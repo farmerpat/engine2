@@ -12,10 +12,10 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   if (Util::fileExists(this->_levelFileName) && Util::fileExists(this->_piecesFileName)) {
     std::vector<std::vector<int>> map = Util::csvToVectorOfVectorsOfInts(this->_levelFileName);
 
-    RealPoint mPos = { 192, 32 };
+    RealPoint mPos = { 64, 64 };
     this->_backgroundMatrix = std::shared_ptr<MatrixOfSprites>(
       new MatrixOfSprites(
-        mPos, 8, 8, 64, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer, map
+        mPos, 16, 16, 46, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer, map
 
       )
     );

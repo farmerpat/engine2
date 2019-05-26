@@ -29,7 +29,8 @@
 
 // TODO: clean up these globals
 static const int SCREEN_WIDTH = 640;
-static const int SCREEN_HEIGHT = 480;
+//static const int SCREEN_HEIGHT = 480;
+static const int SCREEN_HEIGHT = 800;
 
 static bool up_pressed_this_frame = false;
 static bool down_pressed_this_frame = false;
@@ -338,8 +339,8 @@ int main (int argc, char **argv) {
   };
 
   SDL_Point window_size = {
-    640,
-    480
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT
   };
 
   SDL_Rect texture_dest_rect;

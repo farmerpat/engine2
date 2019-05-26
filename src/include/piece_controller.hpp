@@ -19,8 +19,9 @@ class PieceController : public Controller {
     // i think that these should be coming from Piece
     // or from GameManager, or from somewhere...
     // e.g. should be "blockWidth" or something
-    int _moveSize = 8;
-    int _gravity = 8;
+    // TODO: as above
+    int _moveSize = 16;
+    int _gravity = 16;
     int _gravityFrameCounter = 0;
     int _gravityFrameDelay = 30;
 };

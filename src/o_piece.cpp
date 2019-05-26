@@ -3,7 +3,9 @@
 const std::vector<std::vector<int>> OPiece::_map = { {1,1,1}, {1,0,1}, {1,1,1} };
 
 OPiece::OPiece(RealPoint pos, SDL_Renderer *renderer)
-  : Piece (pos, "assets/pink_block.png", renderer, OPiece::_map) { }
+  : Piece (pos, "assets/pink_block.png", renderer, OPiece::_map) {
+  this->_blockWidth = 16;
+}
 
 //OPiece::OPiece(RealPoint pos, std::string file, SDL_Renderer *renderer)
   //: Piece (pos, file, renderer, OPiece::_map) { }
