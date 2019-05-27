@@ -14,6 +14,7 @@ class PuzzleBackgroundHoleController;
 
 class PuzzleBackgroundHole {
   public:
+    // TODO: change vector to ScreenMatrix
     PuzzleBackgroundHole(RealPoint, std::vector<std::vector<int>>);
     virtual ~PuzzleBackgroundHole();
     void addController(std::unique_ptr<PuzzleBackgroundHoleController>);

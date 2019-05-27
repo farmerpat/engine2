@@ -16,11 +16,11 @@ void InvaderzController::update(float dt) {
   float x = pos->X();
 
   int xMin = this->_xMin -
-    (this->_sprite->getFirstNonEmptyColumnIndex()*
+    (this->_sprite->getMatrix().getFirstNonEmptyColumnIndex()*
     (this->_sprite->getWidth()+this->_sprite->getXPad()));
 
   int xMax = this->_xMax +
-    (((this->_sprite->getNumCols()-1) - this->_sprite->getLastNonEmptyColumnIndex())*
+    (((this->_sprite->getNumCols()-1) - this->_sprite->getMatrix().getLastNonEmptyColumnIndex())*
      (this->_sprite->getWidth()+this->_sprite->getXPad()));
 
   if (xMin!=-1 && xMax!=-1) {

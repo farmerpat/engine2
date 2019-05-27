@@ -1,20 +1,31 @@
 #include "include/screen_matrix.hpp"
 
+ScreenMatrix::ScreenMatrix() { }
 // rows is y
 // cols is x
 ScreenMatrix::ScreenMatrix(int xMax, int yMax, int fill=0) {
   this->_xMax = xMax;
   this->_yMax = yMax;
 
-  for (int y=0; y<this->_yMax; y++) {
+  for (int x=0; x<this->_xMax; x++) {
     std::vector<int> row;
 
-    for (int x=0; x<this->_xMax; x++) {
+    for (int y=0; y<this->_yMax; y++) {
       row.push_back(fill);
     }
 
     this->_mat.push_back(row);
   }
+
+  //for (int y=0; y<this->_yMax; y++) {
+    //std::vector<int> row;
+
+    //for (int x=0; x<this->_xMax; x++) {
+      //row.push_back(fill);
+    //}
+
+    //this->_mat.push_back(row);
+  //}
 }
 
 ScreenMatrix::~ScreenMatrix() {
@@ -36,3 +47,64 @@ void ScreenMatrix::print() {
     }
   }
 }
+
+bool ScreenMatrix::someEmptyBlocks() {
+  bool pred = false;
+
+  for (int y=0; y<this->_yMax; y++) {
+    if (pred) break;
+    for (int x=0; x<this->_xMax; x++) {
+      if (this->_mat[y][x] == 0) {
+        pred = true;
+        break;
+
+      }
+    }
+  }
+
+  return pred;
+}
+
+int ScreenMatrix::getLastNonEmptyColumnIndex() {
+  int index = -1;
+
+  for (int x=this->_xMax-1; x>-1; x--) {
+    bool someOnes = false;
+    for (int y=0; y<this->_yMax; y++) {
+      if (this->_mat[y][x]) {
+        someOnes = true;
+        break;
+
+      }
+    }
+
+    if (someOnes) {
+      index = x;
+      break;
+    }
+  }
+
+  return index;
+}
+
+int ScreenMatrix::getFirstNonEmptyColumnIndex() {
+  int index = -1;
+  for (int x=0; x<this->_xMax; x++) {
+    bool someOnes = false;
+
+    for (int y=0; y<this->_yMax; y++) {
+      if (this->_mat[y][x]) {
+        someOnes = true;
+        break;
+      }
+    }
+
+    if (someOnes) {
+      index = x;
+      break;
+    }
+  }
+
+  return index;
+}
+

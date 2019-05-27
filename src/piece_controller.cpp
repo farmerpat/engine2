@@ -8,7 +8,8 @@ PieceController::PieceController(Piece *p) {
 void PieceController::update(float dt) {
   this->_gravityFrameCounter++;
   GameManager *gm = GameManager::getInstance();
-  int move = 0;
+  int moveX = 0;
+  int moveY = 0;
   bool downAccel = false;
 
   RealPoint newPos(
@@ -31,14 +32,18 @@ void PieceController::update(float dt) {
     } else {
       if (gm->playerInput.leftJustPressed) {
         // keep it in bounds
-        move = -this->_moveSize;
+        moveX = -this->_moveSize;
 
       } else if (gm->playerInput.rightJustPressed) {
-        move = this->_moveSize;
+        moveX = this->_moveSize;
 
-      }
+      } else if (gm->playerInput.downJustPressed) {
+        moveY = this->_moveSize;
 
-      if (gm->playerInput.downHeld) {
+      } else if (gm->playerInput.upJustPressed) {
+        moveY = -this->_moveSize;
+
+      } else if (gm->playerInput.downHeld) {
         downAccel = true;
       }
     }
@@ -73,14 +78,14 @@ void PieceController::update(float dt) {
             // this could be updated to be more flexible
             bool allowFlip = true;
 
-            for (int i=0; i<3; i++) {
+            for (int y=0; y<3; y++) {
               if (!allowFlip) break;
-              for (int j=0; j<3; j++) {
+              for (int x=0; x<3; x++) {
                 // i have no idea why these are backwards
                 // figure out a way to optionally make sure that all the blocks can be flipped
                 // before flipping any
-                if (this->_piece->getBitAt(j,i) == 1) {
-                  if (!bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
+                if (this->_piece->getMatrix().getBitAt(x, y) == 1) {
+                  if (!bgMat->getMatrix().getBitAt(pieceMatrixPositionX+x, pieceMatrixPositionY+y) == 0) {
                     allowFlip = false;
                     break;
 
@@ -90,13 +95,14 @@ void PieceController::update(float dt) {
             }
 
             if (allowFlip) {
-              for (int i=0; i<3; i++) {
-                for (int j=0; j<3; j++) {
-                  if (this->_piece->getBitAt(j,i) == 1) {
+              for (int y=0; y<3; y++) {
+                for (int x=0; x<3; x++) {
+                  if (this->_piece->getMatrix().getBitAt(x,y) == 1) {
                     // tell it to flip the hole bit somehow
-                    pl->setBgHoleBit(pieceMatrixPositionX, pieceMatrixPositionY, i, j, 1);
-                    bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
-                    this->_piece->setBitAt(j,i,0);
+                    pl->setBgHoleBit(pieceMatrixPositionX, pieceMatrixPositionY, x, y, 1);
+                    //bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
+                    bgMat->getMatrix().setBitAt(pieceMatrixPositionX+x,pieceMatrixPositionY+y,1);
+                    this->_piece->getMatrix().setBitAt(x,y,0);
 
                   }
                 }
@@ -125,14 +131,18 @@ void PieceController::update(float dt) {
 
   // TODO:
   // keep this in bounds
-  newPos.setX(newPos.X()+move);
+  newPos.setX(newPos.X()+moveX);
+  newPos.setY(newPos.Y()+moveY);
 
   if (this->_gravityFrameCounter >= this->_gravityFrameDelay) {
     this->_gravityFrameCounter = 0;
-    newPos.setY(newPos.Y()+this->_gravity);
+    //newPos.setY(newPos.Y()+this->_gravity);
 
-    if (newPos.Y() > gm->getScreenHeight()) {
-      this->_piece->kill();
+    // TODO:
+    // this is no good. must prevent moves that would take us OOB.
+    if (newPos.Y() >= (gm->getScreenHeight()-(this->_piece->getBlockWidth() * this->_piece->getMatrix().getYMax()) )) {
+      //this->_piece->kill();
+      newPos.setY(gm->getScreenHeight() - (this->_piece->getBlockWidth() * this->_piece->getMatrix().getYMax()));
     }
   } else {
     if (downAccel) {

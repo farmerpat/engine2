@@ -23,6 +23,7 @@ InvaderzMatrixLevel::InvaderzMatrixLevel(SDL_Renderer *renderer) : Level(rendere
 
     this->addSprite(std::move(ese));
 
+    /*
     int map[3][10] = {
       //{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 },
       //{ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 },
@@ -33,12 +34,15 @@ InvaderzMatrixLevel::InvaderzMatrixLevel(SDL_Renderer *renderer) : Level(rendere
 
     int *mapRows[3] = { map[0], map[1], map[2] };
     int **ptrMap = mapRows;
+    */
 
     //std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(
     //new MatrixOfSprites(
     //mPos, 16, 16, 2, 10, 30, 30, 2, 2, "assets/enemy1_single_frame.png", renderer, mapRows
     //)
     //);
+
+    ScreenMatrix mapRows(10, 3, 1);
 
     RealPoint mPos = { 30.0, 110.0 };
     std::unique_ptr<Sprite> mat = std::unique_ptr<Sprite>(

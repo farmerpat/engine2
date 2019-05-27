@@ -1,7 +1,8 @@
 #include "include/matrix_of_sprites.hpp"
+#include <iostream>
 
 MatrixOfSprites::MatrixOfSprites
-  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, std::vector<std::vector<int>> map)
+  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, ScreenMatrix map)
   : Sprite (pos, w, h) {
 
   this->_numRows = nRows;
@@ -17,6 +18,26 @@ MatrixOfSprites::MatrixOfSprites
   this->_matrix = map;
 }
 
+MatrixOfSprites::MatrixOfSprites
+  (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r)
+  : Sprite (pos, w, h) {
+
+  this->_numRows = nRows;
+  this->_numCols = nCols;
+  this->_xPad = xPad;
+  this->_yPad = yPad;
+  this->_texture = Util::loadTexture(img, r);
+  this->setXScale(xScale);
+  this->setYScale(yScale);
+  this->_isAggregate = true;
+  this->setLayer(1);
+
+  ScreenMatrix mat(nRows, nCols, 1);
+  this->_matrix = mat;
+
+}
+
+/*
 MatrixOfSprites::MatrixOfSprites
   (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r, int **map = 0)
   : Sprite (pos, w, h) {
@@ -44,38 +65,46 @@ MatrixOfSprites::MatrixOfSprites
     }
   }
 }
+*/
 
 MatrixOfSprites::~MatrixOfSprites() {
   if (this->_texture) {
     SDL_DestroyTexture(this->_texture);
   }
 
-  for (auto row : this->_matrix) {
-    row.clear();
-  }
+  //for (auto row : this->_matrix) {
+    //row.clear();
+  //}
 
-  this->_matrix.clear();
+  //this->_matrix.clear();
 }
 
 void MatrixOfSprites::render(SDL_Renderer *renderer) {
   SDL_Rect texture_dest_rect;
   int xBase = (int)this->getPos()->X();
   int yBase = (int)this->getPos()->Y();
-  int x;
-  int y;
+  int rectX;
+  int rectY;
 
-  for (int i=0; i<this->_numRows; i++) {
-    y = yBase + (i * (this->_width + this->_yPad));
+  // probably just grab maxX from _mat
+  for (int x=0; x<this->_numRows; x++) {
+    //y = yBase + (i * (this->_width + this->_yPad));
+    rectX = xBase + (x * (this->_width + this->_xPad));
 
-    for (int j=0; j<this->_numCols; j++) {
-      if (this->_matrix[i][j]) {
-        x = xBase + (j * (this->_width + this->_xPad));
-        texture_dest_rect.x = x;
-        texture_dest_rect.y = y;
+    for (int y=0; y<this->_numCols; y++) {
+      if (this->_matrix.getBitAt(x, y)) {
+        //x = xBase + (j * (this->_width + this->_xPad));
+        rectY = yBase + (y * (this->_width + this->_yPad));
+        texture_dest_rect.x = rectX;
+        texture_dest_rect.y = rectY;
+        //texture_dest_rect.y = rectX;
+        //texture_dest_rect.x = rectY;
         texture_dest_rect.w = this->getWidth() * this->_xScale;
         texture_dest_rect.h = this->getHeight() * this->_yScale;
 
         SDL_RenderCopy(renderer, this->_texture, NULL, &texture_dest_rect);
+      } else {
+        std::cout <<"fyf\n";
       }
     }
   }
@@ -83,7 +112,9 @@ void MatrixOfSprites::render(SDL_Renderer *renderer) {
 
 // TODO: this seems so specific to invaderz that making collisionHandler
 // an object probably makes more sense.
+// TODO: update to use ScreenMatrix
 void MatrixOfSprites::collisionHandler(std::unique_ptr<Sprite> &other) {
+  /*
   SDL_Rect theirHitBox = other->getGlobalHitBox();
   SDL_Rect myHitBox;
   int xBase = (int)this->getPos()->X();
@@ -118,9 +149,12 @@ void MatrixOfSprites::collisionHandler(std::unique_ptr<Sprite> &other) {
       }
     }
   }
+  */
 }
 
+// TODO: update to use ScreenMatrix
 bool MatrixOfSprites::isCollidingWith(std::unique_ptr<Sprite> &other) {
+  /*
   // TODO: this could be more effecient. should be able to limit
   // i/j max based on other's hitbox. similarly for collisionHandler
   // furthermore, this is the same shape as collisionHandler. factor this out
@@ -155,6 +189,7 @@ bool MatrixOfSprites::isCollidingWith(std::unique_ptr<Sprite> &other) {
       }
     }
   }
+  */
 
   return false;
 }
@@ -175,53 +210,13 @@ int MatrixOfSprites::getNumRows() {
   return this->_numRows;
 }
 
-int MatrixOfSprites::getFirstNonEmptyColumnIndex() {
-  int index = -1;
-  for (int j=0; j<this->_numCols; j++) {
-    bool someOnes = false;
+//ScreenMatrix const MatrixOfSprites::getMatrix() const {
+  //return this->_matrix;
+//}
 
-    for (int i=0; i<this->_numRows; i++) {
-      if (this->_matrix[i][j]) {
-        someOnes = true;
-        break;
-      }
-    }
-
-    if (someOnes) {
-      index = j;
-      break;
-    }
-  }
-
-  return index;
-}
-
-int MatrixOfSprites::getLastNonEmptyColumnIndex() {
-  int index = -1;
-
-  for (int j=this->_numCols-1; j>-1; j--) {
-    bool someOnes = false;
-    for (int i=0; i<this->_numRows; i++) {
-      if (this->_matrix[i][j]) {
-        someOnes = true;
-        break;
-
-      }
-    }
-
-    if (someOnes) {
-      index = j;
-      break;
-    }
-  }
-
-  return index;
-}
-
-std::vector<std::vector<int>> const MatrixOfSprites::getMatrix() const {
+ScreenMatrix MatrixOfSprites::getMatrix() {
   return this->_matrix;
 }
-
 // TODO:
 // optimize this. e.g. can isCollidingWith use this?
 SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {
@@ -247,29 +242,10 @@ SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {
   return hb;
 }
 
-int MatrixOfSprites::getBitAt(int x,int y) {
-  return this->_matrix[x][y];
-}
+//int MatrixOfSprites::getBitAt(int x,int y) {
+  //return this->_matrix[x][y];
+//}
 
-void MatrixOfSprites::setBitAt(int x ,int y ,int val) {
-  this->_matrix[x][y] = val;
-}
-
-// again, this is basically identical to the code in piece.cpp
-// plz do objectify
-bool MatrixOfSprites::someEmptyBlocks() {
-  bool pred = false;
-
-  for (int i=0; i<this->_numRows; i++) {
-    if (pred) break;
-    for (int j=0; j<this->_numCols; j++) {
-      if (this->_matrix[i][j] == 0) {
-        pred = true;
-        break;
-
-      }
-    }
-  }
-
-  return pred;
-}
+//void MatrixOfSprites::setBitAt(int x ,int y ,int val) {
+  //this->_matrix[x][y] = val;
+//}

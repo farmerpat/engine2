@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <root name="engine2"/>
+    <includedir>
+        <dir name=""/>
+        <dir name="C:/Users/Patrick/source/repos/engine2/src/include/"/>
+    </includedir>
+    <paths>
+        <dir name=""/>
+        <dir name="C:/Users/Patrick/source/repos/engine2/src/"/>
+    </paths>
+</project>

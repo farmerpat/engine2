@@ -30,13 +30,13 @@ void InvaderzAiController::initMatrices() {
 }
 
 void InvaderzAiController::updateFrameShotDelay() {
-  const std::vector<std::vector<int>> mat = this->_sprite->getMatrix();
+  ScreenMatrix mat = this->_sprite->getMatrix();
   int rows = this->_sprite->getNumRows();
   int cols = this->_sprite->getNumCols();
 
   for (int i=0; i<rows; i++) {
     for (int j=0; j<cols; j++) {
-      if (mat[i][j]) {
+      if (mat.getBitAt(j, i)) {
         this->_frameShotDelayCounterMatrix[i][j]++;
 
         if (this->_frameShotDelayCounterMatrix[i][j] >= this->_frameShotDelay) {

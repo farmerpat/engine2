@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include "controller.hpp"
 #include "real_point.hpp"
+#include "screen_matrix.hpp"
 #include "config.hpp"
 #include "invaderz_matrix.hpp"
 #include "game_manager.hpp"

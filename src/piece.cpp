@@ -1,6 +1,6 @@
 #include "include/piece.hpp"
 
-Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer, std::vector<std::vector<int>> map)
+Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer, ScreenMatrix map)
   : Sprite(pos) {
     this->_width = this->_blockWidth * this->_numCols;
     this->_height = this->_blockWidth * this->_numRows;
@@ -18,14 +18,16 @@ Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
     this->_controller = new PieceController(this);
     this->_tag = "puzzle_piece";
 
-    for (int i=0; i<3; i++) {
-      std::vector<int> row;
-      for (int j=0; j<3; j++) {
-        row.push_back(1);
-      }
+    ScreenMatrix mat(3, 3, 1);
+    this->_blockMap = mat;
+    //for (int i=0; i<3; i++) {
+      //std::vector<int> row;
+      //for (int j=0; j<3; j++) {
+        //row.push_back(1);
+      //}
 
-      this->_blockMap.push_back(row);
-    }
+      //this->_blockMap.push_back(row);
+    //}
 }
 
 Piece::~Piece() {
@@ -41,15 +43,15 @@ void Piece::render(SDL_Renderer* renderer) {
   int thisXOffset;
   int thisYOffset;
 
-  for (char i=0; i<this->_numRows; i++) {
-    thisYOffset = i * this->_blockWidth;
+  for (char y=0; y<this->_numRows; y++) {
+    thisYOffset = y * this->_blockWidth;
     thisBlockPos.setY(this->_pos->Y() + thisYOffset);
 
-    for (char j=0; j<this->_numCols; j++) {
-      thisXOffset = j * this->_blockWidth;
+    for (char x=0; x<this->_numCols; x++) {
+      thisXOffset = x * this->_blockWidth;
       thisBlockPos.setX(this->_pos->X() + thisXOffset);
 
-      if (this->_blockMap[i][j]) {
+      if (this->_blockMap.getBitAt(x, y)) {
         // then render it
         textureDestRect.x = (int)thisBlockPos.X();
         textureDestRect.y = (int)thisBlockPos.Y();
@@ -65,22 +67,23 @@ void Piece::render(SDL_Renderer* renderer) {
 
 void Piece::update(float dt) { }
 
+ScreenMatrix Piece::getMatrix () { return this->_blockMap; }
 // these are literally duplicated in MatrixOfSprites
 // seems like an opportunity for a class (except a vector instead of an array)
-int Piece::getBitAt(int x,int y) {
-  return this->_blockMap[x][y];
-}
+//int Piece::getBitAt(int x,int y) {
+  //return this->_blockMap[x][y];
+//}
 
-void Piece::setBitAt(int x,int y,int val) {
-  this->_blockMap[x][y] = val;
-}
+//void Piece::setBitAt(int x,int y,int val) {
+  //this->_blockMap[x][y] = val;
+//}
 
 bool Piece::someBlockSet() {
   bool pred = false;
 
-  for (int i=0; i<this->_numRows; i++) {
-    for (int j=0; j<this->_numCols; j++) {
-      if (this->_blockMap[i][j] != 0) {
+  for (int y=0; y<this->_numRows; y++) {
+    for (int x=0; x<this->_numCols; x++) {
+      if (this->_blockMap.getBitAt(x,y) != 0) {
         pred = true;
         break;
 

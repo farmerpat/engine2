@@ -15,7 +15,9 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     RealPoint mPos = { 64, 64 };
     this->_backgroundMatrix = std::shared_ptr<MatrixOfSprites>(
       new MatrixOfSprites(
-        mPos, 16, 16, 46, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer, map
+        //mPos, 16, 16, 46, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer, map
+        mPos, 16, 16, 46, 32, 0, 0, 1, 1, "assets/gray_bg_block.png", renderer
+  //(pos, w, h, nRows, nCols, xPad, yPad, xScale, yScale, img, SDL_Renderer*, ScreenMatrix)
 
       )
     );
@@ -33,11 +35,11 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     new PuzzleBackgroundHole(p1, m1)
   );
 
-  this->_bgHoles.push_back(
-    std::move(
-      h1
-    )
-  );
+  //this->_bgHoles.push_back(
+    //std::move(
+      //h1
+    //)
+  //);
 
   RealPoint p2 = { 3.0, 5.0 };
   std::vector<std::vector<int>> m2 = {
@@ -50,11 +52,11 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     new PuzzleBackgroundHole(p2, m2)
   );
 
-  this->_bgHoles.push_back(
-    std::move(
-      h2
-    )
-  );
+  //this->_bgHoles.push_back(
+    //std::move(
+      //h2
+    //)
+  //);
 
   this->_levelController = new PuzzleLevelController(this);
 }

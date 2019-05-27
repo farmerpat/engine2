@@ -4,6 +4,7 @@
 #include <memory>
 #include "SDL.h"
 #include "../real_point.hpp"
+#include "../screen_matrix.hpp"
 #include "../game_manager.hpp"
 #include "../level.hpp"
 #include "../hero_sprite.hpp"

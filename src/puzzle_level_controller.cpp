@@ -24,7 +24,7 @@ PuzzleLevelController::PuzzleLevelController(PuzzleLevel *level) : LevelControll
 PuzzleLevelController::~PuzzleLevelController() {}
 
 void PuzzleLevelController::update(float dt) {
-  if (!this->_puzzleLevel->getBackgroundMatrix()->someEmptyBlocks() &&
+  if (!this->_puzzleLevel->getBackgroundMatrix()->getMatrix().someEmptyBlocks() &&
       this->_puzzleLevel->getBgHoles().size() == 0
       ) {
     // open a win modal, and tell the gm to transition to the next
@@ -40,9 +40,9 @@ void PuzzleLevelController::update(float dt) {
     int rows = this->_puzzleLevel->getBackgroundMatrix()->getNumRows();
     int cols =  this->_puzzleLevel->getBackgroundMatrix()->getNumCols();
 
-    for (int i=0; i<rows; i++) {
-      for (int j=0; j<cols; j++) {
-        this->_puzzleLevel->getBackgroundMatrix()->setBitAt(i, j, 1);
+    for (int y=0; y<rows; y++) {
+      for (int x=0; x<cols; x++) {
+        this->_puzzleLevel->getBackgroundMatrix()->getMatrix().setBitAt(x, y, 1);
 
       }
     }
@@ -65,10 +65,10 @@ void PuzzleLevelController::update(float dt) {
         int endRow = startRow+3;
         int endCol = startCol+3;
 
-        for (int i=0, row=startRow; row<endRow; row++, i++) {
-          for (int j=0, col=startCol; col<endCol; col++, j++) {
+        for (int y=0, row=startRow; row<endRow; row++, y++) {
+          for (int x=0, col=startCol; col<endCol; col++, x++) {
             //this->_puzzleLevel->getBackgroundMatrix()->setBitAt(startRow, startCol, holeMap[i][j]);
-            this->_puzzleLevel->getBackgroundMatrix()->setBitAt(row, col, holeMap[i][j]);
+            this->_puzzleLevel->getBackgroundMatrix()->getMatrix().setBitAt(row, col, holeMap[y][x]);
           }
         }
       }

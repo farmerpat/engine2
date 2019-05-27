@@ -9,13 +9,18 @@
 // types
 class ScreenMatrix {
   public:
+    ScreenMatrix();
     ScreenMatrix(int,int,int);
     ~ScreenMatrix();
     void setBitAt(int,int,int);
+    //int getBitAt(int,int) const;
     int getBitAt(int,int);
     void print();
     int getXMax() { return this->_xMax; }
     int getYMax() { return this->_yMax; }
+    bool someEmptyBlocks();
+    int getLastNonEmptyColumnIndex();
+    int getFirstNonEmptyColumnIndex();
 
   protected:
     std::vector<std::vector<int>> _mat;
