@@ -27,7 +27,8 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   }
 
   RealPoint p1 = { 20.0, 20.0 };
-  std::vector<std::vector<int>> m1 = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }};
+  ScreenMatrix m1(3,3,0);
+  m1.setBitAt(1,1,1);
 
   std::shared_ptr<PuzzleBackgroundHole> h1 = std::shared_ptr<PuzzleBackgroundHole>(
     new PuzzleBackgroundHole(p1, m1)
@@ -40,11 +41,14 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   );
 
   RealPoint p2 = { 3.0, 5.0 };
-  std::vector<std::vector<int>> m2 = {
-    { 0, 1, 1 },
-    { 0, 1, 1 },
-    { 0, 0, 0 }
-  };
+
+  // this is tedious. make sub-classes
+  ScreenMatrix m2(3,3,1);
+  m2.setBitAt(0,0,0);
+  m2.setBitAt(0,1,0);
+  m2.setBitAt(0,2,0);
+  m2.setBitAt(1,2,0);
+  m2.setBitAt(2,2,0);
 
   std::shared_ptr<PuzzleBackgroundHole> h2 = std::shared_ptr<PuzzleBackgroundHole>(
     new PuzzleBackgroundHole(p2, m2)
@@ -71,7 +75,7 @@ void PuzzleLevel::setBgHoleBit(int matrixPositionX, int matrixPositionY, int pie
     int y = (int)holePos.Y();
 
     if (x == matrixPositionX && y == matrixPositionY) {
-      pbh->setBitAt(pieceRow, pieceCol, val);
+      pbh->getHoleMap().setBitAt(pieceRow, pieceCol, val);
       break;
 
     }

@@ -1,6 +1,6 @@
 #include "include/puzzle_background_hole.hpp"
 
-PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, std::vector<std::vector<int>> map) {
+PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, ScreenMatrix map) {
   this->_parentMatrixPos = pos;
   this->_holeMap = map;
 
@@ -11,6 +11,8 @@ PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, std::vector<std::vecto
 
   //this->_controllers.push_back(std::move(deathController));
 
+  // TODO:
+  // this should be randomized somehow
   std::unique_ptr<PuzzleBackgroundHoleController> moveController =
     std::unique_ptr<PuzzleBackgroundHoleController>(
         new OscillateRightLeftPuzzleBackgroundHoleController(this, 4)
@@ -57,10 +59,6 @@ void PuzzleBackgroundHole::setMatrixPos(RealPoint newPos) {
   this->_parentMatrixPos = newPos;
 }
 
-std::vector<std::vector<int>> PuzzleBackgroundHole::getHoleMap() {
+ScreenMatrix& PuzzleBackgroundHole::getHoleMap() {
   return this->_holeMap;
-}
-
-void PuzzleBackgroundHole::setBitAt(int row, int col, int val) {
-  this->_holeMap[row][col] = val;
 }

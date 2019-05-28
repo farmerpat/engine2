@@ -24,12 +24,34 @@ PuzzleLevelController::PuzzleLevelController(PuzzleLevel *level) : LevelControll
 PuzzleLevelController::~PuzzleLevelController() {}
 
 void PuzzleLevelController::update(float dt) {
+  // TODO: make it an actual game!
+  // e.g. keep track of the total holes that must be filled...
+  // the time between deploying new holes regardless of whether others
+  // have been filled. the number of holes that have disappeard before
+  // being filled, etc.
+  //
+  // i want this to feel like an arcade game in the sense that:
+  //  1. the player will die if they do nothing
+  //  2. eventually, the player will die even with perfect play
+  //
+  // to start, add one piece that dies after a time.
+  // start putting the spawned piece in the middle of the matrix.
+  // after a piece dies or is filled, add another.
+  //
+  // at some point soon:
+  // start keeping track of "level" and either(and?) decrease
+  // time before hole death / increase number of holes
+  //
+  // could also stop using holes that are the same shape as peices,
+  // and start making more random holes
+
   if (!this->_puzzleLevel->getBackgroundMatrix()->getMatrix().someEmptyBlocks() &&
       this->_puzzleLevel->getBgHoles().size() == 0
       ) {
     // open a win modal, and tell the gm to transition to the next
     // level somehow...
     std::cout << "you are super player!\n";
+    // nope, add another hole
 
   } else {
     // TODO: its better to just clobber the bg matrix map with one entirely
@@ -59,7 +81,7 @@ void PuzzleLevelController::update(float dt) {
 
       if (pbh->isAlive()) {
         RealPoint mp = pbh->getMatrixPos();
-        std::vector<std::vector<int>> holeMap = pbh->getHoleMap();
+        ScreenMatrix holeMap = pbh->getHoleMap();
         int startRow = (int)mp.X();
         int startCol = (int)mp.Y();
         int endRow = startRow+3;
@@ -67,7 +89,9 @@ void PuzzleLevelController::update(float dt) {
 
         for (int x=0, row=startRow; row<endRow; row++, x++) {
           for (int y=0, col=startCol; col<endCol; col++, y++) {
-            this->_puzzleLevel->getBackgroundMatrix()->getMatrix().setBitAt(row, col, holeMap[y][x]);
+            this->_puzzleLevel->
+              getBackgroundMatrix()->
+              getMatrix().setBitAt(row, col, holeMap.getBitAt(x,y));
           }
         }
       }

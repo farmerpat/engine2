@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "real_point.hpp"
+#include "screen_matrix.hpp"
 #include "puzzle_background_hole_controller.hpp"
 #include "death_timer_puzzle_background_hole_controller.hpp"
 #include "oscillate_right_left_puzzle_background_hole_controller.hpp"
@@ -14,8 +15,7 @@ class PuzzleBackgroundHoleController;
 
 class PuzzleBackgroundHole {
   public:
-    // TODO: change vector to ScreenMatrix
-    PuzzleBackgroundHole(RealPoint, std::vector<std::vector<int>>);
+    PuzzleBackgroundHole(RealPoint, ScreenMatrix);
     virtual ~PuzzleBackgroundHole();
     void addController(std::unique_ptr<PuzzleBackgroundHoleController>);
     bool isAlive();
@@ -23,13 +23,12 @@ class PuzzleBackgroundHole {
     void update();
     RealPoint getMatrixPos();
     void setMatrixPos(RealPoint);
-    std::vector<std::vector<int>> getHoleMap();
-    void setBitAt(int, int, int);
+    ScreenMatrix &getHoleMap();
 
   protected:
     bool _alive = true;
     RealPoint _parentMatrixPos;
     std::vector<std::unique_ptr<PuzzleBackgroundHoleController>> _controllers;
-    std::vector<std::vector<int>> _holeMap;
+    ScreenMatrix _holeMap;
 };
 #endif
