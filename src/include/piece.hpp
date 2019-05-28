@@ -18,10 +18,7 @@ class Piece : public Sprite {
     virtual ~Piece();
     void render(SDL_Renderer*);
     void update(float);
-    //ScreenMatrix const getMatrix() const;
-    ScreenMatrix getMatrix();
-    //int getBitAt(int,int);
-    //void setBitAt(int,int,int);
+    ScreenMatrix &getMatrix();
     bool someBlockSet();
     // should this be delegated to ScreenMatrix?
     virtual void rotateClockwise() {};

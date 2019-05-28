@@ -59,7 +59,7 @@ void Piece::render(SDL_Renderer* renderer) {
 
 void Piece::update(float dt) { }
 
-ScreenMatrix Piece::getMatrix () { return this->_blockMap; }
+ScreenMatrix &Piece::getMatrix () { return this->_blockMap; }
 
 bool Piece::someBlockSet() {
   bool pred = false;

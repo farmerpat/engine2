@@ -54,9 +54,6 @@ void PieceController::update(float dt) {
         PuzzleLevel *pl = static_cast<PuzzleLevel*>(l);
 
         if (pl) {
-          // maybe we don't even care about getting the matrix.
-          // maybe we
-          //const std::vector<std::vector<int>> bgMat = pl->getBackgroundMatrix();
           RealPoint *spritePos = this->_piece->getPos();
           std::shared_ptr<MatrixOfSprites> bgMat = pl->getBackgroundMatrix();
           int matRows = bgMat->getNumRows();
@@ -81,7 +78,6 @@ void PieceController::update(float dt) {
             for (int y=0; y<3; y++) {
               if (!allowFlip) break;
               for (int x=0; x<3; x++) {
-                // i have no idea why these are backwards
                 // figure out a way to optionally make sure that all the blocks can be flipped
                 // before flipping any
                 if (this->_piece->getMatrix().getBitAt(x, y) == 1) {
@@ -100,8 +96,6 @@ void PieceController::update(float dt) {
                   if (this->_piece->getMatrix().getBitAt(x,y) == 1) {
                     // tell it to flip the hole bit somehow
                     pl->setBgHoleBit(pieceMatrixPositionX, pieceMatrixPositionY, x, y, 1);
-                    //bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
-                    bgMat->getMatrix().setBitAt(pieceMatrixPositionX+x,pieceMatrixPositionY+y,1);
                     this->_piece->getMatrix().setBitAt(x,y,0);
 
                   }
