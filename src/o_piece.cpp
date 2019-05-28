@@ -1,11 +1,7 @@
 #include "include/o_piece.hpp"
 
-//const std::vector<std::vector<int>> OPiece::_map = { {1,1,1}, {1,0,1}, {1,1,1} };
-//const std::vector<std::vector<int>> OPiece::_map = { {1,1,1}, {1,0,1}, {1,1,1} };
-// not sure how to do this and make it const.
-// TODO: see if its possible
 ScreenMatrix OPiece::_map(3, 3, 1);
-// why?
+// why fail?
 //OPiece::_map.setBitAt(1, 1, 0);
 
 OPiece::OPiece(RealPoint pos, SDL_Renderer *renderer)
@@ -13,9 +9,6 @@ OPiece::OPiece(RealPoint pos, SDL_Renderer *renderer)
   this->_blockWidth = 16;
   this->_blockMap.setBitAt(1,1,0);
 }
-
-//OPiece::OPiece(RealPoint pos, std::string file, SDL_Renderer *renderer)
-  //: Piece (pos, file, renderer, OPiece::_map) { }
 
 void OPiece::rotateClockwise() {
   ScreenMatrix tempBlockMap(3, 3, 0);
@@ -51,9 +44,6 @@ void OPiece::rotateCounterClockwise() {
 // will be the same for all the pieces. if so move them back to Piece.
 void OPiece::distortLeft() {
   if (this->_blockMap.getBitAt(2,0) || this->_blockMap.getBitAt(2,1) || this->_blockMap.getBitAt(2,2)) {
-    this->_blockMap.setBitAt(0,0,this->_blockMap.getBitAt(1,0));
-    this->_blockMap.setBitAt(0,1,this->_blockMap.getBitAt(1,1));
-    this->_blockMap.setBitAt(0,2,this->_blockMap.getBitAt(1,2));
     this->_blockMap.setBitAt(1,0,this->_blockMap.getBitAt(2,0));
     this->_blockMap.setBitAt(1,1,this->_blockMap.getBitAt(2,1));
     this->_blockMap.setBitAt(1,2,this->_blockMap.getBitAt(2,2));
@@ -74,9 +64,6 @@ void OPiece::distortLeft() {
 
 void OPiece::distortRight() {
   if (this->_blockMap.getBitAt(0,0) || this->_blockMap.getBitAt(0,1) || this->_blockMap.getBitAt(0,2)) {
-    this->_blockMap.setBitAt(2,0,this->_blockMap.getBitAt(1,0));
-    this->_blockMap.setBitAt(2,1,this->_blockMap.getBitAt(1,1));
-    this->_blockMap.setBitAt(2,2,this->_blockMap.getBitAt(1,2));
     this->_blockMap.setBitAt(1,0,this->_blockMap.getBitAt(0,0));
     this->_blockMap.setBitAt(1,1,this->_blockMap.getBitAt(0,1));
     this->_blockMap.setBitAt(1,2,this->_blockMap.getBitAt(0,2));
@@ -97,9 +84,6 @@ void OPiece::distortRight() {
 
 void OPiece::distortUp() {
   if (this->_blockMap.getBitAt(0,2) || this->_blockMap.getBitAt(1,2) || this->_blockMap.getBitAt(2,2)) {
-    this->_blockMap.setBitAt(0,0, this->_blockMap.getBitAt(0,1));
-    this->_blockMap.setBitAt(1,0, this->_blockMap.getBitAt(1,1));
-    this->_blockMap.setBitAt(2,0, this->_blockMap.getBitAt(2,1));
     this->_blockMap.setBitAt(0,1, this->_blockMap.getBitAt(0,2));
     this->_blockMap.setBitAt(1,1, this->_blockMap.getBitAt(1,2));
     this->_blockMap.setBitAt(2,1, this->_blockMap.getBitAt(2,2));
@@ -120,9 +104,6 @@ void OPiece::distortUp() {
 
 void OPiece::distortDown() {
   if (this->_blockMap.getBitAt(0,0) || this->_blockMap.getBitAt(1,0) || this->_blockMap.getBitAt(2,0)) {
-    this->_blockMap.setBitAt(0,2,this->_blockMap.getBitAt(0,1));
-    this->_blockMap.setBitAt(1,2,this->_blockMap.getBitAt(1,1));
-    this->_blockMap.setBitAt(2,2,this->_blockMap.getBitAt(2,1));
     this->_blockMap.setBitAt(0,1,this->_blockMap.getBitAt(0,0));
     this->_blockMap.setBitAt(1,1,this->_blockMap.getBitAt(1,0));
     this->_blockMap.setBitAt(2,1,this->_blockMap.getBitAt(2,0));

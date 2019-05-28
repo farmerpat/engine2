@@ -20,14 +20,6 @@ Piece::Piece(RealPoint pos, std::string file, SDL_Renderer *renderer)
 
     ScreenMatrix mat(3, 3, 1);
     this->_blockMap = mat;
-    //for (int i=0; i<3; i++) {
-      //std::vector<int> row;
-      //for (int j=0; j<3; j++) {
-        //row.push_back(1);
-      //}
-
-      //this->_blockMap.push_back(row);
-    //}
 }
 
 Piece::~Piece() {
@@ -68,15 +60,6 @@ void Piece::render(SDL_Renderer* renderer) {
 void Piece::update(float dt) { }
 
 ScreenMatrix Piece::getMatrix () { return this->_blockMap; }
-// these are literally duplicated in MatrixOfSprites
-// seems like an opportunity for a class (except a vector instead of an array)
-//int Piece::getBitAt(int x,int y) {
-  //return this->_blockMap[x][y];
-//}
-
-//void Piece::setBitAt(int x,int y,int val) {
-  //this->_blockMap[x][y] = val;
-//}
 
 bool Piece::someBlockSet() {
   bool pred = false;
