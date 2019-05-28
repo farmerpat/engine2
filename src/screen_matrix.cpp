@@ -33,17 +33,17 @@ ScreenMatrix::~ScreenMatrix() {
 }
 
 void ScreenMatrix::setBitAt(int x, int y, int val) {
-  this->_mat[y][x] = val;
+  this->_mat[x][y] = val;
 }
 
 int ScreenMatrix::getBitAt(int x, int y) {
-  return this->_mat[y][x];
+  return this->_mat[x][y];
 }
 
 void ScreenMatrix::print() {
   for (int y=0; y<this->_yMax; y++) {
     for (int x=0; x<this->_xMax; x++) {
-      std::cout << this->_mat[y][x];
+      std::cout << this->_mat[x][y];
     }
   }
 }
@@ -54,7 +54,7 @@ bool ScreenMatrix::someEmptyBlocks() {
   for (int y=0; y<this->_yMax; y++) {
     if (pred) break;
     for (int x=0; x<this->_xMax; x++) {
-      if (this->_mat[y][x] == 0) {
+      if (this->_mat[x][y] == 0) {
         pred = true;
         break;
 
@@ -71,7 +71,7 @@ int ScreenMatrix::getLastNonEmptyColumnIndex() {
   for (int x=this->_xMax-1; x>-1; x--) {
     bool someOnes = false;
     for (int y=0; y<this->_yMax; y++) {
-      if (this->_mat[y][x]) {
+      if (this->_mat[x][y]) {
         someOnes = true;
         break;
 
@@ -93,7 +93,7 @@ int ScreenMatrix::getFirstNonEmptyColumnIndex() {
     bool someOnes = false;
 
     for (int y=0; y<this->_yMax; y++) {
-      if (this->_mat[y][x]) {
+      if (this->_mat[x][y]) {
         someOnes = true;
         break;
       }

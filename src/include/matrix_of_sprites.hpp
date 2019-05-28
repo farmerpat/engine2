@@ -40,7 +40,7 @@ class MatrixOfSprites : public Sprite {
     //void setBitAt(int,int,int);
     //std::vector<std::vector<int>> const getMatrix() const;
     //ScreenMatrix const getMatrix() const;
-    ScreenMatrix getMatrix();
+    ScreenMatrix &getMatrix();
     SDL_Rect getHitBoxAt(int, int);
     bool someEmptyBlocks();
 

@@ -11,6 +11,7 @@ ScreenMatrix OPiece::_map(3, 3, 1);
 OPiece::OPiece(RealPoint pos, SDL_Renderer *renderer)
   : Piece (pos, "assets/pink_block.png", renderer, OPiece::_map) {
   this->_blockWidth = 16;
+  this->_blockMap.setBitAt(1,1,0);
 }
 
 //OPiece::OPiece(RealPoint pos, std::string file, SDL_Renderer *renderer)

@@ -18,6 +18,8 @@ MatrixOfSprites::MatrixOfSprites
   this->_matrix = map;
 }
 
+// ROWS IS YMAX
+// COLS IS XMAX
 MatrixOfSprites::MatrixOfSprites
   (RealPoint pos, int w, int h, int nRows, int nCols, int xPad, int yPad, int xScale, int yScale, std::string img, SDL_Renderer *r)
   : Sprite (pos, w, h) {
@@ -32,7 +34,7 @@ MatrixOfSprites::MatrixOfSprites
   this->_isAggregate = true;
   this->setLayer(1);
 
-  ScreenMatrix mat(nRows, nCols, 1);
+  ScreenMatrix mat(nCols, nRows, 1);
   this->_matrix = mat;
 
 }
@@ -87,24 +89,18 @@ void MatrixOfSprites::render(SDL_Renderer *renderer) {
   int rectY;
 
   // probably just grab maxX from _mat
-  for (int x=0; x<this->_numRows; x++) {
-    //y = yBase + (i * (this->_width + this->_yPad));
-    rectX = xBase + (x * (this->_width + this->_xPad));
+  for (int y=0; y<this->_numRows; y++) {
+    rectY = yBase + (y * (this->_width + this->_yPad));
 
-    for (int y=0; y<this->_numCols; y++) {
+    for (int x=0; x<this->_numCols; x++) {
       if (this->_matrix.getBitAt(x, y)) {
-        //x = xBase + (j * (this->_width + this->_xPad));
-        rectY = yBase + (y * (this->_width + this->_yPad));
+        rectX = xBase + (x * (this->_width + this->_xPad));
         texture_dest_rect.x = rectX;
         texture_dest_rect.y = rectY;
-        //texture_dest_rect.y = rectX;
-        //texture_dest_rect.x = rectY;
         texture_dest_rect.w = this->getWidth() * this->_xScale;
         texture_dest_rect.h = this->getHeight() * this->_yScale;
 
         SDL_RenderCopy(renderer, this->_texture, NULL, &texture_dest_rect);
-      } else {
-        std::cout <<"fyf\n";
       }
     }
   }
@@ -214,9 +210,10 @@ int MatrixOfSprites::getNumRows() {
   //return this->_matrix;
 //}
 
-ScreenMatrix MatrixOfSprites::getMatrix() {
+ScreenMatrix& MatrixOfSprites::getMatrix() {
   return this->_matrix;
 }
+
 // TODO:
 // optimize this. e.g. can isCollidingWith use this?
 SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {

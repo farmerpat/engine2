@@ -40,8 +40,8 @@ void PuzzleLevelController::update(float dt) {
     int rows = this->_puzzleLevel->getBackgroundMatrix()->getNumRows();
     int cols =  this->_puzzleLevel->getBackgroundMatrix()->getNumCols();
 
-    for (int y=0; y<rows; y++) {
-      for (int x=0; x<cols; x++) {
+    for (int x=0; x<cols; x++) {
+      for (int y=0; y<rows; y++) {
         this->_puzzleLevel->getBackgroundMatrix()->getMatrix().setBitAt(x, y, 1);
 
       }
@@ -65,9 +65,8 @@ void PuzzleLevelController::update(float dt) {
         int endRow = startRow+3;
         int endCol = startCol+3;
 
-        for (int y=0, row=startRow; row<endRow; row++, y++) {
-          for (int x=0, col=startCol; col<endCol; col++, x++) {
-            //this->_puzzleLevel->getBackgroundMatrix()->setBitAt(startRow, startCol, holeMap[i][j]);
+        for (int x=0, row=startRow; row<endRow; row++, x++) {
+          for (int y=0, col=startCol; col<endCol; col++, y++) {
             this->_puzzleLevel->getBackgroundMatrix()->getMatrix().setBitAt(row, col, holeMap[y][x]);
           }
         }
