@@ -63,22 +63,33 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   this->_levelController = new PuzzleLevelController(this);
 }
 
-void PuzzleLevel::setBgHoleBit(int matrixPositionX, int matrixPositionY, int pieceRow, int pieceCol, int val) {
+void PuzzleLevel::setBgHoleBit(int pieceMatrixPositionX, int pieceMatrixPositionY, int pieceRow, int pieceCol, int val) {
   std::vector<std::shared_ptr<PuzzleBackgroundHole>>::size_type i, len;
   std::vector<std::shared_ptr<PuzzleBackgroundHole>> holes = this->_bgHoles;
   len = holes.size();
 
+  int backgroundTargetX = pieceMatrixPositionX + pieceCol;
+  int backgroundTargetY = pieceMatrixPositionY + pieceRow;
+
   for (i=0; i<len; i++) {
     std::shared_ptr<PuzzleBackgroundHole> &pbh = holes[i];
     RealPoint holePos = pbh->getMatrixPos();
-    int x = (int)holePos.X();
-    int y = (int)holePos.Y();
+    int holeX = (int)holePos.X();
+    int holeY = (int)holePos.Y();
 
-    if (x == matrixPositionX && y == matrixPositionY) {
-      pbh->getHoleMap().setBitAt(pieceRow, pieceCol, val);
-      break;
+    for (int x=holeX; x<holeX+3; x++) {
+      for (int y=holeY; y<holeY+3; y++) {
 
+        if (x == backgroundTargetX && y == backgroundTargetY) {
+          pbh->getHoleMap().setBitAt(x-holeX, y-holeY, val);
+          goto leaveloop;
+        }
+      }
     }
+
+leaveloop:
+    ;
+
   }
 }
 
