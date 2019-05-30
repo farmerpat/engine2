@@ -1,5 +1,6 @@
 #include "include/piece_controller.hpp"
 #include "include/piece.hpp"
+#include <iostream>
 
 PieceController::PieceController(Piece *p) {
   this->_piece = p;
@@ -44,6 +45,7 @@ void PieceController::update(float dt) {
         moveY = -this->_moveSize;
 
       } else if (gm->playerInput.downHeld) {
+        std::cout << "fyf\n";
         downAccel = true;
       }
     }

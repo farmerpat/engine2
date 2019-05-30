@@ -52,6 +52,17 @@ static bool b_input_stale = false;
 static bool x_input_stale = false;
 static bool y_input_stale = false;
 
+static int up_hold_counter = 0;
+static int down_hold_counter = 0;
+static int left_hold_counter = 0;
+static int right_hold_counter = 0;
+static int a_hold_counter = 0;
+static int b_hold_counter = 0;
+static int x_hold_counter = 0;
+static int y_hold_counter = 0;
+
+const int FRAMES_UNTIL_HOLD = 60;
+
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
@@ -76,6 +87,7 @@ void dropStaleInputs () {
   if (up_input_stale) {
     gm->playerInput.upPressed = false;
     gm->playerInput.upJustPressed = false;
+    gm->playerInput.upHeld = false;
     up_input_stale = false;
   }
 
@@ -89,36 +101,42 @@ void dropStaleInputs () {
   if (left_input_stale) {
     gm->playerInput.leftPressed = false;
     gm->playerInput.leftJustPressed = false;
+    gm->playerInput.leftHeld = false;
     left_input_stale = false;
   }
 
   if (right_input_stale) {
     gm->playerInput.rightPressed = false;
     gm->playerInput.rightJustPressed = false;
+    gm->playerInput.rightHeld = false;
     right_input_stale = false;
   }
 
   if (a_input_stale) {
     gm->playerInput.aPressed = false;
     gm->playerInput.aJustPressed = false;
+    gm->playerInput.aHeld = false;
     a_input_stale = false;
   }
 
   if (b_input_stale) {
     gm->playerInput.bPressed = false;
     gm->playerInput.bJustPressed = false;
+    gm->playerInput.bHeld = false;
     b_input_stale = false;
   }
 
   if (x_input_stale) {
     gm->playerInput.xPressed = false;
     gm->playerInput.xJustPressed = false;
+    gm->playerInput.xHeld = false;
     x_input_stale = false;
   }
 
   if (y_input_stale) {
     gm->playerInput.yPressed = false;
     gm->playerInput.yJustPressed = false;
+    gm->playerInput.yHeld = false;
     y_input_stale = false;
   }
 }
@@ -159,6 +177,22 @@ void cleanUpInput(GameManager *gm) {
   }
 }
 
+void processKeyHolds(GameManager *gm) {
+  // do up first, as is tradition
+  if (gm->playerInput.downPressed) {
+    down_hold_counter++;
+
+    if (down_hold_counter >= FRAMES_UNTIL_HOLD) {
+      down_hold_counter = 0;
+      gm->playerInput.downHeld = true;
+    }
+  } else {
+    // this is probalby sub-optimal
+    // it might be better to clear this in parsePlayerInput on SDL_KEYUP
+    down_hold_counter = 0;
+  }
+}
+
 void parsePlayerInput (GameManager *gm, SDL_Event e) {
   // TODO: add gamepad support
   if (e.type == SDL_KEYDOWN) {
@@ -179,11 +213,12 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
           gm->playerInput.downJustPressed = true;
 
         } else {
+          // maybe we will have to handle this case?
           // this is quick and dirty. i should be setting
           // my own frame delay for held buttons.
-          down_pressed_this_frame = false;
-          gm->playerInput.downPressed = true;
-          gm->playerInput.downHeld = true;
+          //down_pressed_this_frame = false;
+          //gm->playerInput.downPressed = true;
+          //gm->playerInput.downHeld = true;
 
         }
         break;
@@ -246,6 +281,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!up_pressed_this_frame) {
           gm->playerInput.upPressed = false;
           gm->playerInput.upJustPressed = false;
+          gm->playerInput.upHeld = false;
 
         } else {
           up_input_stale = true;
@@ -266,6 +302,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!left_pressed_this_frame) {
           gm->playerInput.leftPressed = false;
           gm->playerInput.leftJustPressed = false;
+          gm->playerInput.leftHeld = false;
         } else {
           left_input_stale = true;
         }
@@ -275,6 +312,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!right_pressed_this_frame) {
           gm->playerInput.rightPressed = false;
           gm->playerInput.rightJustPressed = false;
+          gm->playerInput.rightHeld = false;
         } else {
           right_input_stale = true;
         }
@@ -284,6 +322,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!a_pressed_this_frame) {
           gm->playerInput.aPressed = false;
           gm->playerInput.aJustPressed = false;
+          gm->playerInput.aHeld = false;
         } else {
           a_input_stale = true;
         }
@@ -293,6 +332,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!x_pressed_this_frame) {
           gm->playerInput.xPressed = false;
           gm->playerInput.xJustPressed = false;
+          gm->playerInput.xHeld = false;
         } else {
           x_input_stale = true;
         }
@@ -302,6 +342,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!y_pressed_this_frame) {
           gm->playerInput.yPressed = false;
           gm->playerInput.yJustPressed = false;
+          gm->playerInput.yHeld = false;
         } else {
           y_input_stale = true;
         }
@@ -311,6 +352,7 @@ void parsePlayerInput (GameManager *gm, SDL_Event e) {
         if (!b_pressed_this_frame) {
           gm->playerInput.bPressed = false;
           gm->playerInput.bJustPressed = false;
+          gm->playerInput.bHeld = false;
         } else {
           b_input_stale = true;
         }
@@ -438,6 +480,9 @@ int main (int argc, char **argv) {
         }
 
         cleanUpInput(gm);
+
+        processKeyHolds(gm);
+
         //dt = (current_time - last_time) / 1000.0f;
         // should i be calculating this instead?
         testLevel->removeDeadSprites();
