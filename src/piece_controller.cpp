@@ -45,8 +45,22 @@ void PieceController::update(float dt) {
         moveY = -this->_moveSize;
 
       } else if (gm->playerInput.downHeld) {
-        std::cout << "fyf\n";
-        downAccel = true;
+        //downAccel = true;
+        //moveY = 2 * this->_moveSize;
+        moveY = this->_moveSize;
+
+      } else if (gm->playerInput.upHeld) {
+        //moveY = 2 * -this->_moveSize;
+        moveY = -this->_moveSize;
+
+      } else if (gm->playerInput.leftHeld) {
+        //moveX = 2 * -this->_moveSize;
+        moveX = -this->_moveSize;
+
+      } else if (gm->playerInput.rightHeld) {
+        //moveX = 2 * this->_moveSize;
+        moveX = this->_moveSize;
+
       }
     }
 

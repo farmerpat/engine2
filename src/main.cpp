@@ -61,7 +61,7 @@ static int b_hold_counter = 0;
 static int x_hold_counter = 0;
 static int y_hold_counter = 0;
 
-const int FRAMES_UNTIL_HOLD = 60;
+const int FRAMES_UNTIL_HOLD = 30;
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
@@ -178,7 +178,19 @@ void cleanUpInput(GameManager *gm) {
 }
 
 void processKeyHolds(GameManager *gm) {
-  // do up first, as is tradition
+  if (gm->playerInput.upPressed) {
+    up_hold_counter++;
+
+    if (up_hold_counter >= FRAMES_UNTIL_HOLD) {
+      up_hold_counter = 0;
+      gm->playerInput.upHeld = true;
+    }
+  } else {
+    // this is probalby sub-optimal
+    // it might be better to clear this in parsePlayerInput on SDL_KEYUP
+    up_hold_counter = 0;
+  }
+
   if (gm->playerInput.downPressed) {
     down_hold_counter++;
 
@@ -187,9 +199,73 @@ void processKeyHolds(GameManager *gm) {
       gm->playerInput.downHeld = true;
     }
   } else {
-    // this is probalby sub-optimal
-    // it might be better to clear this in parsePlayerInput on SDL_KEYUP
     down_hold_counter = 0;
+  }
+
+  if (gm->playerInput.leftPressed) {
+    left_hold_counter++;
+
+    if (left_hold_counter >= FRAMES_UNTIL_HOLD) {
+      left_hold_counter = 0;
+      gm->playerInput.leftHeld = true;
+    }
+  } else {
+    left_hold_counter = 0;
+  }
+
+  if (gm->playerInput.rightPressed) {
+    right_hold_counter++;
+
+    if (right_hold_counter >= FRAMES_UNTIL_HOLD) {
+      right_hold_counter = 0;
+      gm->playerInput.rightHeld = true;
+    }
+  } else {
+    right_hold_counter = 0;
+  }
+
+  if (gm->playerInput.aPressed) {
+    a_hold_counter++;
+
+    if (a_hold_counter >= FRAMES_UNTIL_HOLD) {
+      a_hold_counter = 0;
+      gm->playerInput.aHeld = true;
+    }
+  } else {
+    a_hold_counter = 0;
+  }
+
+  if (gm->playerInput.bPressed) {
+    b_hold_counter++;
+
+    if (b_hold_counter >= FRAMES_UNTIL_HOLD) {
+      b_hold_counter = 0;
+      gm->playerInput.bHeld = true;
+    }
+  } else {
+    b_hold_counter = 0;
+  }
+
+  if (gm->playerInput.xPressed) {
+    x_hold_counter++;
+
+    if (x_hold_counter >= FRAMES_UNTIL_HOLD) {
+      x_hold_counter = 0;
+      gm->playerInput.xHeld = true;
+    }
+  } else {
+    x_hold_counter = 0;
+  }
+
+  if (gm->playerInput.yPressed) {
+    y_hold_counter++;
+
+    if (y_hold_counter >= FRAMES_UNTIL_HOLD) {
+      y_hold_counter = 0;
+      gm->playerInput.yHeld = true;
+    }
+  } else {
+    y_hold_counter = 0;
   }
 }
 
