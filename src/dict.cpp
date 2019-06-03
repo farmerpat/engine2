@@ -53,7 +53,7 @@ std::string Dict::getString(std::string key) {
 void Dict::addInt(std::string key, int value) {
   TypeValuePair pair;
   pair.type = "int";
-  pair.val = value;
+  pair.val = std::to_string(value);
 
   //this->_map.insert(key, pair);
   //this->_map.insert(std::make_pair<std::string,TypeValuePair>(key, pair));
