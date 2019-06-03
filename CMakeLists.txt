@@ -50,6 +50,7 @@ set(
   src/real_point.cpp
   src/util.cpp
   src/config.cpp
+  src/dict.cpp
   src/game_manager.cpp
   src/path.cpp
   src/controller.cpp

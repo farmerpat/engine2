@@ -129,7 +129,14 @@ void PuzzleLevelController::deployPiece() {
 
     SDL_Renderer *renderer = gm->getWindowRenderer();
 
-    RealPoint pPos = { (screenWidth/2.0), 0.0 };
+    RealPoint *matPos = this->_puzzleLevel->getBackgroundMatrix()->getPos();
+    //int blockWidth = this->_puzzleLevel->getBackgroundMatrix()->getWidth();
+    //int numBlocks = this->_puzzleLevel->getBackgroundMatrix()->getNumCols();
+
+    //int yPos = matPos->Y() + numBlocks * blockWidth;
+    int yPos = matPos->Y();
+    // TODO: deploy it inside the matrix...do it!
+    RealPoint pPos = { (screenWidth/2.0), yPos };
     // a factory instead of this.
     //std::vector<std::vector<int>> map = this->_puzzleLevel->grabRandomPieceMap();
 

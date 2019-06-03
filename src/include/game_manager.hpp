@@ -8,6 +8,7 @@
 #include "SDL_mixer.h"
 #include "player_input.hpp"
 #include "real_point.hpp"
+#include "dict.hpp"
 class Level;
 class Sprite;
 
@@ -17,6 +18,7 @@ class GameManager {
     // TODO: handling of sound effects should probalby be in its own class
     std::vector<Mix_Chunk*> _soundEffects;
     std::vector<std::string> _soundEffectNames;
+    Dict _dict;
 
     int _screenWidth = 0;
     int _screenHeight = 0;
@@ -66,6 +68,8 @@ class GameManager {
     bool getHeroIsAlive();
     void setHeroIsAlive();
     void clearHeroIsAlive();
+    void addIntToDictionary(std::string, int);
+    int getIntFromDictionary(std::string);
 
 };
 #endif

@@ -141,8 +141,29 @@ void PieceController::update(float dt) {
 
   // TODO:
   // keep this in bounds
-  newPos.setX(newPos.X()+moveX);
-  newPos.setY(newPos.Y()+moveY);
+  // do it!
+
+  int minXPossible = gm->getIntFromDictionary("screenMatrixMinX");
+  int maxXPossible = gm->getIntFromDictionary("screenMatrixMaxX");
+  int minYPossible = gm->getIntFromDictionary("screenMatrixMinY");
+  int maxYPossible = gm->getIntFromDictionary("screenMatrixMaxY");
+
+  if ((newPos.X()+moveX) < minXPossible) {
+    newPos.setX(minXPossible);
+    // actually caculate based on the piece size
+  } else if ((newPos.X()+moveX) > maxXPossible) {
+    newPos.setX(maxXPossible);
+  } else {
+    newPos.setX(newPos.X()+moveX);
+  }
+
+  if ((newPos.Y()+moveY) < minYPossible) {
+    newPos.setY(minYPossible);
+  } else if ((newPos.Y()+moveY) > maxYPossible) {
+    newPos.setY(maxYPossible);
+  } else {
+    newPos.setY(newPos.Y()+moveY);
+  }
 
   if (this->_gravityFrameCounter >= this->_gravityFrameDelay) {
     this->_gravityFrameCounter = 0;

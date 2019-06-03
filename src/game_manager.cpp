@@ -154,3 +154,11 @@ void GameManager::setHeroIsAlive() {
 void GameManager::clearHeroIsAlive() {
   this->_heroIsAlive = false;
 }
+
+void GameManager::addIntToDictionary(std::string key, int val) {
+  this->_dict.addInt(key, val);
+}
+
+int GameManager::getIntFromDictionary(std::string key) {
+  return this->_dict.getInt(key);
+}

@@ -20,6 +20,18 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
       )
     );
 
+    gm->addIntToDictionary("screenMatrixMinX", mPos.X());
+    gm->addIntToDictionary("screenMatrixMinY", mPos.Y());
+
+    gm->addIntToDictionary("screenMatrixMaxX",
+      mPos.X() + this->_backgroundMatrix->getWidth() * this->_backgroundMatrix->getNumCols()
+    );
+
+    gm->addIntToDictionary(
+      "screenMatrixMaxY",
+      mPos.Y() + this->_backgroundMatrix->getHeight() * this->_backgroundMatrix->getNumRows()
+    );
+
     // TODO: i guess rm this. or at least stop doing it if its not going to be used
     //this->generatePieceList();
   } else {
