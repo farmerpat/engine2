@@ -145,22 +145,25 @@ void PieceController::update(float dt) {
 
   int minXPossible = gm->getIntFromDictionary("screenMatrixMinX");
   int maxXPossible = gm->getIntFromDictionary("screenMatrixMaxX");
+  //int maxXPossible = gm->getIntFromDictionary("screenMatrixMaxX") - (this->_piece->);
   int minYPossible = gm->getIntFromDictionary("screenMatrixMinY");
+  //int maxYPossible = gm->getIntFromDictionary("screenMatrixMaxY") - (this->_piece->);
   int maxYPossible = gm->getIntFromDictionary("screenMatrixMaxY");
 
   if ((newPos.X()+moveX) < minXPossible) {
     newPos.setX(minXPossible);
     // actually caculate based on the piece size
-  } else if ((newPos.X()+moveX) > maxXPossible) {
-    newPos.setX(maxXPossible);
+  } else if ((newPos.X()+moveX) > (maxXPossible-16*3)) {
+    newPos.setX(maxXPossible-16*3);
   } else {
     newPos.setX(newPos.X()+moveX);
   }
 
   if ((newPos.Y()+moveY) < minYPossible) {
     newPos.setY(minYPossible);
-  } else if ((newPos.Y()+moveY) > maxYPossible) {
-    newPos.setY(maxYPossible);
+    // TDOO: pull these from piece or something...magick #s bad!
+  } else if ((newPos.Y()+moveY) > (maxYPossible-16*3)) {
+    newPos.setY(maxYPossible-16*3);
   } else {
     newPos.setY(newPos.Y()+moveY);
   }
