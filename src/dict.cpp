@@ -7,7 +7,6 @@ void Dict::add(std::string key, std::string value, std::string type) {
   pair.type = type;
   pair.val = value;
 
-  //this->_map.insert(std::make_pair<std::string, TypeValuePair>(key, pair));
   this->_map[key] = pair;
 }
 
@@ -26,7 +25,6 @@ int Dict::getInt(std::string key) {
       }
     }
   }
-
 
   return std::stoi(val);
 }
@@ -55,7 +53,5 @@ void Dict::addInt(std::string key, int value) {
   pair.type = "int";
   pair.val = std::to_string(value);
 
-  //this->_map.insert(key, pair);
-  //this->_map.insert(std::make_pair<std::string,TypeValuePair>(key, pair));
   this->_map[key] = pair;
 }
