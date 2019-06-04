@@ -238,11 +238,3 @@ SDL_Rect MatrixOfSprites::getHitBoxAt(int row, int col) {
 
   return hb;
 }
-
-//int MatrixOfSprites::getBitAt(int x,int y) {
-  //return this->_matrix[x][y];
-//}
-
-//void MatrixOfSprites::setBitAt(int x ,int y ,int val) {
-  //this->_matrix[x][y] = val;
-//}

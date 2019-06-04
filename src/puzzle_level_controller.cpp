@@ -89,9 +89,15 @@ void PuzzleLevelController::update(float dt) {
 
         for (int x=0, row=startRow; row<endRow; row++, x++) {
           for (int y=0, col=startCol; col<endCol; col++, y++) {
-            this->_puzzleLevel->
-              getBackgroundMatrix()->
-              getMatrix().setBitAt(row, col, holeMap.getBitAt(x,y));
+            // for holes that come/go from/to off-screen
+            // i suspect that i will also have to do this for the portion
+            // of code that sets bits in the hole
+            // ...nah...piece_controller must deal w/ partially shown pieces.
+            if (row >=0 && col >=0) {
+              this->_puzzleLevel->
+                getBackgroundMatrix()->
+                getMatrix().setBitAt(row, col, holeMap.getBitAt(x,y));
+            }
           }
         }
       }

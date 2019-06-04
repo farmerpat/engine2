@@ -36,10 +36,6 @@ class MatrixOfSprites : public Sprite {
     int getYPad();
     int getNumCols();
     int getNumRows();
-    //int getBitAt(int,int);
-    //void setBitAt(int,int,int);
-    //std::vector<std::vector<int>> const getMatrix() const;
-    //ScreenMatrix const getMatrix() const;
     ScreenMatrix &getMatrix();
     SDL_Rect getHitBoxAt(int, int);
     bool someEmptyBlocks();
@@ -52,7 +48,6 @@ class MatrixOfSprites : public Sprite {
     int _numRows = 0;
     int _xPad = 0;
     int _yPad = 0;
-    //std::vector<std::vector<int>> _matrix;
     ScreenMatrix _matrix;
 
 };

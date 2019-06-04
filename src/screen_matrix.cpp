@@ -16,16 +16,6 @@ ScreenMatrix::ScreenMatrix(int xMax, int yMax, int fill=0) {
 
     this->_mat.push_back(row);
   }
-
-  //for (int y=0; y<this->_yMax; y++) {
-    //std::vector<int> row;
-
-    //for (int x=0; x<this->_xMax; x++) {
-      //row.push_back(fill);
-    //}
-
-    //this->_mat.push_back(row);
-  //}
 }
 
 ScreenMatrix::~ScreenMatrix() {
