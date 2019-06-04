@@ -4,18 +4,9 @@ PuzzleBackgroundHole::PuzzleBackgroundHole(RealPoint pos, ScreenMatrix map) {
   this->_parentMatrixPos = pos;
   this->_holeMap = map;
 
-  std::unique_ptr<PuzzleBackgroundHoleController> deathController =
-    std::unique_ptr<PuzzleBackgroundHoleController>(
-        new DeathTimerPuzzleBackgroundHoleController(this, 480)
-    );
-
-  //this->_controllers.push_back(std::move(deathController));
-
-  // TODO:
-  // this should be randomized somehow
   std::unique_ptr<PuzzleBackgroundHoleController> moveController =
     std::unique_ptr<PuzzleBackgroundHoleController>(
-        new OscillateRightLeftPuzzleBackgroundHoleController(this, 4)
+      new FallingPieceBackgroundHoleController(this)
     );
 
   this->_controllers.push_back(std::move(moveController));

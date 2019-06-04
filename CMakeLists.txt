@@ -94,6 +94,7 @@ set(
   src/puzzle_background_hole_controller.cpp
   src/death_timer_puzzle_background_hole_controller.cpp
   src/oscillate_right_left_puzzle_background_hole_controller.cpp
+  src/falling_piece_puzzle_background_hole_controller.cpp
 
 )
 

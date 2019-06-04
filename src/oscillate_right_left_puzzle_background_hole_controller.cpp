@@ -6,9 +6,6 @@ OscillateRightLeftPuzzleBackgroundHoleController::OscillateRightLeftPuzzleBackgr
   this->_moveSteps = moveSteps;
 }
 
-// TODO:
-// this moves up/down instead. figure out why x/y are reversed
-// and fix it.
 void OscillateRightLeftPuzzleBackgroundHoleController::update() {
   this->_frameCounter++;
 

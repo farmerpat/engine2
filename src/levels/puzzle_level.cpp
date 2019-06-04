@@ -38,7 +38,7 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
     std::cout << "puzzle_level can't find file(s)\n";
   }
 
-  RealPoint p1 = { 20.0, 20.0 };
+  RealPoint p1 = { 3.0, -3.0 };
   ScreenMatrix m1(3,3,0);
   m1.setBitAt(1,1,1);
 
@@ -62,15 +62,15 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   m2.setBitAt(1,2,0);
   m2.setBitAt(2,2,0);
 
-  std::shared_ptr<PuzzleBackgroundHole> h2 = std::shared_ptr<PuzzleBackgroundHole>(
-    new PuzzleBackgroundHole(p2, m2)
-  );
+  //std::shared_ptr<PuzzleBackgroundHole> h2 = std::shared_ptr<PuzzleBackgroundHole>(
+    //new PuzzleBackgroundHole(p2, m2)
+  //);
 
-  this->_bgHoles.push_back(
-    std::move(
-      h2
-    )
-  );
+  //this->_bgHoles.push_back(
+    //std::move(
+      //h2
+    //)
+  //);
 
   this->_levelController = new PuzzleLevelController(this);
 }

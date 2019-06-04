@@ -82,9 +82,9 @@ void PieceController::update(float dt) {
           int pieceMatrixPositionX = (int)spritePos->X() - relativeXZero;
           int pieceMatrixPositionY = (int)spritePos->Y() - relativeYZero;
 
-          // if its inside the bg matrix
-          // this will have to be expanded to all for holes that are partially on screen
-          if (pieceMatrixPositionX >=0 && pieceMatrixPositionY>=0) {
+          // if its inside the bg matrix, or on the edge
+          // TODO: pull these 3s from somewhere. magick numbers bad.
+          if (pieceMatrixPositionX >=-3 && pieceMatrixPositionY>=-3) {
             pieceMatrixPositionX /= cellWidth;
             pieceMatrixPositionY /= cellHeight;
 

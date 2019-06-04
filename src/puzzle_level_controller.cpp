@@ -101,7 +101,10 @@ void PuzzleLevelController::update(float dt) {
           }
         }
       }
+
+      // TODO
       // remove the dead ones...
+      // and punish the player
     }
 
     // if theres no active pieces on the screen, add a a new one.
