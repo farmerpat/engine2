@@ -19,6 +19,7 @@ class ScreenMatrix {
     int getXMax() { return this->_xMax; }
     int getYMax() { return this->_yMax; }
     bool someEmptyBlocks();
+    bool noEmptyBlocks();
     int getLastNonEmptyColumnIndex();
     int getFirstNonEmptyColumnIndex();
 

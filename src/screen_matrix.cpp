@@ -38,6 +38,23 @@ void ScreenMatrix::print() {
   }
 }
 
+bool ScreenMatrix::noEmptyBlocks() {
+  bool pred = true;
+
+  for (int y=0; y<this->_yMax; y++) {
+    if (!pred) break;
+    for (int x=0; x<this->_xMax; x++) {
+      if (this->_mat[x][y] == 0) {
+        pred = false;
+        break;
+
+      }
+    }
+  }
+
+  return pred;
+}
+
 bool ScreenMatrix::someEmptyBlocks() {
   bool pred = false;
 

@@ -119,17 +119,6 @@ void PieceController::update(float dt) {
                 }
               }
             }
-
-            /*
-             if (bgMat->getBitAt(pieceMatrixPositionY+j, pieceMatrixPositionX+i) == 0) {
-               if (this->_piece->getBitAt(j,i) == 1) {
-                 bgMat->setBitAt(pieceMatrixPositionY+j,pieceMatrixPositionX+i,1);
-                 this->_piece->setBitAt(j,i,0);
-
-               }
-             }
-           */
-
           }
         }
       }
@@ -139,10 +128,6 @@ void PieceController::update(float dt) {
       this->_piece->rotateClockwise();
     }
   }
-
-  // TODO:
-  // keep this in bounds
-  // do it!
 
   int minXPossible = gm->getIntFromDictionary("screenMatrixMinX");
   int maxXPossible = gm->getIntFromDictionary("screenMatrixMaxX");
