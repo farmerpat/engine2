@@ -74,6 +74,7 @@ void PuzzleLevelController::update(float dt) {
     std::vector<std::shared_ptr<PuzzleBackgroundHole>>::size_type i, len;
     std::vector<std::shared_ptr<PuzzleBackgroundHole>> holes = this->_puzzleLevel->getBgHoles();
     len = holes.size();
+    std::cout << "len: " << len << "\n";
 
     for (i=0; i<len; i++) {
       std::shared_ptr<PuzzleBackgroundHole> &pbh = holes[i];
@@ -100,12 +101,15 @@ void PuzzleLevelController::update(float dt) {
             }
           }
         }
-      }
 
-      // TODO
-      // remove the dead ones...
-      // and punish the player
+        if (pbh->getHoleMap().noEmptyBlocks()) {
+          std::cout << "kill!\n";
+          pbh->kill();
+        }
+      }
     }
+
+    this->_puzzleLevel->removeFilledHoles();
 
     // if theres no active pieces on the screen, add a a new one.
     if (!this->pieceOnScreen()) {

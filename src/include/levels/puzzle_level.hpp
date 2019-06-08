@@ -24,6 +24,7 @@ class PuzzleLevel : public Level {
     std::vector<std::vector<int>> grabRandomPieceMap();
     std::vector<std::shared_ptr<PuzzleBackgroundHole>> getBgHoles();
     void setBgHoleBit(int, int, int, int, int);
+    void removeFilledHoles();
 
   protected:
     std::shared_ptr<MatrixOfSprites> _backgroundMatrix;

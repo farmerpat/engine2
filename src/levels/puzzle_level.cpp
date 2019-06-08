@@ -155,3 +155,16 @@ std::vector<std::vector<int>> PuzzleLevel::grabRandomPieceMap() {
 std::vector<std::shared_ptr<PuzzleBackgroundHole>> PuzzleLevel::getBgHoles() {
   return this->_bgHoles;
 }
+
+void PuzzleLevel::removeFilledHoles() {
+  this->_bgHoles.erase(
+    std::remove_if(
+      this->_bgHoles.begin(),
+      this->_bgHoles.end(),
+      [](std::shared_ptr<PuzzleBackgroundHole> &pbh) {
+        return !pbh->isAlive();
+      }
+    ),
+    this->_bgHoles.end()
+  );
+}
