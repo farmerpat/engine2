@@ -65,8 +65,8 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   // test ui text box
   RealPoint tp = { 3.0, 3.0 };
   std::unique_ptr<Sprite> uit = std::unique_ptr<Sprite>(
-    new UiTextBox(
-      tp, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25, renderer
+    new UiDynamicTextBox(
+      tp, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25
     )
   );
 

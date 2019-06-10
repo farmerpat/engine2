@@ -14,7 +14,7 @@
 #include "../level_controller.hpp"
 #include "../puzzle_level_controller.hpp"
 #include "../puzzle_background_hole.hpp"
-#include "../ui_text_box.hpp"
+#include "../ui_dynamic_text_box.hpp"
 
 class PuzzleLevel : public Level {
   public:

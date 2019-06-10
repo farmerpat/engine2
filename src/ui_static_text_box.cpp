@@ -1,22 +1,20 @@
-#include "include/ui_text_box.hpp"
-#include <iostream>
+#include "include/ui_static_text_box.hpp"
 
-UiTextBox::UiTextBox
+UiStaticTextBox::UiStaticTextBox
 (RealPoint pos, std::string font, int pt, std::string text, int w, int h, SDL_Renderer *ren)
   : Sprite (pos, w, h) {
   SDL_Color color = {255, 255, 255};
 
   this->_fontTexture = Util::loadFontTexture(font, text, pt, color, ren);
-  std::cout << "fyf\n";
 }
 
-UiTextBox::~UiTextBox() {
+UiStaticTextBox::~UiStaticTextBox() {
   if (this->_fontTexture) {
     SDL_DestroyTexture(this->_fontTexture);
   }
 }
 
-void UiTextBox::render(SDL_Renderer *renderer) {
+void UiStaticTextBox::render(SDL_Renderer *renderer) {
   SDL_Rect texture_dest_rect;
 
   texture_dest_rect.x = (int)this->getPos()->X();
@@ -32,7 +30,7 @@ void UiTextBox::render(SDL_Renderer *renderer) {
   // TODO: push/pop render draw color should be utility fns
   // push draw color
   SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
-  // just default to white bg for now.
+  // just default to black bg for now.
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
   // NOTE: may want a different rectangle for this
   SDL_RenderFillRect(renderer, &texture_dest_rect);

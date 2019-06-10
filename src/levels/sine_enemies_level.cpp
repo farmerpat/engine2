@@ -7,7 +7,7 @@ SineEnemiesLevel::SineEnemiesLevel(SDL_Renderer *renderer) : Level(renderer) {
     int screenWidth = gm->getScreenWidth();
     int screenHeight = gm->getScreenHeight();
 
-    RealPoint heroPos = { screenWidth/2.0, screenHeight*(13/16.0) };
+    RealPoint heroPos = { float(screenWidth/2.0), float(screenHeight*(13/16.0)) };
     std::unique_ptr<Sprite> heroSprite = std::unique_ptr<Sprite>(
       new HeroSprite(heroPos, renderer)
     );
@@ -16,7 +16,7 @@ SineEnemiesLevel::SineEnemiesLevel(SDL_Renderer *renderer) : Level(renderer) {
 
     // TODO: figure out why this would be half of the hitbox
     //RealPoint cPos = { (SCREEN_WIDTH/2.0) - (ess2->getHitBox()->w*.5), 55.0 };
-    RealPoint cPos = { (screenWidth/2.0) - 16, 55.0 };
+    RealPoint cPos = { (float)(screenWidth/2.0 - 16), 55.0 };
     std::unique_ptr<Sprite> ese1 = std::unique_ptr<Sprite>(
       new EnemySpriteEllipsis(cPos, renderer, 250.0, 20.0)
     );

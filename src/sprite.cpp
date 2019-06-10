@@ -130,6 +130,14 @@ int Sprite::getHeight(void) {
   return this->_height;
 }
 
+void Sprite::setWidth(int w) {
+  this->_width = w;
+}
+
+void Sprite::setHeight(int h) {
+  this->_height = h;
+}
+
 std::string Sprite::getTag() {
   return this->_tag;
 }

@@ -58,6 +58,8 @@ class Sprite {
     void setVelocity(RealPoint);
     void move(float);
 
+    void setWidth(int);
+    void setHeight(int);
     int getWidth(void);
     int getHeight(void);
     virtual void render(SDL_Renderer*) = 0;

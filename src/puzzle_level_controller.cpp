@@ -161,7 +161,7 @@ void PuzzleLevelController::deployPiece() {
     //int yPos = matPos->Y() + numBlocks * blockWidth;
     int yPos = matPos->Y();
     // TODO: deploy it inside the matrix...do it!
-    RealPoint pPos = { (screenWidth/2.0), yPos };
+    RealPoint pPos = { (float)(screenWidth/2.0), (float)yPos };
     // a factory instead of this.
     //std::vector<std::vector<int>> map = this->_puzzleLevel->grabRandomPieceMap();
 
