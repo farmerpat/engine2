@@ -18,6 +18,16 @@ Level::~Level() {
 }
 
 void Level::update(float dt) {
+  if (this->_gameOver) {
+    // wtf do i want?
+    // i game over controller?
+    // do we want game over screen
+    // to be a level that we change to?
+    // probably not. a game over controller
+    // might allow such flexibility.
+    //this->_
+  }
+
   // TODO: break this up and call controllers on all the things
   std::vector<std::unique_ptr<Sprite>>::size_type i, len;
   len = this->_sprites.size();
@@ -159,6 +169,8 @@ void Level::renderUiElements(SDL_Renderer *renderer) {
 }
 
 void Level::render(SDL_Renderer* renderer) {
+  // do i want to skip all this if gameover?
+  // or leave it up to the game over controller?
   this->renderBackgroundElements(renderer);
   this->renderSprites(renderer);
   this->renderUiElements(renderer);
@@ -188,4 +200,12 @@ std::unique_ptr<Sprite> &Level::getSpriteByTag(std::string tag) {
 
 std::vector<std::unique_ptr<Sprite>> const &Level::getSprites() {
   return this->_sprites;
+}
+
+void Level::setGameOver() {
+  this->_gameOver = true;
+}
+
+bool Level::gameOver() {
+  return this->_gameOver;
 }

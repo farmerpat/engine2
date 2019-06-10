@@ -7,6 +7,8 @@ PieceController::PieceController(Piece *p) {
 }
 
 void PieceController::update(float dt) {
+  // TODO: prevent movement if _puzzleLevel->gameOver();
+  // and allow something like restart/quit
   this->_gravityFrameCounter++;
   GameManager *gm = GameManager::getInstance();
   int moveX = 0;

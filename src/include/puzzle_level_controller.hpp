@@ -23,6 +23,12 @@ class PuzzleLevelController : public LevelController {
     PuzzleLevel *_puzzleLevel;
     bool pieceOnScreen();
     void deployPiece();
+    // TODO:
+    // decide if i want PuzzleLevel descendents to
+    // deal with this type of thing
+    int _missedHolesAllowed = 4;
+    int _holesFilled = 0;
+    int _holesMissed = 0;
 };
 
 #endif

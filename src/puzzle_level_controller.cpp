@@ -45,9 +45,20 @@ void PuzzleLevelController::update(float dt) {
   // could also stop using holes that are the same shape as peices,
   // and start making more random holes
 
+  if (this->_holesMissed >= this->_missedHolesAllowed) {
+    // then they've lost
+    // TODO:
+    // figure out what to do about it...
+    // the simplest thing i can think of
+    // is to just add a gameOver-esque UI element
+    this->_puzzleLevel->setGameOver();
+  }
+
   if (!this->_puzzleLevel->getBackgroundMatrix()->getMatrix().someEmptyBlocks() &&
       this->_puzzleLevel->getBgHoles().size() == 0
       ) {
+    // TODO:
+    // add another hole
     // open a win modal, and tell the gm to transition to the next
     // level somehow...
     std::cout << "you are super player!\n";
@@ -105,6 +116,7 @@ void PuzzleLevelController::update(float dt) {
         if (pbh->getHoleMap().noEmptyBlocks()) {
           std::cout << "kill!\n";
           pbh->kill();
+          this->_holesMissed++;
         }
       }
     }

@@ -14,6 +14,7 @@
 #include "../level_controller.hpp"
 #include "../puzzle_level_controller.hpp"
 #include "../puzzle_background_hole.hpp"
+#include "../ui_text_box.hpp"
 
 class PuzzleLevel : public Level {
   public:
@@ -25,6 +26,7 @@ class PuzzleLevel : public Level {
     std::vector<std::shared_ptr<PuzzleBackgroundHole>> getBgHoles();
     void setBgHoleBit(int, int, int, int, int);
     void removeFilledHoles();
+    void setGameOver();
 
   protected:
     std::shared_ptr<MatrixOfSprites> _backgroundMatrix;

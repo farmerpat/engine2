@@ -26,6 +26,8 @@ class Level {
     void addUiElement(std::unique_ptr<Sprite>);
     std::unique_ptr<Sprite> &getSpriteByTag(std::string);
     std::vector<std::unique_ptr<Sprite>> const &getSprites();
+    virtual void setGameOver();
+    bool gameOver();
 
   protected:
     std::vector<std::unique_ptr<Sprite>> _backgroundElements;
@@ -35,6 +37,7 @@ class Level {
     void renderSprites(SDL_Renderer*);
     void renderUiElements(SDL_Renderer*);
     LevelController *_levelController = 0;
+    bool _gameOver = false;
 
 };
 #endif

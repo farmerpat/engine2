@@ -62,15 +62,15 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   m2.setBitAt(1,2,0);
   m2.setBitAt(2,2,0);
 
-  //std::shared_ptr<PuzzleBackgroundHole> h2 = std::shared_ptr<PuzzleBackgroundHole>(
-    //new PuzzleBackgroundHole(p2, m2)
-  //);
+  // test ui text box
+  RealPoint tp = { 3.0, 3.0 };
+  std::unique_ptr<Sprite> uit = std::unique_ptr<Sprite>(
+    new UiTextBox(
+      tp, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25, renderer
+    )
+  );
 
-  //this->_bgHoles.push_back(
-    //std::move(
-      //h2
-    //)
-  //);
+  this->addUiElement(std::move(uit));
 
   this->_levelController = new PuzzleLevelController(this);
 }
@@ -167,4 +167,10 @@ void PuzzleLevel::removeFilledHoles() {
     ),
     this->_bgHoles.end()
   );
+}
+
+void PuzzleLevel::setGameOver() {
+  Level::setGameOver();
+
+  // try adding some kind of a textbox sprite to _uiElements
 }
