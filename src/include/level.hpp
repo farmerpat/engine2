@@ -23,7 +23,7 @@ class Level {
     virtual void render(SDL_Renderer*);
     void addBackgroundElement(std::unique_ptr<Sprite>);
     void addSprite(std::unique_ptr<Sprite>);
-    void addUiElement(std::unique_ptr<Sprite>);
+    void addUiElement(std::shared_ptr<Sprite>);
     std::unique_ptr<Sprite> &getSpriteByTag(std::string);
     std::vector<std::unique_ptr<Sprite>> const &getSprites();
     virtual void setGameOver();
@@ -32,7 +32,8 @@ class Level {
   protected:
     std::vector<std::unique_ptr<Sprite>> _backgroundElements;
     std::vector<std::unique_ptr<Sprite>> _sprites;
-    std::vector<std::unique_ptr<Sprite>> _uiElements;
+    // TODO: just make them all share pointers.
+    std::vector<std::shared_ptr<Sprite>> _uiElements;
     void renderBackgroundElements(SDL_Renderer*);
     void renderSprites(SDL_Renderer*);
     void renderUiElements(SDL_Renderer*);

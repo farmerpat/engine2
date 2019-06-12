@@ -1,25 +1,27 @@
 #include "include/score_text_box.hpp"
-#include <iostream>
 
 ScoreTextBox::ScoreTextBox
-(RealPoint pos, std::string font, int pt, std::string text, int w, int h)
-  : UiDynamicTextBox (pos, font, pt, text, w, h) {
-
+(RealPoint pos, std::string font, int pt, std::string scoreText, int w, int h)
+  : UiDynamicTextBox (pos, font, pt, scoreText, w, h) {
+    this->_scoreText = scoreText;
 }
 
-
-ScoreTextBox::~ScoreTextBox() {
-  std::cout << "i r UiTextBox desctructor\n";
-}
+ScoreTextBox::~ScoreTextBox() { }
 
 void ScoreTextBox::render(SDL_Renderer *ren) {
-
+  std::string text = this->_scoreText + std::to_string(this->_score);
+  this->_text = text;
+  UiDynamicTextBox::render(ren);
 }
 
-void ScoreTextBox::setScore(int);
-int ScoreTextBox::getScore();
+void ScoreTextBox::setScore(int s) {
+  this->_score = s;
+}
+
+int ScoreTextBox::getScore() {
+  return this->_score;
+}
+
 void ScoreTextBox::incScore(int inc) {
-
+  this->_score += inc;
 }
-
-

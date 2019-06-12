@@ -11,7 +11,7 @@
 
 class ScoreTextBox : public UiDynamicTextBox {
   public:
-    ScoreTextBox(RealPoint, std::string, int, std::string, int, int, SDL_Renderer*);
+    ScoreTextBox(RealPoint, std::string, int, std::string, int, int);
     ~ScoreTextBox();
     void render(SDL_Renderer*);
     void setScore(int);
@@ -20,6 +20,7 @@ class ScoreTextBox : public UiDynamicTextBox {
 
   protected:
     int _score = 0;
+    std::string _scoreText = "Score: ";
 
 };
 #endif

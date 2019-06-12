@@ -85,6 +85,7 @@ set(
   src/ui_text.cpp
   src/ui_static_text_box.cpp
   src/ui_dynamic_text_box.cpp
+  src/score_text_box.cpp
   src/levels/sine_enemies_level.cpp
   src/levels/invaderz_matrix_level.cpp
   src/piece_controller.cpp

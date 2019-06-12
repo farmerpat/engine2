@@ -186,8 +186,8 @@ void Level::addSprite(std::unique_ptr<Sprite> sprite) {
   this->_sprites.push_back(std::move(sprite));
 }
 
-void Level::addUiElement(std::unique_ptr<Sprite> sprite) {
-  this->_uiElements.push_back(std::move(sprite));
+void Level::addUiElement(std::shared_ptr<Sprite> sprite) {
+  this->_uiElements.push_back(sprite);
 }
 
 std::unique_ptr<Sprite> &Level::getSpriteByTag(std::string tag) {

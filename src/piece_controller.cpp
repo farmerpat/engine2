@@ -113,9 +113,9 @@ void PieceController::update(float dt) {
               for (int y=0; y<3; y++) {
                 for (int x=0; x<3; x++) {
                   if (this->_piece->getMatrix().getBitAt(x,y) == 1) {
-                    // tell it to flip the hole bit somehow
                     pl->setBgHoleBit(pieceMatrixPositionX, pieceMatrixPositionY, y, x, 1);
                     this->_piece->getMatrix().setBitAt(x,y,0);
+                    pl->incScore();
 
                   }
                 }

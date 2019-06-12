@@ -62,15 +62,14 @@ PuzzleLevel::PuzzleLevel(SDL_Renderer *renderer, std::string levelFileName, std:
   m2.setBitAt(1,2,0);
   m2.setBitAt(2,2,0);
 
-  // test ui text box
   RealPoint tp = { 3.0, 3.0 };
-  std::unique_ptr<Sprite> uit = std::unique_ptr<Sprite>(
-    new UiDynamicTextBox(
-      tp, "assets/fonts/slkscr.ttf", 16, "fyfalot", 75, 25
+  std::shared_ptr<Sprite> uit = std::shared_ptr<Sprite>(
+    new ScoreTextBox(
+      tp, "assets/fonts/slkscr.ttf", 16, "Score: ", 75, 25
     )
   );
 
-  this->addUiElement(std::move(uit));
+  this->addUiElement(uit);
 
   this->_levelController = new PuzzleLevelController(this);
 }
@@ -172,5 +171,22 @@ void PuzzleLevel::removeFilledHoles() {
 void PuzzleLevel::setGameOver() {
   Level::setGameOver();
 
-  // try adding some kind of a textbox sprite to _uiElements
+  // TODO:
+  // add a UiDynamicTextBox _uiElements
+}
+
+void PuzzleLevel::incScore(int inc) {
+  std::vector<std::unique_ptr<Sprite>>::size_type i, len;
+  len = this->_uiElements.size();
+
+  for (i=0; i<len; i++) {
+
+    std::shared_ptr<Sprite> sprite = this->_uiElements[i];
+    std::shared_ptr<ScoreTextBox> stb = std::static_pointer_cast<ScoreTextBox>(sprite);
+
+    if (stb) {
+      stb->incScore(inc);
+
+    }
+  }
 }
