@@ -2,10 +2,10 @@
 #define PIECE_CONTROLLER_HPP
 
 #include "SDL.h"
-#include "controller.hpp"
+#include "include/controller.hpp"
 //#include "piece.hpp"
-#include "levels/puzzle_level.hpp"
-#include "game_manager.hpp"
+#include "include/levels/puzzle_level.hpp"
+#include "include/game_manager.hpp"
 
 class Piece;
 

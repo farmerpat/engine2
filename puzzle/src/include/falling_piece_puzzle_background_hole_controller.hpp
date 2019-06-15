@@ -1,9 +1,9 @@
 #ifndef FALLING_PIECE_BACKGROUND_HOLE_CONTROLLER_HPP
 #define FALLING_PIECE_BACKGROUND_HOLE_CONTROLLER_HPP
 
-#include "real_point.hpp"
-#include "game_manager.hpp"
-#include "puzzle_background_hole_controller.hpp"
+#include "include/real_point.hpp"
+#include "include/game_manager.hpp"
+#include "include/puzzle_background_hole_controller.hpp"
 
 class PuzzleBackgroundHole;
 

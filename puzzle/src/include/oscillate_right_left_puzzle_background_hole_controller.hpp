@@ -1,8 +1,8 @@
 #ifndef OSCILLATE_RIGHT_LEFT_PUZZLE_BACKGROUND_HOLE_CONTROLLER_HPP
 #define OSCILLATE_RIGHT_LEFT_PUZZLE_BACKGROUND_HOLE_CONTROLLER_HPP
 
-#include "real_point.hpp"
-#include "puzzle_background_hole_controller.hpp"
+#include "include/real_point.hpp"
+#include "include/puzzle_background_hole_controller.hpp"
 
 class PuzzleBackgroundHole;
 

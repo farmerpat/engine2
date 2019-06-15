@@ -3,13 +3,13 @@
 
 #include <vector>
 #include <string>
-#include "util.hpp"
+#include "include/util.hpp"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "real_point.hpp"
-#include "screen_matrix.hpp"
-#include "piece.hpp"
-#include "piece_controller.hpp"
+#include "include/real_point.hpp"
+#include "include/screen_matrix.hpp"
+#include "include/piece.hpp"
+#include "include/piece_controller.hpp"
 
 class OPiece : public Piece {
   public:

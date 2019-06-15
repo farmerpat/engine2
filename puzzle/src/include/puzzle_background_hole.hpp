@@ -3,10 +3,10 @@
 
 #include <vector>
 #include <memory>
-#include "real_point.hpp"
-#include "screen_matrix.hpp"
-#include "puzzle_background_hole_controller.hpp"
-#include "falling_piece_puzzle_background_hole_controller.hpp"
+#include "include/real_point.hpp"
+#include "include/screen_matrix.hpp"
+#include "include/puzzle_background_hole_controller.hpp"
+#include "include/falling_piece_puzzle_background_hole_controller.hpp"
 
 // TODO:
 // if want fade out effect on kill, use texture instead of emptiness

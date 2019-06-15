@@ -3,10 +3,10 @@
 
 #include <vector>
 #include "SDL.h"
-#include "game_manager.hpp"
-#include "level_controller.hpp"
-#include "level.hpp"
-#include "sprite.hpp"
+#include "include/game_manager.hpp"
+#include "include/level_controller.hpp"
+#include "include/level.hpp"
+#include "include/sprite.hpp"
 //#include "piece.hpp"
 //#include "o_piece.hpp"
 //#include "levels/puzzle_level.hpp"

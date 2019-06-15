@@ -4,18 +4,18 @@
 #include <string>
 #include <memory>
 #include "SDL.h"
-#include "../real_point.hpp"
-#include "../util.hpp"
-#include "../game_manager.hpp"
-#include "../level.hpp"
-#include "../sprite.hpp"
-#include "../piece.hpp"
-#include "../matrix_of_sprites.hpp"
-#include "../level_controller.hpp"
-#include "../puzzle_level_controller.hpp"
-#include "../puzzle_background_hole.hpp"
-#include "../ui_dynamic_text_box.hpp"
-#include "../score_text_box.hpp"
+#include "include/real_point.hpp"
+#include "include/util.hpp"
+#include "include/game_manager.hpp"
+#include "include/level.hpp"
+#include "include/sprite.hpp"
+#include "include/piece.hpp"
+#include "include/matrix_of_sprites.hpp"
+#include "include/level_controller.hpp"
+#include "include/puzzle_level_controller.hpp"
+#include "include/puzzle_background_hole.hpp"
+#include "include/ui_dynamic_text_box.hpp"
+#include "include/score_text_box.hpp"
 
 class PuzzleLevel : public Level {
   public:
